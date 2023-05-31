@@ -10,7 +10,6 @@ Route::get('/portfolio', [PortfolioController::class, 'portfolio'])->name('portf
 
 Route::get('/portfolio/create', [PortfolioController::class, 'create'])->name('portfolio.create');
 
-Route::get('/portfolio/{id}', [PortfolioController::class, 'portfoliosingle'])->name('portfolio.single');
 
 Route::get('/portfolio/{portfolio}/edit', [PortfolioController::class, 'edit'])->name('portfolio.edit');
 
@@ -28,3 +27,4 @@ Route::get('/services', function () {
     return view('services');
 });
 
+Route::get('/portfolio/{id}', [PortfolioController::class, 'portfoliosingle'])->name('portfolio.single');

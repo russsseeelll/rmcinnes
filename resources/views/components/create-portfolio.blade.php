@@ -30,7 +30,7 @@
                             <label for="category" class="form-label">Category</label>
                             <select name="category" class="form-select">
                                 <option value="Home Automation">Home automation</option>
-                                <option value="Web development">Web development</option>                                
+                                <option value="Web Development">Web development</option>                                
                             </select>
                             @error('category')
                             <div class="alert alert-danger">{{$message}}</div>

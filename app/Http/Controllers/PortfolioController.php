@@ -51,14 +51,14 @@ class PortfolioController extends BaseController
     public function store(Request $request)
     {
         $formFields = $request->validate([
-            "title" => "required",
+            "title" => ['required', 'unique:portfolio'],
             "date" => "required",
             "category" => "required",
             "tags" => "nullable",
-            "summary" => "required",
-            "description" => "required",
+            "summary" => ['required', 'max:255'],
+            "description" => ['required', 'max:1024'],
             "link" => "nullable",
-            "image" => "image|mimes:jpeg,png,jpg,gif|max:2048", // Modify the image validation rules if necessary
+            "image" => "image|mimes:jpeg,png,jpg,gif|max:10000",
         ]);
     
         if ($request->hasFile('image')) {
@@ -86,14 +86,14 @@ class PortfolioController extends BaseController
     public function update(Request $request, Portfolio $portfolio)
     {
         $formFields = $request->validate([
-            "title" => "required",
+            "title" => ['required', 'unique:portfolio'],
             "date" => "required",
             "category" => "required",
-            "tags",
-            "summary" => "required",
-            "description" => "required",
-            "link",
-            "image" => "image|mimes:jpeg,png,jpg,gif|max:2048", // Modify the image validation rules if necessary
+            "tags" => "nullable",
+            "summary" => ['required', 'max:255'],
+            "description" => ['required', 'max:512'],
+            "link" => "nullable",
+            "image" => "image|mimes:jpeg,png,jpg,gif|max:10000",
         ]);
     
         if ($request->hasFile('image')) {
