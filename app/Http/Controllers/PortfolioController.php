@@ -45,7 +45,7 @@ class PortfolioController extends BaseController
 
     public function create()
     {
-        return view("components.portfolio.create");
+        return view("components.create-portfolio");
     }
 
     public function store(Request $request)
@@ -54,23 +54,27 @@ class PortfolioController extends BaseController
             "title" => "required",
             "date" => "required",
             "category" => "required",
-            "tags",
+            "tags" => "nullable",
             "summary" => "required",
             "description" => "required",
-            "link",
-            "image" => "required|image|mimes:jpeg,png,jpg,gif|max:2048", // Add image validation rules
+            "link" => "nullable",
+            "image" => "image|mimes:jpeg,png,jpg,gif|max:2048", // Modify the image validation rules if necessary
         ]);
     
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/images', $imageName); // Store the image in the storage/app/public/images directory
-            $formFields['image'] = 'storage/images/' . $imageName; // Save the image path in the database
+            $image->move(public_path('storage/images'), $imageName);
+            $formFields['image'] = 'storage/images/' . $imageName;
         }
+    
+        // Check if 'tags' and 'link' fields are empty. If they are, set them to null or some default value.
+        $formFields['tags'] = empty($formFields['tags']) ? null : $formFields['tags'];
+        $formFields['link'] = empty($formFields['link']) ? null : $formFields['link'];
     
         Portfolio::create($formFields);
     
-        return redirect("/")->with("message", "Entry created successfully!");
+        return redirect("/portfolio")->with("message", "Entry created successfully!");
     }
     
 
