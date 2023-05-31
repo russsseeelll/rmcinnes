@@ -13,12 +13,7 @@
       <meta property="og:title" content="rmcinnes" />
       <meta property="og:image" content="" />
       <meta property="og:description" content="rmcinnes" />
-      <!-- Google Font -->
       <link href="https://fonts.googleapis.com/css?family=Merriweather:&amp;display=swap" rel="stylesheet" />
-      <!-- Require stylesheet load from local -->
-      <!-- <link href="./dist/css/bootstrap.min.css" rel="stylesheet"> -->
-      <!-- <link href="./dist/css/fontawesome-all.min.css" rel="stylesheet"> -->
-      <!-- Required stylesheets -->
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
       <link href="/css/style.css" rel="stylesheet"/>
