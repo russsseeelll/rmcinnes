@@ -2,6 +2,7 @@ body{
   background-color: #162231;
   display: flex;
   flex-direction: column;
+  width: 100%;
  /* make main axis vertical */
   min-height: 100vh;
  /* viewport height */
@@ -265,55 +266,97 @@ body{
   object-fit: cover;
   border-radius: 10px;
 }
+/* Base styles for the footer */
 .page_footer {
   --bs-body-color: #212529;
   --bs-body-bg: rgb(255, 255, 255);
- /* easy frontend variables */
   --theme-colour: rgb(13, 110, 253);
   --theme-color-rgb: 13, 110, 253;
   background-color: var(--bs-body-bg);
   color: var(--bs-body-color);
   padding: 48px 0;
   margin-top: auto;
- /* push it down to the end of the page */
 }
+
 .page_footer img {
   max-width: 150px;
   max-height: 150px;
 }
-.page_footer-text{
+
+.page_footer-text {
   margin-left: 140px;
 }
-/* Gray Block Style */
-.gray .page_footer, .page_footer.gray {
- /* Bootstrap variables */
-  --bs-body-bg: rgb(246, 246, 246);
-}
-/* Dark Gray Block Style */
-.dark-gray .page_footer, .page_footer.dark-gray {
- /* Bootstrap variables */
-  --bs-body-color: #ffffff;
-  --bs-body-bg: rgb(30, 39, 53);
-}
-/* Dark Block Style */
-.dark .page_footer, .page_footer.dark {
- /* Bootstrap variables */
-  --bs-body-color: #ffffff;
-  --bs-body-bg: rgb(11, 23, 39);
-}
+
 .page_footer-social li {
   list-style-type: none;
   display: inline-block;
   margin: 6px 12px;
 }
+
 .page_footer-social li a {
   color: var(--bs-body-color);
   transition: 0.4s;
   font-size: 20px;
 }
+
 .page_footer-social li a:hover {
   color: var(--theme-colour);
 }
+
+/* Media queries for responsiveness */
+@media screen and (max-width: 768px) {
+  .page_footer {
+    padding: 24px 0;
+    text-align: center;
+  }
+
+  .page_footer img {
+    display: block;
+    margin: 0 auto;
+    max-width: 120px;
+    max-height: 120px;
+  }
+
+  .page_footer-text {
+    margin-left: 0;
+    margin-top: 16px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .page_footer {
+    padding: 16px 0;
+  }
+
+  .page_footer img {
+    max-width: 100px;
+    max-height: 100px;
+    margin-top: 30px; /* Lower the logo by 5px */
+  }
+
+  .page_footer-social li {
+    margin: 4px 8px;
+  }
+
+  .page_footer-social li a {
+    font-size: 16px;
+  }
+}
+
+/* Adjustments for dark backgrounds */
+.page_footer.dark-gray,
+.page_footer.dark {
+  --bs-body-color: #ffffff;
+}
+
+.page_footer.dark-gray {
+  --bs-body-bg: rgb(30, 39, 53);
+}
+
+.page_footer.dark {
+  --bs-body-bg: rgb(11, 23, 39);
+}
+
 .portfolio {
  /* Bootstrap variables */
   --bs-body-color: #28303b;
