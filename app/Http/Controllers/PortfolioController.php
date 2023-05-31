@@ -99,7 +99,7 @@ class PortfolioController extends BaseController
             "date" => "required",
             "category" => "required",
             "tags" => "nullable",
-            "summary" => ['required', 'max:512'],
+            "summary" => ['required', 'max:513'],
             "description" => ['required', 'max:3000'],
             "link" => "nullable",
             "image" => "image|mimes:jpeg,png,jpg,gif|max:10000",
