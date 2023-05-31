@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
                 'description' => 'This project involves creating a comprehensive home automation system that can control and monitor home appliances using a Raspberry Pi and Python programming. It incorporates IoT technologies and Zigbee wireless networking for seamless connectivity.',
                 'summary' => 'The smart home automation system effectively manages and controls home appliances, enhancing convenience and efficiency. It is also equipped with a user-friendly interface for easy operation and monitoring.',
                 'link' => 'https://www.youtube.com/watch?v=your_video_id_here',
-                'image' => 'images/html.jpg'
+                'image' => ''
             ],
             [
                 'title' => 'Smart Home Automation System 1',
@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
                 'description' => 'This project involves creating a comprehensive home automation system that can control and monitor home appliances using a Raspberry Pi and Python programming. It incorporates IoT technologies and Zigbee wireless networking for seamless connectivity.',
                 'summary' => 'The smart home automation system effectively manages and controls home appliances, enhancing convenience and efficiency. It is also equipped with a user-friendly interface for easy operation and monitoring.',
                 'link' => 'https://www.youtube.com/watch?v=your_video_id_here',
-                'image' => 'images/html.jpg'
+                'image' => ''
             ],
             [
                 'title' => 'Smart Home Automation System 2',
@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
                 'description' => 'This project involves creating a comprehensive home automation system that can control and monitor home appliances using a Raspberry Pi and Python programming. It incorporates IoT technologies and Zigbee wireless networking for seamless connectivity.',
                 'summary' => 'The smart home automation system effectively manages and controls home appliances, enhancing convenience and efficiency. It is also equipped with a user-friendly interface for easy operation and monitoring.',
                 'link' => 'https://www.youtube.com/watch?v=your_video_id_here',
-                'image' => 'images/html.jpg'
+                'image' => ''
             ],
             // Add more entries in the same format as above
         ];

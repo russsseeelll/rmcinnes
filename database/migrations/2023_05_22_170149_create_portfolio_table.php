@@ -17,8 +17,8 @@ return new class extends Migration
             $table->date('date');
             $table->string('category');
             $table->string('tags');
-            $table->string('summary');
-            $table->string('description');
+            $table->string('summary', 512);
+            $table->string('description', 3000);
             $table->string('link')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();

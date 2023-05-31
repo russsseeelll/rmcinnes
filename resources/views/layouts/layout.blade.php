@@ -28,6 +28,9 @@
       <!-- START: Body Content -->
       <div class="ezy__nav1 dark-gray ">
          <nav class="navbar navbar-expand-lg navbar-light py-3">
+          @auth
+          <li class="nav-item"><a class="nav-link"> welcome {{auth()->user()->name}}</a></li>
+          @endauth
             <div class="container">
                <a class="navbar-brand" href="/">
                rmcinnes
@@ -43,6 +46,18 @@
                   <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                   <li class="nav-item"><a class="nav-link" href="/portfolio">Portfolio</a></li>
                   <li class="nav-item"><a class="nav-link" href="/services">Services</a></li>
+
+                  @auth
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                          Logout
+                      </a>
+                  </li>
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                      @csrf
+                  </form>
+                  @endauth
+                  
                </div>
             </div>
          </nav>

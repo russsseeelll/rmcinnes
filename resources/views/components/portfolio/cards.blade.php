@@ -27,17 +27,21 @@
                     {{ $portfolio->summary }}
                 </p>
                 <a href="{{ route('portfolio.single', ['id' => $portfolio->id]) }}" class="btn portfolio-btn-read-more">More info</a>
+                @auth
                 <a href="{{ route('portfolio.edit', ['portfolio' => $portfolio->id]) }}" class="btn portfolio-btn-read-more">Edit</a>
                 <button type="button" class="btn portfolio-btn-read-more delete-portfolio-button" data-bs-toggle="modal" data-bs-target="#tech-modal" data-portfolio-id="{{ $portfolio->id }}">Delete</button>
+                @endauth
             </div>
         </article>
     </div>
 @endforeach
 @endif
 
+@auth
     <div class="col-12 mt-5" >
         <a href="{{ route('portfolio.create')}}" class="btn btn-primary contact-btn">Add New</a>
     </div>
+@endauth
 
 <div class="modal fade" id="tech-modal" tabindex="-1" aria-labelledby="tech-modal" aria-hidden="true">
     <div class="modal-dialog">

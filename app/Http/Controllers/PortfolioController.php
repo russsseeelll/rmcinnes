@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\File;
+
 
 class PortfolioController extends BaseController
 {
@@ -38,8 +40,12 @@ class PortfolioController extends BaseController
     public function portfoliosingle($id)
     {
         $portfolio = Portfolio::find($id);
+        if (!$portfolio) {
+            return redirect('/login');
+        }
         return view('portfolio-single', ['portfolio' => $portfolio]);
     }
+    
 
 
 
@@ -55,8 +61,8 @@ class PortfolioController extends BaseController
             "date" => "required",
             "category" => "required",
             "tags" => "nullable",
-            "summary" => ['required', 'max:255'],
-            "description" => ['required', 'max:1024'],
+            "summary" => ['required', 'max:512'],
+            "description" => ['required', 'max:3000'],
             "link" => "nullable",
             "image" => "image|mimes:jpeg,png,jpg,gif|max:10000",
         ]);
@@ -79,6 +85,9 @@ class PortfolioController extends BaseController
     
 
     public function edit(Portfolio $portfolio){
+        if (!$portfolio) {
+            return redirect('/login'); 
+        }
         return view('components.edit-portfolio', ['portfolio' => $portfolio]);
     }
     
@@ -86,12 +95,12 @@ class PortfolioController extends BaseController
     public function update(Request $request, Portfolio $portfolio)
     {
         $formFields = $request->validate([
-            "title" => ['required', 'unique:portfolio'],
+            "title" => "required",
             "date" => "required",
             "category" => "required",
             "tags" => "nullable",
-            "summary" => ['required', 'max:255'],
-            "description" => ['required', 'max:512'],
+            "summary" => ['required', 'max:512'],
+            "description" => ['required', 'max:3000'],
             "link" => "nullable",
             "image" => "image|mimes:jpeg,png,jpg,gif|max:10000",
         ]);
@@ -113,13 +122,25 @@ class PortfolioController extends BaseController
 
     public function destroy(Portfolio $portfolio)
     {
+
+        if (!$portfolio) {
+            return redirect('/login'); 
+        }
+        
         $title = $portfolio->title; 
         $category = $portfolio->category;
+    
+        
+        $imagePath = public_path($portfolio->image);
+        if(File::exists($imagePath)) { 
+            File::delete($imagePath);
+        }
     
         $portfolio->delete();
     
         return redirect('/portfolio')->with('message', 'You have successfully deleted "' . $title . '" from the category "' . $category . '".');
     }
+    
     
 
     public function manage() {
