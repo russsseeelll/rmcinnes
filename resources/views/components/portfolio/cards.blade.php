@@ -43,11 +43,11 @@
     </div>
 @endauth
 
-<div class="modal fade delete-modal" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal" aria-hidden="true">
+<div class="modal fade delete-modal" id="delete-modal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Confirm Deletion</h5>
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -66,3 +66,4 @@
         </div>
     </div>
 </div>
+
