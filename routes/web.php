@@ -1,9 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ToolController;
 use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\ContactController;
 
 Route::get('/', [ToolController::class, 'tools']);
 
@@ -14,6 +16,8 @@ Route::get('/portfolio/{portfolio}/edit', [PortfolioController::class, 'edit'])-
 Route::put('/portfolio/{portfolio}', [PortfolioController::class, 'update'])->name('portfolio.update')->middleware('auth');
 
 Route::post('/portfolio', [PortfolioController::class, 'store'])->name('portfolio.store')->middleware('auth');
+
+Route::post('/contact', [ContactController::class, 'store']);
 
 Route::delete('/portfolio/{portfolio}', [PortfolioController::class, 'destroy'])->name('portfolio.destroy')->middleware('auth');
 
@@ -35,3 +39,5 @@ Route::post('/login', 'App\Http\Controllers\UserController@authenticate')->name(
 Route::get('/portfolio', [PortfolioController::class, 'portfolio'])->name('portfolio');
 
 Route::get('/portfolio/{id}', [PortfolioController::class, 'portfoliosingle'])->name('portfolio.single');
+
+

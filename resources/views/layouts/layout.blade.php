@@ -56,8 +56,12 @@
                </div>
             </div>
          </nav>
+         @if(session('message_sent'))
+         <div class="alert alert-success">
+             {{ session('message_sent') }}
+         </div>
+        @endif
      </div>
-
          {{$slot}}
          
          <section class="page_footer dark-gray">

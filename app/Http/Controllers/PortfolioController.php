@@ -30,7 +30,7 @@ class PortfolioController extends BaseController
             $query->where('category', $request->input('category'));
         }
     
-        $portfolios = $query->paginate(10);
+        $portfolios = $query->paginate(6);
     
         return view('portfolio', ['portfolios' => $portfolios]);
 
