@@ -926,3 +926,34 @@ body{
   position: relative;
   color: #fff;
 }
+
+.delete-modal {
+  background-color: var(--ezy-item-bg);
+  border-radius: 10px;
+  color: var(--bs-body-color);
+  padding: 20px;
+  text-align: center;
+}
+.delete-modal .modal-body {
+  opacity: 0.9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.2rem;
+  color: white;
+}
+.delete-modal .modal-title {
+  font-weight: bold;
+  color: white;
+}
+.delete-modal .modal-description {
+  font-weight: normal;
+  color: white;
+}
+.delete-modal .modal-body img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+  max-height: 300px;
+}
