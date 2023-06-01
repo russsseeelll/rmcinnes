@@ -29,7 +29,7 @@
                 <a href="{{ route('portfolio.single', ['id' => $portfolio->id]) }}" class="btn portfolio-btn-read-more">More info</a>
                 @auth
                 <a href="{{ route('portfolio.edit', ['portfolio' => $portfolio->id]) }}" class="btn portfolio-btn-read-more">Edit</a>
-                <button type="button" class="btn portfolio-btn-read-more delete-portfolio-button" data-bs-toggle="modal" data-bs-target="#tech-modal" data-portfolio-id="{{ $portfolio->id }}">Delete</button>
+                <button type="button" class="btn portfolio-btn-read-more delete-portfolio-button" data-bs-toggle="modal" data-bs-target="#delete-modal" data-portfolio-id="{{ $portfolio->id }}">Delete</button>
                 @endauth
             </div>
         </article>
@@ -43,9 +43,9 @@
     </div>
 @endauth
 
-<div class="modal fade delete-modal" id="delete-modal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content delete-modal">
             <div class="modal-header">
                 <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -66,4 +66,5 @@
         </div>
     </div>
 </div>
+
 
