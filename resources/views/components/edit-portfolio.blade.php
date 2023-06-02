@@ -8,7 +8,7 @@
                         <p class="portfolio-sub-heading">Edit: {{$portfolio->title}}</p>
                     </header>
                     
-                    <form method="POST" action="{{ route('portfolio.update', ['portfolio' => $portfolio->id]) }}" enctype="multipart/form-data" class="edit-form">
+                    <form method="POST" action="{{ route('portfolio.update', ['portfolio' => $portfolio->slug]) }}" enctype="multipart/form-data" class="edit-form">
                         @csrf
                         @method('PUT')
                         

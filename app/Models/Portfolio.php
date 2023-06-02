@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Portfolio extends Model
 {
+    use Sluggable;
+
     /**
      * The table associated with the model.
      *
@@ -20,6 +23,24 @@ class Portfolio extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'tags', 'category', 'description', 'date', 'summary', 'image', 'link'];
+    protected $fillable = ['title', 'tags', 'category', 'description', 'date', 'summary', 'image', 'link', 'slug'];
 
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

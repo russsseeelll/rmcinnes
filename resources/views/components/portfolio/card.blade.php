@@ -21,12 +21,13 @@
                             <span class="tech-tag">{{ trim($tag) }}</span>
                         @endforeach
                     </div>
-                    <p class="portfolio__single-description">
-                        {{ $portfolio->description }}
-                    </p>
                     <p class="portfolio__single-summary">
                         {{ $portfolio->summary }}
                     </p>
+                    <p class="portfolio__single-description">
+                        {!! nl2br(e($portfolio->description)) !!}
+                    </p>
+
                 </div>
                 <div class="portfolio__single-footer">
                 @if($portfolio->link)
