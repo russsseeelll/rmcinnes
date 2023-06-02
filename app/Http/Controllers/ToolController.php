@@ -12,7 +12,7 @@ class ToolController extends Controller
     {
         $tools = Tool::all();
 
-        return view('welcome', compact('tools'));
+        return view('welcome', ['tools' => $tools]);
     }
 
 }

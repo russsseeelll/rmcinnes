@@ -62,8 +62,9 @@
          </div>
         @endif
      </div>
+     <div style="display: flex; flex-direction: column; min-height: 100vh; background-color: rgb(11, 23, 39);">
          {{$slot}}
-         
+            </div>
          <section class="page_footer dark-gray">
           <div class="container">
             <div class="row d-flex justify-content-between align-items-center">
