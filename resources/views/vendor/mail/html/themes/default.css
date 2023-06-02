@@ -10,8 +10,8 @@ body *:not(html):not(style):not(br):not(tr):not(code) {
 
 body {
     -webkit-text-size-adjust: none;
-    background-color: #ffffff;
-    color: #718096;
+    background-color: #1a202c;
+    color: #edf2f7;
     height: 100%;
     line-height: 1.4;
     margin: 0;
@@ -25,10 +25,11 @@ ol,
 blockquote {
     line-height: 1.4;
     text-align: left;
+    color: #edf2f7;
 }
 
 a {
-    color: #3869d4;
+    color: #90cdf4;
 }
 
 a img {
@@ -38,7 +39,7 @@ a img {
 /* Typography */
 
 h1 {
-    color: #3d4852;
+    color: #f7fafc;
     font-size: 18px;
     font-weight: bold;
     margin-top: 0;
@@ -80,7 +81,7 @@ img {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 100%;
-    background-color: #edf2f7;
+    background-color: #2d3748;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -100,10 +101,11 @@ img {
 .header {
     padding: 25px 0;
     text-align: center;
+    background-color: #2d3748;
 }
 
 .header a {
-    color: #3d4852;
+    color: #f7fafc;
     font-size: 19px;
     font-weight: bold;
     text-decoration: none;
@@ -123,9 +125,9 @@ img {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 100%;
-    background-color: #edf2f7;
-    border-bottom: 1px solid #edf2f7;
-    border-top: 1px solid #edf2f7;
+    background-color: #2d3748;
+    border-bottom: 1px solid #4a5568;
+    border-top: 1px solid #4a5568;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -135,8 +137,8 @@ img {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 570px;
-    background-color: #ffffff;
-    border-color: #e8e5ef;
+    background-color: #1a202c;
+    border-color: #2d3748;
     border-radius: 2px;
     border-width: 1px;
     box-shadow: 0 2px 0 rgba(0, 0, 150, 0.025), 2px 4px 0 rgba(0, 0, 150, 0.015);
@@ -148,13 +150,14 @@ img {
 /* Subcopy */
 
 .subcopy {
-    border-top: 1px solid #e8e5ef;
+    border-top: 1px solid #4a5568;
     margin-top: 25px;
     padding-top: 25px;
 }
 
 .subcopy p {
     font-size: 14px;
+    color: #edf2f7;
 }
 
 /* Footer */
@@ -166,17 +169,18 @@ img {
     margin: 0 auto;
     padding: 0;
     text-align: center;
-    width: 570px;
+    background-color: #2d3748;
+    color: #f7fafc;
 }
 
 .footer p {
-    color: #b0adc5;
+    color: #edf2f7;
     font-size: 12px;
     text-align: center;
 }
 
 .footer a {
-    color: #b0adc5;
+    color: #90cdf4;
     text-decoration: underline;
 }
 
@@ -191,13 +195,14 @@ img {
 }
 
 .table th {
-    border-bottom: 1px solid #edeff2;
+    border-bottom: 1px solid #4a5568;
     margin: 0;
     padding-bottom: 8px;
+    color: #f7fafc;
 }
 
 .table td {
-    color: #74787e;
+    color: #e2e8f0;
     font-size: 15px;
     line-height: 18px;
     margin: 0;
@@ -260,18 +265,18 @@ img {
 /* Panels */
 
 .panel {
-    border-left: #2d3748 solid 4px;
+    border-left: #e53e3e solid 4px;
     margin: 21px 0;
 }
 
 .panel-content {
-    background-color: #edf2f7;
-    color: #718096;
+    background-color: #2d3748;
+    color: #f7fafc;
     padding: 16px;
 }
 
 .panel-content p {
-    color: #718096;
+    color: #f7fafc;
 }
 
 .panel-item {
@@ -281,6 +286,7 @@ img {
 .panel-item p:last-of-type {
     margin-bottom: 0;
     padding-bottom: 0;
+    color: #f7fafc;
 }
 
 /* Utilities */
