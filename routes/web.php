@@ -11,15 +11,19 @@ Route::get('/', [ToolController::class, 'tools']);
 
 Route::get('/portfolio/create', [PortfolioController::class, 'create'])->name('portfolio.create')->middleware('auth');
 
-Route::get('/portfolio/{portfolio}/edit', [PortfolioController::class, 'edit'])->name('portfolio.edit')->middleware('auth');
+Route::get('/portfolio/{portfolio:slug}/edit', [PortfolioController::class, 'edit'])->name('portfolio.edit')->middleware('auth');
 
-Route::put('/portfolio/{portfolio}', [PortfolioController::class, 'update'])->name('portfolio.update')->middleware('auth');
+Route::put('/portfolio/{portfolio:slug}', [PortfolioController::class, 'update'])->name('portfolio.update')->middleware('auth');
 
 Route::post('/portfolio', [PortfolioController::class, 'store'])->name('portfolio.store')->middleware('auth');
 
-Route::post('/contact', [ContactController::class, 'store']);
+Route::delete('/portfolio/{portfolio:slug}', [PortfolioController::class, 'destroy'])->name('portfolio.destroy')->middleware('auth');
 
-Route::delete('/portfolio/{portfolio}', [PortfolioController::class, 'destroy'])->name('portfolio.destroy')->middleware('auth');
+Route::get('/portfolio/{portfolio:slug}', [PortfolioController::class, 'portfoliosingle'])->name('portfolio.single');
+
+Route::get('/portfolio', [PortfolioController::class, 'portfolio'])->name('portfolio');
+
+Route::post('/contact', [ContactController::class, 'store']);
 
 Route::post('/logout', function () {
     Auth::logout();
@@ -35,9 +39,3 @@ Route::get('/login', function () {
 });
 
 Route::post('/login', 'App\Http\Controllers\UserController@authenticate')->name('login');
-
-Route::get('/portfolio', [PortfolioController::class, 'portfolio'])->name('portfolio');
-
-Route::get('/portfolio/{id}', [PortfolioController::class, 'portfoliosingle'])->name('portfolio.single');
-
-

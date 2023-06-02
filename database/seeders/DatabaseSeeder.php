@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -17,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $data = [
             [
                 'title' => 'Smart Home Automation System',
+                'slug' => Str::slug('slugisworking'),
                 'date' => Carbon::now()->subMonths(5)->format('Y-m-d'),
                 'category' => 'Home Automation',
                 'tags' => 'Raspberry Pi,Python,IoT,Zigbee',
@@ -27,6 +29,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'title' => 'Smart Home Automation System 1',
+                'slug' => Str::slug('slugisworking1'),
                 'date' => Carbon::now()->subMonths(5)->format('Y-m-d'),
                 'category' => 'Home Automation',
                 'tags' => 'Raspberry Pi,Python,IoT,Zigbee',
@@ -37,6 +40,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'title' => 'Smart Home Automation System 2',
+                'slug' => Str::slug('slugisworking2'),
                 'date' => Carbon::now()->subMonths(5)->format('Y-m-d'),
                 'category' => 'Home Automation',
                 'tags' => 'Raspberry Pi,Python,IoT,Zigbee',

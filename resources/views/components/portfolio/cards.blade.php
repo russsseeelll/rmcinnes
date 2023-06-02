@@ -26,10 +26,10 @@
                 <p class="portfolio-summary mt-3 mb-4">
                     {{ $portfolio->summary }}
                 </p>
-                <a href="{{ route('portfolio.single', ['id' => $portfolio->id]) }}" class="btn portfolio-btn-read-more">More info</a>
+                <a href="{{ route('portfolio.single', ['portfolio' => $portfolio->slug]) }}" class="btn portfolio-btn-read-more">More info</a>
                 @auth
-                <a href="{{ route('portfolio.edit', ['portfolio' => $portfolio->id]) }}" class="btn portfolio-btn-read-more">Edit</a>
-                <button type="button" class="btn portfolio-btn-read-more delete-portfolio-button" data-bs-toggle="modal" data-bs-target="#delete-modal" data-portfolio-id="{{ $portfolio->id }}">Delete</button>
+                <a href="{{ route('portfolio.edit', ['portfolio' => $portfolio->slug]) }}" class="btn portfolio-btn-read-more">Edit</a>
+                <button type="button" class="btn portfolio-btn-read-more delete-portfolio-button" data-bs-toggle="modal" data-bs-target="#delete-modal" data-portfolio-slug="{{ $portfolio->slug }}">Delete</button>
                 @endauth
             </div>
         </article>
@@ -56,7 +56,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 @if (!$portfolios->isEmpty())
-                    <form action="{{ route('portfolio.destroy', ['portfolio' => $portfolio->id]) }}" method="POST">
+                    <form action="{{ route('portfolio.destroy', ['portfolio' => $portfolio->slug]) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn portfolio-btn-read-more">Delete</button>
@@ -68,3 +68,10 @@
 </div>
 
 
+<script>
+    $('.delete-portfolio-button').click(function() {
+    var portfolioSlug = $(this).data('portfolio-slug');
+    $('#deleteForm').attr('action', '/portfolio/' + portfolioSlug);
+});
+
+    </script>
