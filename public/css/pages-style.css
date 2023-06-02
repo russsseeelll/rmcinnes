@@ -794,8 +794,25 @@ body{
 
 /* Laptop */
 @media (max-width: 1024px) {
+  .portfolio__single-wrapper {
+    margin: 20px;
+    padding: 30px 20px;
+  }
+
+  .portfolio__single {
+    max-width: 90%;
+    margin: 20px auto;
+    padding: 30px 20px;
+    border-radius: 15px;
+  }
+
   .portfolio__single-title {
     font-size: 32px;
+    line-height: 1.3;
+  }
+
+  .portfolio__single-title i {
+    margin-right: 7px;
   }
 
   .portfolio__single-summary,
@@ -804,14 +821,86 @@ body{
   }
 
   .portfolio__single-image {
-    width: 60%;
+    width: 80%;
+  }
+
+  .portfolio__single-image img {
+    border-radius: 15px;
+  }
+
+  .portfolio__single-tech-tags {
+    font-size: 16px;
+    padding: 7px 10px;
+    border-radius: 7px;
   }
 }
 
 /* Tablet */
 @media (max-width: 768px) {
+  .portfolio__single-wrapper {
+    margin: 10px;
+    padding: 20px 10px;
+  }
+
+  .portfolio__single {
+    max-width: 95%;
+    margin: 15px auto;
+    padding: 25px 15px;
+    border-radius: 10px;
+  }
+
   .portfolio__single-title {
     font-size: 28px;
+    line-height: 1.3;
+  }
+
+  .portfolio__single-title i {
+    margin-right: 7px;
+  }
+
+  .portfolio__single-summary,
+  .portfolio__single-description {
+    font-size: 16px;
+  }
+
+  .portfolio__single-image {
+    width: 90%;
+  }
+
+  .portfolio__single-image img {
+    border-radius: 10px;
+  }
+
+  .portfolio__single-tech-tags {
+    font-size: 16px;
+    padding: 7px 10px;
+    border-radius: 7px;
+  }
+}
+
+
+
+/* Mobile */
+@media (max-width: 480px) {
+  .portfolio__single-wrapper {
+    margin: 0px;
+    padding: 20px 10px;
+  }
+
+  .portfolio__single {
+    max-width: 100%;
+    margin: 10px 0px;
+    padding: 20px 10px;
+    border-radius: 10px;
+  }
+
+  .portfolio__single-title {
+    font-size: 24px;
+    line-height: 1.3;
+  }
+
+  .portfolio__single-title i {
+    margin-right: 5px;
   }
 
   .portfolio__single-summary,
@@ -822,17 +911,15 @@ body{
   .portfolio__single-image {
     width: 100%;
   }
-}
 
-/* Mobile */
-@media (max-width: 480px) {
-  .portfolio__single-title {
-    font-size: 24px;
+  .portfolio__single-image img {
+    border-radius: 10px;
   }
 
-  .portfolio__single-summary,
-  .portfolio__single-description {
-    font-size: 12px;
+  .portfolio__single-tech-tags {
+    font-size: 14px;
+    padding: 5px 7px;
+    border-radius: 5px;
   }
 }
 
