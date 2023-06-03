@@ -15,7 +15,7 @@
                     <span class="portfolio__single-date">{{ $portfolio->date }}</span>
                 </div>
                 <div class="portfolio__single-content">
-                    <div class="portfolio__single-category">Category: {{ $portfolio->category }}</div>
+                    <div class="portfolio__single-category" style="padding-bottom:15px">Category: {{ $portfolio->category }}</div>
                     <div class="portfolio__single-tech-tags">
                         @foreach(explode(',', $portfolio->tags) as $tag)
                             <span class="tech-tag">{{ trim($tag) }}</span>
