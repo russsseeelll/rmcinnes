@@ -79,10 +79,10 @@
               <div class="col-12 col-sm-4 d-flex justify-content-center justify-content-lg-end">
                 <ul class="page_footer-social nav">
                   <li>
-                    <a href="#" class="social-link" aria-label="LinkedIn profile"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.linkedin.com/in/russell-mcinnes-8b94a615/" class="social-link" aria-label="LinkedIn profile"><i class="fab fa-linkedin"></i></a>
                   </li>
                   <li>
-                    <a href="#" class="social-link" aria-label="GitHub profile"><i class="fab fa-github"></i></a>
+                    <a href="https://github.com/russsseeelll" class="social-link" aria-label="GitHub profile"><i class="fab fa-github"></i></a>
                   </li>
                 </ul>
               </div>
