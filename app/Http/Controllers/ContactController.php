@@ -16,7 +16,7 @@ class ContactController extends Controller
         ]);
 
         // Send the email to the admin
-        Mail::to('admin@rmcinnes.co.uk')->send(new \App\Mail\ContactMail($validatedData));
+        Mail::to('russell@rmcinnes.co.uk')->send(new \App\Mail\ContactMail($validatedData));
 
         // Send the auto-reply to the user
         $autoReplyDetails = [
