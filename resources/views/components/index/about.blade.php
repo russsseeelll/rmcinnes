@@ -1,12 +1,39 @@
-<section class="about dark text-center py-5" id="about">
-    <div class="container" style="background-color: var(--bs-body-bg); color: var(--bs-body-color); overflow: hidden; padding: 50px 0; border: 2px solid var(--theme-colour); border-radius: 15px;">
-        <div class="row justify-content-center text-center mb-5">
-            <div class="col-12 col-md-8">
-                <h2 class="about-heading fw-bold">Russell McInnes</h2>
-                <h1 class="display-3 fw-bold mb-3">Software Engineer</h1>
-                <p class="about-sub-heading lead mb-4">Software engineer with years of experience in Web Development and Automation.</p>
-                <a class="btn btn-lg btn-primary" href="{{ asset('R_McInnes_CV_2024.pdf') }}">View/Download CV</a>
+<section class="py-3 my-md-3 text-white">
+    <div class="container">
+        <div class="carousel slide text-center py-3 pointer-event" id="aboutCarousel" data-bs-ride="carousel" data-bs-interval="false">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-6">
+                            <h2 class="about-heading">Russell McInnes</h2>
+                            <h1 class="display-4 fw-bold mb-2">Software Engineer</h1>
+                            <p class="about-sub-heading">Software engineer with years of experience in Web Development and Automation.</p>
+                            <div class="d-grid col-6 mx-auto pt-4">
+                                <a class="btn btn-outline-light btn-hover" href="{{ asset('R_McInnes_CV_2024.pdf') }}" download="Russell_McInnes_CV">View/Download CV</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-6">
+                            <img src="{{ asset('photo.jpg') }}" class="img-fluid rounded mb-3" alt="About Me Image">
+                        </div>
+                        <div class="col-lg-6">
+                            <h2 class="about-heading">About Me</h2>
+                            <p class="about-sub-heading">Discover more about my professional journey and personal insights into the technology industry.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#aboutCarousel" data-bs-slide="prev" style="display: none;">
+                <span class="custom-arrow left-arrow"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#aboutCarousel" data-bs-slide="next" style="display: none;">
+                <span class="custom-arrow right-arrow"></span>
+                <span the="visually-hidden"></span>
+            </button>
         </div>
     </div>
 </section>

@@ -20,43 +20,40 @@
       <link href="/css/pages-style.css" rel="stylesheet"/>
    </head>
    <body>
-      <!-- START: Body Content -->
-      <div class="ezy__nav1 dark-gray ">
-         <nav class="navbar navbar-expand-lg navbar-light py-3">
-          @auth
-          <li class="nav-item"><a class="nav-link"> welcome {{auth()->user()->name}}</a></li>
-          @endauth
-            <div class="container">
-               <a class="navbar-brand" href="/">
-               rmcinnes
-               </a>
+   <div class="ezy__nav1 dark-gray">
+       <nav class="navbar navbar-expand-lg navbar-light py-3">
+           @auth
+               <li class="nav-item">
+                   <a class="nav-link">Welcome, {{ auth()->user()->name }}</a>
+               </li>
+           @endauth
+           <div class="container">
+               <a class="navbar-brand" href="/">rmcinnes</a>
                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-                  aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-               <span>
-               <span></span>
-               </span>
+                       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                   <span><span></span></span>
                </button>
                <div class="collapse navbar-collapse" id="navbarText">
-                  <ul class="navbar-nav ms-auto mb-2 mb-lg-0 mt-4 mt-lg-0">
-                  <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                  <li class="nav-item"><a class="nav-link" href="/portfolio">Portfolio</a></li>
-                  <li class="nav-item"><a class="nav-link" href="/services">Services</a></li>
-
-                  @auth
-                  <li class="nav-item">
-                      <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                          Logout
-                      </a>
-                  </li>
-                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                      @csrf
-                  </form>
-                  @endauth
-                  
+                   <ul class="navbar-nav ms-auto mb-2 mb-lg-0 mt-4 mt-lg-0">
+                       <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                       <li class="nav-item"><a class="nav-link" href="/portfolio">Portfolio</a></li>
+                       <li class="nav-item"><a class="nav-link" href="/services">Services</a></li>
+                       @auth
+                           <li class="nav-item">
+                               <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                   Logout
+                               </a>
+                           </li>
+                           <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                               @csrf
+                           </form>
+                       @endauth
+                   </ul>
                </div>
-            </div>
-         </nav>
-         @if(session('message_sent'))
+           </div>
+       </nav>
+
+   @if(session('message_sent'))
          <div class="alert alert-success">
              {{ session('message_sent') }}
          </div>
@@ -89,10 +86,10 @@
             </div>
           </div>
         </section>
-        
-        
-    
-  
+
+
+
+
    <!-- END: Body Content -->
    <!-- Require scripts load from local -->
    <!-- <script src="./dist/js/popper.min.js" ></script> -->
@@ -101,6 +98,6 @@
    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+   <script src="/js/scripts.js"></script>
   </body>
   </html>
-  

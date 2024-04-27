@@ -8,99 +8,89 @@ body{
  /* viewport height */
 }
 .navbar {
- /* Bootstrap variables */
-  --bs-body-color: #000;
-  --bs-body-bg: rgb(255, 255, 255);
- /* Easy Frontend variables */
-  --theme-colour: rgb(13, 110, 253);
-  --theme-color-rgb: 13, 110, 253;
-  background-color: var(--bs-body-bg);
+    --bs-body-color: #000;
+    --bs-body-bg: #ffffff;
+    --theme-colour: #0d6efd;
+    --theme-color-rgb: 13, 110, 253;
+    background-color: var(--bs-body-bg);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+    transition: background-color 0.3s ease; /* Smooth transition for color change */
 }
 
 @media (max-width: 767px) {
-  body {
-    overflow-x: hidden; /* Hide horizontal scrollbar */
-  }
+    body {
+        overflow-x: hidden;
+    }
 }
 
-/* Gray Block Style */
 .gray .navbar, .navbar.gray {
- /* Bootstrap variables */
-  --bs-body-bg: rgb(246, 246, 246);
+    --bs-body-bg: #f6f6f6;
 }
-/* Dark Gray Block Style */
+
 .dark-gray .navbar, .navbar.dark-gray {
- /* Bootstrap variables */
-  --bs-body-color: #ffffff;
-  --bs-body-bg: rgb(30, 39, 53);
+    --bs-body-color: #ffffff;
+    --bs-body-bg: #1e2735;
 }
-/* Dark Block Style */
+
 .dark .navbar, .navbar.dark {
- /* Bootstrap variables */
-  --bs-body-color: #ffffff;
-  --bs-body-bg: rgb(11, 23, 39);
+    --bs-body-color: #ffffff;
+    --bs-body-bg: #0b1727;
 }
+
 .navbar .navbar-brand {
-  font-weight: 800;
-  font-size: 30px;
-  color: var(--bs-body-color);
+    font-weight: 800;
+    font-size: 30px;
+    color: var(--bs-body-color);
+    transition: transform 0.3s ease; /* Smooth scale effect */
 }
+
+.navbar .navbar-brand:hover {
+    transform: scale(1.1); /* Scale effect on hover */
+}
+
 .navbar .navbar-toggler {
-  border: none;
-  box-shadow: none !important;
+    border: none;
+    background: var(--theme-colour); /* Theme color for the button */
+    box-shadow: none !important;
 }
+
 .navbar .navbar-toggler>span {
-  display: flex;
-  align-items: center;
-  height: 32px;
+    height: 32px;
 }
+
 .navbar .navbar-toggler>span>span {
-  position: relative;
+    background-color: var(--bs-body-color);
+    transition: all .35s ease-in-out;
 }
-.navbar .navbar-toggler>span>span, .navbar .navbar-toggler>span>span::before, .navbar .navbar-toggler>span>span::after {
-  height: 2px;
-  background-color: var(--bs-body-color);
-  width: 25px;
-  display: inline-block;
-  border-radius: 5px;
-  transition: all .35s ease-in-out;
-}
-.navbar .navbar-toggler>span>span::before, .navbar .navbar-toggler>span>span::after {
-  content: '';
-  position: absolute;
-  left: 0;
-}
-.navbar .navbar-toggler[aria-expanded="false"]>span>span::before {
-  top: 7px;
-}
-.navbar .navbar-toggler[aria-expanded="false"]>span>span::after {
-  bottom: 7px;
-}
+
 .navbar .navbar-toggler[aria-expanded="true"]>span>span {
-  background-color: transparent;
+    background-color: transparent;
 }
-.navbar .navbar-toggler[aria-expanded="true"]>span>span::before {
-  top: 0;
-  transform: rotate(-45deg);
-}
+
+.navbar .navbar-toggler[aria-expanded="true"]>span>span::before,
 .navbar .navbar-toggler[aria-expanded="true"]>span>span::after {
-  bottom: 0;
-  transform: rotate(45deg);
+    transform: rotate(45deg);
+    background: #fff; /* Make toggler lines white */
 }
+
 .navbar .navbar-nav .nav-link {
-  color: var(--bs-body-color);
-  opacity: .6;
+    color: var(--bs-body-color);
+    opacity: .6;
+    transition: color 0.3s ease, opacity 0.3s ease; /* Smoother transition */
 }
+
 .navbar .navbar-nav .nav-link:hover, .navbar .navbar-nav .nav-link:focus, .navbar .navbar-nav .nav-link.active {
-  color: var(--bs-body-color);
-  opacity: 1;
+    color: var(--theme-colour); /* Change color on interaction */
+    opacity: 1;
 }
+
 @media (min-width: 992px) {
-  .navbar .navbar-nav .nav-link {
-      padding-right: 16px;
-      padding-left: 16px;
- }
+    .navbar .navbar-nav .nav-link {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
 }
+
 .about {
   background-color: var(--bs-body-bg);
   color: var(--bs-body-color);
@@ -169,6 +159,50 @@ body{
   transform: scale(1.05);
  /* Added hover effect */
 }
+.carousel-item {
+    transition: transform 1s ease, opacity 1s ease-in-out;
+    min-height: 400px;
+    padding: 20px; /* Increased padding around text */
+}
+
+.carousel-item img {
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.btn-hover:hover {
+    background-color: #fff;
+    color: #000;
+    transition: all 0.3s ease-in-out;
+}
+
+.about-heading, .about-sub-heading {
+    transition: color 0.5s ease-in-out;
+    margin-bottom: 20px; /* Increased spacing between text lines */
+}
+
+.custom-arrow {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-color: #ccc;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    transition: opacity 0.5s ease-in-out;
+}
+
+.left-arrow {
+    transform: rotate(-90deg);
+}
+
+.right-arrow {
+    transform: rotate(90deg);
+}
+
+
+.about-heading:hover {
+    color: #ccc;
+}
+
+
 .banner {
   --bs-body-color: #212529;
   --bs-body-bg: rgb(255, 255, 255);
