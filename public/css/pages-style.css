@@ -10,7 +10,7 @@ body{
 .navbar {
     --bs-body-color: #000;
     --bs-body-bg: #ffffff;
-    --theme-colour: #0d6efd;
+
     --theme-color-rgb: 13, 110, 253;
     background-color: var(--bs-body-bg);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
@@ -90,6 +90,77 @@ body{
         padding-left: 16px;
     }
 }
+@media (max-width: 767px) {
+    .navbar {
+        --bs-body-color: #fff; /* Ensure text is legible on dark backgrounds */
+        padding: 0.5rem 1rem; /* Reduced padding for more space */
+    }
+
+    .navbar .navbar-toggler {
+        width: 40px; /* A bit wider to handle easily */
+        height: 30px;
+        position: relative; /* Positioning for the custom hamburger */
+        padding: 0; /* Remove padding to use space efficiently */
+    }
+
+    .navbar .navbar-toggler>span {
+        display: block;
+        position: relative;
+        height: 2px;
+        width: 100%;
+        background-color: var(--bs-body-color);
+        transition: background 0.3s ease-in-out;
+        transition-delay: 0.2s;
+    }
+
+    .navbar .navbar-toggler>span::before,
+    .navbar .navbar-toggler>span::after {
+        content: '';
+        position: absolute;
+        top: -10px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: inherit;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .navbar .navbar-toggler>span::after {
+        top: 10px;
+    }
+
+    .navbar .navbar-toggler[aria-expanded="true"]>span {
+        background-color: transparent;
+    }
+
+    .navbar .navbar-toggler[aria-expanded="true"]>span::before {
+        transform: translateY(10px) rotate(45deg);
+    }
+
+    .navbar .navbar-toggler[aria-expanded="true"]>span::after {
+        transform: translateY(-10px) rotate(-45deg);
+    }
+
+    .navbar-collapse {
+        margin-top: 15px;
+        background-color: var(--bs-body-bg); /* Adds contrast */
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1); /* Soft shadow for depth */
+    }
+
+    .navbar .navbar-nav .nav-link {
+        padding: 0.75rem 1rem; /* Larger touch targets */
+        font-size: 1rem; /* Larger font for readability */
+        color: var(--bs-body-color);
+        opacity: 0.8;
+    }
+
+    .navbar .navbar-nav .nav-link:hover,
+    .navbar .navbar-nav .nav-link:focus {
+        opacity: 1; /* Clear focus on interaction */
+        background-color: rgba(255, 255, 255, 0.1); /* Subtle highlight */
+    }
+}
+
 
 .about {
   background-color: var(--bs-body-bg);
@@ -159,6 +230,10 @@ body{
   transform: scale(1.05);
  /* Added hover effect */
 }
+.carousel-inner {
+    overflow: hidden;
+}
+
 .carousel-item {
     transition: transform 1s ease, opacity 1s ease-in-out;
     min-height: 400px;
@@ -166,35 +241,53 @@ body{
 }
 
 .carousel-item img {
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    max-height: 100%; /* Ensures image does not exceed container height */
+    object-fit: cover; /* Maintains aspect ratio without distortion */
 }
 
-.btn-hover:hover {
-    background-color: #fff;
-    color: #000;
-    transition: all 0.3s ease-in-out;
-}
-
-.about-heading, .about-sub-heading {
-    transition: color 0.5s ease-in-out;
-    margin-bottom: 20px; /* Increased spacing between text lines */
-}
-
-.custom-arrow {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
+.carousel-indicator {
+    width: 10px;
+    height: 10px;
+    border: none;
+    border-radius: 50%;
     background-color: #ccc;
-    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-    transition: opacity 0.5s ease-in-out;
+    margin: 0 5px;
+    cursor: pointer;
 }
 
-.left-arrow {
-    transform: rotate(-90deg);
+.carousel-controls {
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
+    display: flex;
+    justify-content: center; /* Centers indicators horizontally */
 }
 
-.right-arrow {
-    transform: rotate(90deg);
+@media (max-width: 768px) {
+    /* Hide carousel controls on small screens */
+    .carousel-control-prev, .carousel-control-next, .carousel-indicator, .carousel-controls {
+        display: none;
+    }
+
+    /* Hide all slides except the first one */
+    .carousel-item:not(:first-child) {
+        display: none;
+    }
+
+    /* Optional: Adjust the first slide's layout or visibility as needed */
+    .carousel-item:first-child {
+        display: block; /* Ensure the first slide is always shown */
+        width: 100%; /* Full width to utilize space effectively */
+        min-height: 350px; /* Adjust height as needed */
+        max-height: 400px; /* Fixing height can help maintain layout consistency */
+    }
+
+    /* Adjust image within the first slide if necessary */
+    .carousel-item:first-child img {
+        max-height: 100%; /* Ensures image does not exceed the slide's height */
+        width: auto; /* Maintain aspect ratio */
+        object-fit: cover; /* Ensures the image covers the allotted area nicely */
+    }
 }
 
 

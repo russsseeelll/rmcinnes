@@ -1,4 +1,4 @@
-<section class="py-3 my-md-3 text-white">
+<section class="py-3 my-md-3 text-white" style="position: relative;">
     <div class="container">
         <div class="carousel slide text-center py-3 pointer-event" id="aboutCarousel" data-bs-ride="carousel" data-bs-interval="false">
             <div class="carousel-inner">
@@ -17,26 +17,30 @@
                 <div class="carousel-item">
                     <div class="row justify-content-center align-items-center">
                         <div class="col-lg-6">
-                            <img src="{{ asset('photo.jpg') }}" class="img-fluid rounded mb-3" alt="About Me Image">
+                            <img src="{{ asset('photo.jpg') }}" class="img-fluid rounded mb-3" alt="About Me Image" style="max-height: 330px; width: auto;">
                         </div>
                         <div class="col-lg-6">
-                            <h2 class="about-heading">About Me</h2>
-                            <p class="about-sub-heading">Discover more about my professional journey and personal insights into the technology industry.</p>
+                            <h2 class="about-heading">About</h2>
+                            <p class="about-sub-heading">I'm Russell, a web developer and home automation artisan from Glasgow. I'm currently employed at a local university, handling their systems and ensuring everything's up to speed. My background includes an HND in Software Development from Glasgow Clyde College, which adds a solid foundation to my everyday work.
+                                This is my portfolio website - a small corner of the internet where I get to display my projects. Feel free to explore and see what I've been working on. Enjoy your visit!</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#aboutCarousel" data-bs-slide="prev" style="display: none;">
-                <span class="custom-arrow left-arrow"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#aboutCarousel" data-bs-slide="next" style="display: none;">
-                <span class="custom-arrow right-arrow"></span>
-                <span the="visually-hidden"></span>
-            </button>
+            <div class="carousel-controls d-flex justify-content-center position-absolute w-100" style="bottom: 10px;">
+                <button class="carousel-indicator" data-bs-target="#aboutCarousel" data-bs-slide-to="0"></button>
+                <button class="carousel-indicator" data-bs-target="#aboutCarousel" data-bs-slide-to="1"></button>
+            </div>
         </div>
     </div>
 </section>
+
+<h1>Fastest 5K Time</h1>
+@if($fastestTime)
+    <p>Your fastest 5K time is: {{ gmdate('H:i:s', $fastestTime) }}</p>
+@else
+    <p>No 5K activities found.</p>
+@endif
 
 
 @include('components.break')
