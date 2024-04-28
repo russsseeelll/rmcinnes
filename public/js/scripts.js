@@ -42,3 +42,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector(".contact-form-card form");
+    const submitButton = form.querySelector("button[type='submit']");
+    const originalButtonHtml = submitButton.innerHTML;
+    const messageSent = "{{ session('message_sent') }}" || false;
+
+    form.addEventListener("submit", function() {
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        submitButton.disabled = true;
+    });
+
+    // Scroll to the form on page load if 'message_sent' or errors exist
+    if (messageSent || document.querySelectorAll('.alert-danger').length > 0) {
+        setTimeout(function() {
+            document.querySelector("#contact-form").scrollIntoView({behavior: 'smooth'});
+        }, 100);
+    }
+});
+
+

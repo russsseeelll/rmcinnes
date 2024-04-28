@@ -1,5 +1,5 @@
-<section class="contact dark">
-    <div class="container">
+<section class="contact dark" id="contact-form">
+<div class="container">
        <div class="row justify-content-between">
           <div class="col-lg-5 mb-5 mb-lg-0">
              <h2 class="contact-title mb-4 mt-0">Contact</h2>
@@ -28,7 +28,12 @@
           </div>
           <div class="col-lg-5">
              <div class="card contact-form-card">
-                <div class="card-body p-md-5">
+                 @if(session('message_sent'))
+                     <div class="alert alert-success">
+                         {{ session('message_sent') }}
+                     </div>
+                 @endif
+                 <div class="card-body p-md-5">
                    <h2 class="contact-heading mb-3">Contact Me</h2>
                    <p class="contact-sub-heading mb-5">Please contact me if you have any queries or want to discuss a project!
                    </p>
@@ -51,11 +56,11 @@
                         @error('message')
                            <span class="text-danger">{{ $message }}</span>
                         @enderror
-                     </div>                     
+                     </div>
                      <div class="text-end">
                          <button type="submit" class="btn btn-primary contact-btn">Submit</button>
                      </div>
-                 </form>                 
+                 </form>
                 </div>
              </div>
           </div>
