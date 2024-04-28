@@ -35,13 +35,6 @@
     </div>
 </section>
 
-<h1>Fastest 5K Time</h1>
-@if($fastestTime)
-    <p>Your fastest 5K time is: {{ gmdate('H:i:s', $fastestTime) }}</p>
-@else
-    <p>No 5K activities found.</p>
-@endif
-
 
 @include('components.break')
 

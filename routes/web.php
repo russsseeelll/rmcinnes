@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ToolController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\StravaController;
 use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/', function () {
