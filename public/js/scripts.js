@@ -48,17 +48,26 @@ document.addEventListener("DOMContentLoaded", function() {
     const originalButtonHtml = submitButton.innerHTML;
     const messageSent = "{{ session('message_sent') }}" || false;
 
-    form.addEventListener("submit", function() {
+    form.addEventListener("submit", function(event) {
         submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
         submitButton.disabled = true;
+
+        // Optionally, store a flag in sessionStorage or localStorage
+        sessionStorage.setItem('submitted', 'true');
     });
 
-    // Scroll to the form on page load if 'message_sent' or errors exist
-    if (messageSent || document.querySelectorAll('.alert-danger').length > 0) {
-        setTimeout(function() {
-            document.querySelector("#contact-form").scrollIntoView({behavior: 'smooth'});
-        }, 100);
+    // Check if the form was submitted and if there's a message indicating success or errors
+    if (sessionStorage.getItem('submitted') === 'true') {
+        sessionStorage.removeItem('submitted'); // Clean up storage after handling the scroll
+
+        // Scroll to the form only if 'message_sent' or errors exist
+        if (messageSent || document.querySelectorAll('.alert-danger').length > 0) {
+            setTimeout(function() {
+                document.querySelector("#contact-form").scrollIntoView({behavior: 'smooth'});
+            }, 100);
+        }
     }
 });
+
 
 
