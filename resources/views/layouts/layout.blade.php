@@ -53,6 +53,7 @@
            </div>
        </nav>
 
+
    @if(session('message_sent'))
          <div class="alert alert-success">
              {{ session('message_sent') }}
