@@ -53,12 +53,6 @@
            </div>
        </nav>
 
-
-   @if(session('message_sent'))
-         <div class="alert alert-success">
-             {{ session('message_sent') }}
-         </div>
-        @endif
      </div>
      <div style="display: flex; flex-direction: column; min-height: 100vh; background-color: rgb(11, 23, 39);">
          {{$slot}}
