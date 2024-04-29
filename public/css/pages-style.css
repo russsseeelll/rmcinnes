@@ -524,6 +524,14 @@ body{
     border-radius: 10px;
 }
 
+.portfolio__single-description {
+    opacity: 0.6;
+    height: 120px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+
 .gray .portfolio, .portfolio.gray {
 
     --bs-body-bg: rgb(246, 246, 246);
