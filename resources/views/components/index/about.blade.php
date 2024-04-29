@@ -67,7 +67,7 @@
                 <h4 class="fw-bold mb-3">Home Automation <i class='fas fa-house-user'></i></h4>
                 <p class="mb-0">
                  I became fascinated with home automation at the start of the COVID-19 pandemic. Spending more time at home made me realize the potential for technology to enhance our daily lives.
-                 I eagerly explored smart devices, IoT technologies, and innovative solutions. This newfound passion has driven me to incorporate home automation into my professional pursuits.
+                 I eagerly explored smart devices, IoT technologies and innovative solutions. This newfound passion has driven me to incorporate home automation into my professional pursuits.
                 </p>
              </div>
           </div>
