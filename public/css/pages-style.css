@@ -156,69 +156,88 @@ body{
     color: var(--bs-body-color);
     overflow: hidden;
     padding: 50px 0;
-
 }
+
 @media (min-width: 768px) {
     .about {
         padding: 25px 0;
-
     }
 }
+
 .gray .about, .about.gray {
     --bs-body-bg: rgb(246, 246, 246);
 }
+
 .dark-gray .about, .about.dark-gray {
     --bs-body-color: #ffffff;
     --bs-body-bg: rgb(30, 39, 53);
 }
+
 .dark .about, .about.dark {
     --bs-body-color: #ffffff;
     --bs-body-bg: rgb(11, 23, 39);
 }
+
 .about-heading {
     font-size: 36px;
     line-height: 52px;
     color: var(--theme-colour);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
     font-weight: 600;
-
     transition: all 0.3s ease-in-out;
-
 }
+
 @media (min-width: 768px) {
     .about-heading {
         font-size: 45px;
         line-height: 65px;
     }
 }
+
 .about-sub-heading {
     font-size: 20px;
-
     line-height: 32px;
     font-weight: 600;
-
     text-align: left;
     transition: all 0.3s ease-in-out;
-
     text-align: center;
 }
+
 .about-content p {
     font-size: 19px;
-
     line-height: 2;
     opacity: 0.85;
     transition: all 0.3s ease-in-out;
-
 }
+
 .about img {
     border-radius: 15px;
     transition: transform 0.3s ease-in-out;
-
+    width: 100%;
+    max-width: 600px; /* Default max width for desktops */
+    height: 350px; /* Fixed height */
 }
+
+@media (max-width: 767px) {
+    .about img {
+        max-width: 100%; /* Full width on smaller screens */
+        height: auto; /* Maintain aspect ratio */
+    }
+
+    .about-content p, .about-sub-heading, .about-heading {
+        text-align: center; /* Center text on smaller screens */
+    }
+
+    .about {
+        padding: 30px 15px; /* Reduced padding on smaller screens */
+    }
+}
+
 .about img:hover {
     transform: scale(1.05);
-
 }
+
+
 .carousel-inner {
     overflow: hidden;
 }

@@ -21,7 +21,7 @@
                         </div>
                         <div class="col-lg-6">
                             <h2 class="about-heading">About</h2>
-                            <p class="about-sub-heading">I'm Russell, a web developer and home automation artisan from Glasgow. I'm currently employed at a local university, handling their systems and ensuring everything's up to speed. My background includes an HND in Software Development from Glasgow Clyde College, which adds a solid foundation to my everyday work.
+                            <p class="about-sub-heading">I'm Russell, a web developer and automation artisan from Glasgow. I'm currently employed at a local university, handling their systems and ensuring everything's up to speed. My background includes an HND in Software Development from Glasgow Clyde College, which adds a solid foundation to my everyday work.
                                 This is my portfolio website - a small corner of the internet where I get to display my projects. Feel free to explore and see what I've been working on. Enjoy your visit!</p>
                         </div>
                     </div>
@@ -64,16 +64,16 @@
        <div class="row align-items-center justify-content-center ">
           <div class="col-12 col-md-5 order-2" >
              <div class="d-flex flex-column justify-content-center about-content ps-md-5">
-                <h4 class="fw-bold mb-3">Home Automation <i class='fas fa-house-user'></i></h4>
+                <h4 class="fw-bold mb-3">Automation <i class='fas fa-house-user'></i></h4>
                 <p class="mb-0">
-                 I became fascinated with home automation at the start of the COVID-19 pandemic. Spending more time at home made me realize the potential for technology to enhance our daily lives.
-                 I eagerly explored smart devices, IoT technologies and innovative solutions. This newfound passion has driven me to incorporate home automation into my professional pursuits.
+                 I became fascinated with automation at the start of the COVID-19 pandemic. Spending more time at home made me realize the potential for technology to enhance our daily lives.
+                 I eagerly explored smart devices, IoT technologies and innovative solutions. This newfound passion has driven me to incorporate automation into my professional pursuits.
                 </p>
              </div>
           </div>
           <div class="col-12 col-md-5 order-1 mb-4 mb-md-0">
              <div>
-                <img src="images/homeautomation.jpg" alt="" class="img-fluid" />
+                <img src="images/automation.jpg" alt="" class="img-fluid" />
              </div>
           </div>
        </div>
