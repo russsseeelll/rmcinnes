@@ -242,6 +242,14 @@ body{
     background-color: #ccc;
     margin: 0 5px;
     cursor: pointer;
+    opacity: 0.5;
+    transition: background-color 0.3s, transform 0.3s, opacity 0.3s;
+}
+
+.carousel-indicator.active {
+    background-color: #fff;
+    transform: scale(1.5);
+    opacity: 1;
 }
 .carousel-controls {
     position: absolute;

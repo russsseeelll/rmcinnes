@@ -1,36 +1,22 @@
-
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Carousel mouse enter/leave to toggle controls
     const aboutCarousel = document.querySelector('#aboutCarousel');
-    if (aboutCarousel) {
-        aboutCarousel.addEventListener('mouseenter', function() {
-            document.querySelectorAll('.carousel-control-prev, .carousel-control-next').forEach(control => control.style.display = 'block');
-        });
 
-        aboutCarousel.addEventListener('mouseleave', function() {
-            document.querySelectorAll('.carousel-control-prev, .carousel-control-next').forEach(control => control.style.display = 'none');
-        });
-    }
-
-    // Set indicators' opacity on mouse enter/leave
     const indicators = document.querySelectorAll('.carousel-indicator');
-    if (aboutCarousel) {
-        aboutCarousel.addEventListener('mouseenter', function() {
-            indicators.forEach(indicator => indicator.style.opacity = '1');
-        });
+    aboutCarousel.addEventListener('slide.bs.carousel', function(e) {
+        indicators.forEach(indicator => indicator.classList.remove('active'));
+        indicators[e.to].classList.add('active');
+    });
 
-        aboutCarousel.addEventListener('mouseleave', function() {
-            indicators.forEach(indicator => indicator.style.opacity = '0');
-        });
+    if (indicators.length > 0) {
+        indicators[0].classList.add('active');
     }
 
-    // Typewriter effect
     const aboutHeading = document.querySelector('.display-4');
     if (aboutHeading) {
         let i = 0;
         const txt = aboutHeading.textContent;
         aboutHeading.textContent = '';
+
         function typeWriter() {
             if (i < txt.length) {
                 aboutHeading.textContent += txt.charAt(i);
@@ -52,22 +38,18 @@ document.addEventListener("DOMContentLoaded", function() {
         submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
         submitButton.disabled = true;
 
-        // Optionally, store a flag in sessionStorage or localStorage
         sessionStorage.setItem('submitted', 'true');
     });
 
-    // Check if the form was submitted and if there's a message indicating success or errors
     if (sessionStorage.getItem('submitted') === 'true') {
-        sessionStorage.removeItem('submitted'); // Clean up storage after handling the scroll
+        sessionStorage.removeItem('submitted');
 
-        // Scroll to the form only if 'message_sent' or errors exist
         if (messageSent || document.querySelectorAll('.alert-danger').length > 0) {
             setTimeout(function() {
-                document.querySelector("#contact-form").scrollIntoView({behavior: 'smooth'});
+                document.querySelector("#contact-form").scrollIntoView({
+                    behavior: 'smooth'
+                });
             }, 100);
         }
     }
 });
-
-
-
