@@ -9,17 +9,17 @@
 @else
     @foreach($portfolios as $portfolio)
         <div class="col-12 col-md-6 col-lg-4 mt-4 d-flex">
-            <article class="portfolio-post p-3 p-md-4 bg-white shadow" style="border-radius: 10px; display: flex; flex-direction: column; height: 100%;">
+            <article class="portfolio-post p-3 p-md-4 shadow" style="border-radius: 10px; display: flex; flex-direction: column; height: 100%; width: 100%;">
                 @if ($portfolio->image)
                     <!-- Ensuring the image fits perfectly within a fixed size, maintaining aspect ratio -->
-                    <div style="height: 200px; width: 100%; overflow: hidden; border-radius: 10px;">
-                        <img src="{{ asset($portfolio->image) }}" alt="{{ $portfolio->title }}" style="height: 100%; width: 100%; object-fit: cover;">
+                    <div style="height: 200px; overflow: hidden; border-radius: 10px; display: flex; justify-content: center; align-items: center;">
+                        <img src="{{ asset($portfolio->image) }}" alt="{{ $portfolio->title }}" style="max-height: 100%; max-width: 100%; object-fit: cover;">
                     </div>
                 @endif
-                <div class="mt-4 flex-grow-1 d-flex flex-column">
+                <div class="flex-grow-1 d-flex flex-column">
                     <h4 class="portfolio-title fs-4 mb-2">{{ $portfolio->title }}</h4>
                     <p class="portfolio-author">
-                        <span>At <span>{{ $portfolio->date }}</span></span>
+                        At <span>{{ $portfolio->date }}</span>
                     </p>
                     <div class="portfolio-tags mb-2">
                         @foreach(explode(',', $portfolio->tags) as $tag)
@@ -30,10 +30,10 @@
                         {{ $portfolio->summary }}
                     </p>
                     <div class="mt-auto">
-                        <a href="{{ route('portfolio.single', ['portfolio' => $portfolio->slug]) }}" class="btn portfolio-btn-read-more">More info</a>
+                        <a href="{{ route('portfolio.single', ['portfolio' => $portfolio->slug]) }}" class="btn btn-primary">More info</a>
                         @auth
-                            <a href="{{ route('portfolio.edit', ['portfolio' => $portfolio->slug]) }}" class="btn portfolio-btn-read-more">Edit</a>
-                            <button type="button" class="btn portfolio-btn-read-more delete-portfolio-button" data-bs-toggle="modal" data-bs-target="#delete-modal" data-portfolio-slug="{{ $portfolio->slug }}">Delete</button>
+                            <a href="{{ route('portfolio.edit', ['portfolio' => $portfolio->slug]) }}" class="btn btn-secondary">Edit</a>
+                            <button type="button" class="btn btn-danger delete-portfolio-button" data-bs-toggle="modal" data-bs-target="#delete-modal" data-portfolio-slug="{{ $portfolio->slug }}">Delete</button>
                         @endauth
                     </div>
                 </div>
