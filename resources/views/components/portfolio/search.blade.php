@@ -7,7 +7,7 @@
             <select class="form-select portfolio-input" name="category" id="filterDropdown">
                 <option value="" selected>All</option>
                 <option value="Web Development">Web Projects</option>
-                <option value="Home Automation">Home Automation Projects</option>
+                <option value="Automation">Automation Projects</option>
             </select>
         </div>
         <div class="col-lg-2">

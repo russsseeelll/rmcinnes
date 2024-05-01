@@ -9,7 +9,6 @@
             <div class="col-lg-6">
                 <div class="portfolio__single-header">
                     <h2 class="portfolio__single-title">
-                        <i class="fas fa-home"></i>
                         {{ $portfolio->title }}
                     </h2>
                     <span class="portfolio__single-date">{{ $portfolio->date }}</span>

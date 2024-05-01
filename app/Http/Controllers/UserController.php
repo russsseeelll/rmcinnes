@@ -13,27 +13,27 @@ class UserController extends Controller
        public function login(){
         return view('login');
     }
-    
+
     public function authenticate(Request $request)
     {
         // This line validates the incoming request
         $formFields = $request->validate([
-            'name' => ['required', 'string'],  
-            'password' => 'required'  // password is required
+            'name' => ['required', 'string'],
+            'password' => 'required'
         ]);
-    
+
         // Retrieve the user by the provided username
         $user = User::where('name', $formFields['name'])->first();
-    
+
         // If the user was found and the password matches
         if ($user && Hash::check($formFields['password'], $user->password)) {
             Auth::login($user);  // Manually log in the user
             $request->session()->regenerate();  // Regenerate the session
-    
+
             // Then redirect the user to the home page with a success message
             return redirect('/')->with('message', 'You have successfully logged in');
         }
-    
+
         // If authentication fails, redirect back with an error message
         return back()->withErrors(['name'=> 'Invalid Credentials'])->withInput(['name']);
 
@@ -47,6 +47,6 @@ class UserController extends Controller
         // Redirecting the user to the home page with a success message
         return redirect('/')->with('message', 'You have successfully logged out');
     }
-    
+
 
 }

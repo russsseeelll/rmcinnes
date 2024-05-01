@@ -29,7 +29,7 @@
                         <div class="mb-3">
                             <label for="category" class="form-label">Category</label>
                             <select name="category" class="form-select">
-                                <option value="Home Automation">Automation</option>
+                                <option value="Automation">Automation</option>
                                 <option value="Web Development">Web development</option>
                             </select>
                             @error('category')
