@@ -22,7 +22,7 @@
                         <div class="col-lg-6">
                             <h2 class="about-heading">About</h2>
                             <p class="about-sub-heading">I am Russell, a software engineer from Glasgow, Scotland. I'm currently employed at a local university, where I oversee backend operations and develop innovative solutions to a variety of problems. My background includes an HND in Software Development from Glasgow Clyde College, and I am currently pursuing an Honours Degree in Software Engineering.
-                                This is my portfolio website, a small corner of the internet where I can showcase my projects. Please feel free to explore and see what I've been working on. Enjoy your visit!</p>
+                                This is my portfolio website, a small corner of the internet where I can showcase my projects. Enjoy your visit!</p>
                         </div>
                     </div>
                 </div>
