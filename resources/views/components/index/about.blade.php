@@ -21,8 +21,8 @@
                         </div>
                         <div class="col-lg-6">
                             <h2 class="about-heading">About</h2>
-                            <p class="about-sub-heading">I'm Russell, a web developer and automation artisan from Glasgow. I'm currently employed at a local university, handling their systems and ensuring everything's up to speed. My background includes an HND in Software Development from Glasgow Clyde College, which adds a solid foundation to my everyday work.
-                                This is my portfolio website - a small corner of the internet where I get to display my projects. Feel free to explore and see what I've been working on. Enjoy your visit!</p>
+                            <p class="about-sub-heading">I am Russell, a software engineer from Glasgow, Scotland. I'm currently employed at a local university, where I oversee backend operations and develop innovative solutions to a variety of problems. My background includes an HND in Software Development from Glasgow Clyde College, and I am currently pursuing an Honours Degree in Software Engineering.
+                                This is my portfolio website, a small corner of the internet where I can showcase my projects. Please feel free to explore and see what I've been working on. Enjoy your visit!</p>
                         </div>
                     </div>
                 </div>
@@ -45,9 +45,8 @@
              <div class="d-flex flex-column justify-content-center about-content pe-md-5">
                 <h4 class="fw-bold mb-3">Web-App Development <i class="fas fa-laptop-code"></i></h4>
                 <p class="mb-0">
-                 I developed a strong passion for web development and cloud technology at a young age.
-                 Drawing from my technical background, I chose to pursue this field and enrolled in college to deepen my knowledge.
-                 Now equipped with a considerable skill set, I have decided to venture into freelance web development.
+                    From a young age, I developed a strong interest in web development and cloud technology. I remember being fascinated by the fact that I could see the same content as someone on the opposite side of the world. This motivated me to study it and learn new and innovative techniques to create functional, nice looking websites.
+
                 </p>
              </div>
           </div>
@@ -66,8 +65,8 @@
              <div class="d-flex flex-column justify-content-center about-content ps-md-5">
                 <h4 class="fw-bold mb-3">Automation <i class='fas fa-house-user'></i></h4>
                 <p class="mb-0">
-                 I became fascinated with automation at the start of the COVID-19 pandemic. Spending more time at home made me realize the potential for technology to enhance our daily lives.
-                 I eagerly explored smart devices, IoT technologies and innovative solutions. This newfound passion has driven me to incorporate automation into my professional pursuits.
+                    I became interested in automation at the start of the COVID-19 pandemic. Spending more time at home made me realise how technology can improve our daily lives.
+                    I researched smart devices, IoT technologies, and novel solutions. This newfound passion has motivated me to incorporate automation into my professional endeavours.
                 </p>
              </div>
           </div>
