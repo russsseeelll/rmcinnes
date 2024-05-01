@@ -1,10 +1,10 @@
 <div class="portfolio__single-wrapper">
     <div class="portfolio__single">
         <div class="row">
-            <div class="col-lg-6 portfolio__single-image">
+            <div class="col-lg-6 portfolio__single-image" style="display: flex; align-items: center; justify-content: center; overflow: hidden; height: 400px;">
                 @if ($portfolio->image)
-                <img src="{{ asset($portfolio->image) }}" alt="{{ $portfolio->title }}" />
-                 @endif
+                    <img src="{{ asset($portfolio->image) }}" alt="{{ $portfolio->title }}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                @endif
             </div>
             <div class="col-lg-6">
                 <div class="portfolio__single-header">
@@ -26,18 +26,17 @@
                     <p class="portfolio__single-description">
                         {!! nl2br(e($portfolio->description)) !!}
                     </p>
-
                 </div>
                 <div class="portfolio__single-footer">
-                @if($portfolio->link)
-                <a href="{{ $portfolio->link }}" class="portfolio__single-youtube-link">
-                    @if(strpos($portfolio->link, 'github') !== false)
-                        <i class="fab fa-github"></i> View project on Github
-                    @elseif(strpos($portfolio->link, 'youtube') !== false)
-                        <i class="fab fa-youtube"></i> Watch Project Demo
+                    @if($portfolio->link)
+                        <a href="{{ $portfolio->link }}" class="portfolio__single-youtube-link">
+                            @if(strpos($portfolio->link, 'github') !== false)
+                                <i class="fab fa-github"></i> View project on Github
+                            @elseif(strpos($portfolio->link, 'youtube') !== false)
+                                <i class="fab fa-youtube"></i> Watch Project Demo
+                            @endif
+                        </a>
                     @endif
-                </a>
-                  @endif
                 </div>
             </div>
         </div>
