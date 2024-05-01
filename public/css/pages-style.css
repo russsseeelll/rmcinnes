@@ -576,10 +576,8 @@ body {
 }
 
 .portfolio {
-
     --bs-body-color: #28303b;
     --bs-body-bg: #fff;
-
     --theme-colour: rgb(13, 110, 253);
     --theme-color-rgb: 13, 110, 253;
     --ezy-card-bg: #fff;
@@ -617,32 +615,25 @@ body {
     padding-right: 5px;
 }
 
-
 .gray .portfolio,
 .portfolio.gray {
-
     --bs-body-bg: rgb(246, 246, 246);
-
     --ezy-card-bg: #fff;
     --ezy-card-shadow: 0px 8px 44px rgba(182, 198, 222, 0.48);
 }
 
 .dark-gray .portfolio,
 .portfolio.dark-gray {
-
     --bs-body-color: rgb(241, 241, 241);
     --bs-body-bg: rgb(30, 39, 53);
-
     --ezy-card-bg: rgb(11, 23, 39);
     --ezy-card-shadow: none;
 }
 
 .dark .portfolio,
 .portfolio.dark {
-
     --bs-body-color: rgb(255, 255, 255);
     --bs-body-bg: rgb(11, 23, 39);
-
     --ezy-card-bg: rgb(30, 39, 53);
     --ezy-card-shadow: none;
 }
@@ -673,32 +664,26 @@ body {
     overflow: hidden;
     background-color: var(--ezy-card-bg);
     box-shadow: var(--ezy-card-shadow);
-    height: auto; /* Adjusted to maintain consistency */
-    min-height: 500px; /* Minimum height to accommodate the tallest content */
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* This will space out the content evenly */
+    justify-content: space-between;
+    min-height: 500px; /* Ensures a consistent height across all cards */
 }
-
 
 .portfolio-banner {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
     border-radius: 10px;
-}
-
-.portfolio-title {
-    font-weight: 500;
-    margin-top: 0 !important;
-    color: var(--bs-body-color);
 }
 
 .portfolio-title, .portfolio-summary {
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* Limit text to 2 lines */
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    height: 3em; /* Set a fixed height (1.5em per line of text) */
+    height: 3em;
 }
-
 
 .portfolio-description {
     color: var(--bs-body-color);
@@ -714,8 +699,8 @@ body {
 }
 
 .portfolio-btn:hover {
-    color: #ffffff;
     background-color: rgba(var(--theme-color-rgb), 0.9);
+    color: #ffffff;
 }
 
 .portfolio-btn-read-more {
@@ -750,12 +735,7 @@ body {
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(var(--theme-color-rgb), 0.25);
 }
-.portfolio-post img.portfolio-banner {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 10px;
-}
+
 
 .form-control:focus {
     background-color: var(--ezy-card-bg);
