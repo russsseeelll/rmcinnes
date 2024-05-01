@@ -19,14 +19,12 @@ class PortfolioController extends BaseController
     {
         $query = Portfolio::query();
 
-        // Check if a search term has been entered
         if ($request->input('search')) {
             $query->where('title', 'LIKE', '%'.$request->input('search').'%')
                   ->orWhere('tags', 'LIKE', '%'.$request->input('search').'%')
                   ->orWhere('category', 'LIKE', '%'.$request->input('search').'%');
         }
 
-        // Check if a category filter has been applied
         if ($request->input('category')) {
             $query->where('category', $request->input('category'));
         }
