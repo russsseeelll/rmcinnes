@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ToolController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\StravaController;
 use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/', [ToolController::class, 'tools']);
@@ -31,9 +30,5 @@ Route::get('/services', function () {
 Route::get('/login', function () {
     return view('login');
 });
-
-Route::get('/auth/strava', [StravaController::class, 'redirectToStrava']);
-Route::get('/auth/strava/callback', [StravaController::class, 'handleStravaCallback']);
-Route::get('/strava/fastest-5k', [StravaController::class, 'getFastest5k']);
 
 Route::post('/login', [App\Http\Controllers\UserController::class, 'authenticate'])->name('login');

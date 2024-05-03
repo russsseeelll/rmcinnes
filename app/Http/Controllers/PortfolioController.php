@@ -10,7 +10,6 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-
 class PortfolioController extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
@@ -21,8 +20,8 @@ class PortfolioController extends BaseController
 
         if ($request->input('search')) {
             $query->where('title', 'LIKE', '%'.$request->input('search').'%')
-                  ->orWhere('tags', 'LIKE', '%'.$request->input('search').'%')
-                  ->orWhere('category', 'LIKE', '%'.$request->input('search').'%');
+                ->orWhere('tags', 'LIKE', '%'.$request->input('search').'%')
+                ->orWhere('category', 'LIKE', '%'.$request->input('search').'%');
         }
 
         if ($request->input('category')) {
@@ -34,7 +33,6 @@ class PortfolioController extends BaseController
         return view('portfolio', ['portfolios' => $portfolios]);
 
     }
-
 
     public function portfoliosingle(Portfolio $portfolio)
     {
@@ -69,7 +67,6 @@ class PortfolioController extends BaseController
             $formFields['image'] = 'storage/images/' . $imageName;
         }
 
-        // Check if 'tags' and 'link' fields are empty. If they are, set them to null or some default value.
         $formFields['tags'] = empty($formFields['tags']) ? null : $formFields['tags'];
         $formFields['link'] = empty($formFields['link']) ? null : $formFields['link'];
         $formFields['slug'] = Str::slug($formFields['title'], '-');
@@ -79,14 +76,12 @@ class PortfolioController extends BaseController
         return redirect("/portfolio")->with("message", "Entry created successfully!");
     }
 
-
     public function edit(Portfolio $portfolio){
         if (!$portfolio) {
             return redirect('/login');
         }
         return view('components.edit-portfolio', ['portfolio' => $portfolio]);
     }
-
 
     public function update(Request $request, Portfolio $portfolio)
     {
@@ -108,17 +103,13 @@ class PortfolioController extends BaseController
             $formFields['image'] = 'storage/images/' . $imageName;
         }
 
-        // Create slug from title outside the if block so it always gets updated
         $formFields['slug'] = Str::slug($formFields['title'], '-');
 
         $portfolio->update($formFields);
 
         return redirect()->route('portfolio')
-                         ->with("message", "Entry updated successfully!");
+            ->with("message", "Entry updated successfully!");
     }
-
-
-
 
     public function destroy(Portfolio $portfolio)
     {
@@ -130,7 +121,6 @@ class PortfolioController extends BaseController
         $title = $portfolio->title;
         $category = $portfolio->category;
 
-
         $imagePath = public_path($portfolio->image);
         if(File::exists($imagePath)) {
             File::delete($imagePath);
@@ -140,8 +130,6 @@ class PortfolioController extends BaseController
 
         return redirect('/portfolio')->with('message', 'You have successfully deleted "' . $title . '" from the category "' . $category . '".');
     }
-
-
 
     public function manage() {
         return view('portfolio.manage', ['portfolios' => Portfolio::all()]);
