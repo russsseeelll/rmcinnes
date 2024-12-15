@@ -32,7 +32,7 @@
                             <label for="category" class="form-label">Category</label>
                             <select name="category" class="form-select">
                                 <option value="Automation" {{$portfolio->category == "Automation" ? 'selected' : ''}}>Automation</option>
-                                <option value="Web development" {{$portfolio->category == "Web development" ? 'selected' : ''}}>Web development</option>
+                                <option value="Software Development" {{$portfolio->category == "Software Development" ? 'selected' : ''}}>Software Development</option>
                             </select>
                             @error('category')
                             <div class="alert alert-danger">{{$message}}</div>
