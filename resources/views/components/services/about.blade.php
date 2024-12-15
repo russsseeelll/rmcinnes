@@ -1,37 +1,37 @@
-<section class="services dark">
-    <div class="container position-relative">
-       <div class="row mb-md-5">
-          <div class="col-lg-6">
-             <h2 class="services-heading mb-4">My Services</h2>
-             <p class="services-sub-heading mb-0">Paid development services that I offer:</p>
-          </div>
-       </div>
-       <div class="row services-list text-center">
-          <div class="col-md-6">
-             <div class="card services-card mt-4">
-                <div class="card-body py-4 p-lg-4 py-lg-5">
-                   <div class="services-icon"><i class="fas fa-code"></i></div>
-                   <!-- Changed icon to represent Web Development -->
-                   <h4 class="services-title fs-3 mb-3 mt-4">Web Development</h4>
-                   <p class="services-content mb-0">As a Web Developer, I'm committed to delivering high-quality work that meets any clients' identified needs.
-                       My fee structure is based on a flat rate of £30ph, plus the cost of any niche-specific tools required for your unique project.
-                       Because each project is different, I'd be delighted to speak with you about your specific requirements and provide a customised quote.
-                   </p>
+<!-- Services Section -->
+<section class="bg-gray-900 text-gray-100 py-16">
+    <div class="container mx-auto px-6 lg:px-8">
+        <div class="text-center mb-8">
+            <h2 class="text-4xl font-bold text-blue-400">My Services</h2>
+            <p class="text-gray-300 leading-relaxed">
+                Professional software development and IT consultancy services tailored to your needs.
+            </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Software Development Card -->
+            <div class="bg-gray-800 rounded-lg shadow-lg p-6 text-center">
+                <div class="text-blue-400 text-5xl mb-4">
+                    <i class="fas fa-code"></i>
                 </div>
-             </div>
-          </div>
-          <div class="col-md-6">
-             <div class="card services-card mt-4">
-                <div class="card-body py-4 p-lg-4 py-lg-5">
-                   <div class="services-icon"><i class="fas fa-home"></i></div>
-                   <!-- Changed icon to represent automation -->
-                   <h4 class="services-title fs-3 mb-3 mt-4">Automation</h4>
-                   <p class="services-content mb-0">By utilising Open-Source automation projects, I am able to keep my service costs low.
-                       The total cost is simply the cost of any equipment we require, as well as my hourly rate, which varies depending on the project size.
-                       That means you get excellent service without having to spend a lot of money. Please reach out and contact me for a customized quote.
-                   </p>
+                <h3 class="text-2xl font-bold text-blue-400 mb-4">Software Development</h3>
+                <p class="text-gray-300 leading-relaxed">
+                    I specialize in creating high-quality, custom web applications that meet the unique needs of my clients. 
+                    My services are available at a flat rate of £30/hour, plus the cost of any specialized tools required. 
+                    Let’s discuss your project and create a tailored solution that exceeds your expectations.
+                </p>
+            </div>
+            <!-- IT Consultancy Card -->
+            <div class="bg-gray-800 rounded-lg shadow-lg p-6 text-center">
+                <div class="text-blue-400 text-5xl mb-4">
+                    <i class="fas fa-cogs"></i>
                 </div>
-             </div>
-          </div>
-       </div>
- </section>
+                <h3 class="text-2xl font-bold text-blue-400 mb-4">IT Consultancy</h3>
+                <p class="text-gray-300 leading-relaxed">
+                    With expertise in automation, system optimization, and IT service delivery, I help organizations streamline their processes. 
+                    My consultancy services are cost-effective, with fees based on project scope and the necessary equipment. 
+                    Reach out for a customized quote and let’s explore how I can support your IT goals.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
                 'title' => 'Smart Home Automation System',
                 'slug' => Str::slug('slugisworking'),
                 'date' => Carbon::now()->subMonths(5)->format('Y-m-d'),
-                'category' => 'Home Automation',
+                'category' => 'IT Project',
                 'tags' => 'Raspberry Pi,Python,IoT,Zigbee',
                 'description' => 'This project involves creating a comprehensive home automation system that can control and monitor home appliances using a Raspberry Pi and Python programming. It incorporates IoT technologies and Zigbee wireless networking for seamless connectivity.',
                 'summary' => 'The smart home automation system effectively manages and controls home appliances, enhancing convenience and efficiency. It is also equipped with a user-friendly interface for easy operation and monitoring.',
@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
                 'title' => 'Smart Home Automation System 1',
                 'slug' => Str::slug('slugisworking1'),
                 'date' => Carbon::now()->subMonths(5)->format('Y-m-d'),
-                'category' => 'Home Automation',
+                'category' => 'IT Project',
                 'tags' => 'Raspberry Pi,Python,IoT,Zigbee',
                 'description' => 'This project involves creating a comprehensive home automation system that can control and monitor home appliances using a Raspberry Pi and Python programming. It incorporates IoT technologies and Zigbee wireless networking for seamless connectivity.',
                 'summary' => 'The smart home automation system effectively manages and controls home appliances, enhancing convenience and efficiency. It is also equipped with a user-friendly interface for easy operation and monitoring.',
@@ -42,14 +42,13 @@ class DatabaseSeeder extends Seeder
                 'title' => 'Smart Home Automation System 2',
                 'slug' => Str::slug('slugisworking2'),
                 'date' => Carbon::now()->subMonths(5)->format('Y-m-d'),
-                'category' => 'Home Automation',
+                'category' => 'Software Devlopment',
                 'tags' => 'Raspberry Pi,Python,IoT,Zigbee',
                 'description' => 'This project involves creating a comprehensive home automation system that can control and monitor home appliances using a Raspberry Pi and Python programming. It incorporates IoT technologies and Zigbee wireless networking for seamless connectivity.',
                 'summary' => 'The smart home automation system effectively manages and controls home appliances, enhancing convenience and efficiency. It is also equipped with a user-friendly interface for easy operation and monitoring.',
                 'link' => 'https://www.youtube.com/watch?v=your_video_id_here',
                 'image' => ''
             ],
-            // Add more entries in the same format as above
         ];
 
         foreach ($data as $item) {
