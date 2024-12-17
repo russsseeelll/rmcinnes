@@ -36,8 +36,22 @@
                      </svg>
                   </button>
 
-                  <!-- Navbar Links -->
+                  <!-- Navbar Links for Desktop -->
                   <nav class="hidden lg:flex space-x-6" id="nav-menu">
+                     <a href="/" class="hover:text-blue-400 transition">Home</a>
+                     <a href="/portfolio" class="hover:text-blue-400 transition">Portfolio</a>
+                     <a href="/services" class="hover:text-blue-400 transition">Services</a>
+                     @auth
+                     <a href="#" class="hover:text-blue-400 transition" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Logout
+                     </a>
+                     @endauth
+                  </nav>
+               </div>
+
+               <!-- Mobile Menu -->
+               <div class="hidden lg:hidden" id="mobile-menu">
+                  <nav class="flex flex-col space-y-2 mt-4">
                      <a href="/" class="hover:text-blue-400 transition">Home</a>
                      <a href="/portfolio" class="hover:text-blue-400 transition">Portfolio</a>
                      <a href="/services" class="hover:text-blue-400 transition">Services</a>
@@ -97,13 +111,13 @@
       </form>
       @endauth
 
-    <!-- Script for Navbar Toggle -->
-    <script>
-        const navToggle = document.getElementById('nav-toggle');
-        const navMenu = document.getElementById('nav-mobile');
+      <!-- Script for Navbar Toggle -->
+      <script>
+         const navToggle = document.getElementById('nav-toggle');
+         const mobileMenu = document.getElementById('mobile-menu');
 
-        navToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('hidden');
-        });
-    </script>
+         navToggle.addEventListener('click', () => {
+             mobileMenu.classList.toggle('hidden');
+         });
+      </script>
 </body>

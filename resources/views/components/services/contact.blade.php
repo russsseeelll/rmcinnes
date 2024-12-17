@@ -10,9 +10,9 @@
                     I’m always happy to connect and explore how I can help meet your goals.
                 </p>
                 <div class="space-y-4">
-                    <a href="mailto:admin@rmcinnes.co.uk" 
+                    <a href="mailto:russell@rmcinnes.co.uk" 
                        class="flex items-center text-blue-400 hover:text-blue-500 transition">
-                        <i class="fas fa-envelope text-2xl mr-4"></i> admin@rmcinnes.co.uk
+                        <i class="fas fa-envelope text-2xl mr-4"></i> russell@rmcinnes.co.uk
                     </a>
                     <a href="https://github.com/russsseeelll" 
                        class="flex items-center text-blue-400 hover:text-blue-500 transition">

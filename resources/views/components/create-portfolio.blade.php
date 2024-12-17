@@ -1,84 +1,115 @@
 <x-layout>
-    <section class="edit-container">
-        <div class="container">
-            <div class="card edit-card">
-                <div class="card-body">
-                    <header class="text-center mb-4">
-                        <h2 class="portfolio-heading">Create a Portfolio Entry</h2>
+    <section class="bg-gray-900 text-gray-100 py-12">
+        <div class="container mx-auto px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto bg-gray-800 rounded-lg shadow-lg">
+                <div class="p-6 lg:p-8">
+                    <header class="text-center mb-6">
+                        <h2 class="text-3xl font-bold text-blue-400">Create a Portfolio Entry</h2>
                     </header>
 
-                    <form method="POST" action="{{route('portfolio.store')}}" enctype="multipart/form-data" class="edit-form">
+                    <form method="POST" action="{{route('portfolio.store')}}" enctype="multipart/form-data" class="space-y-6">
                         @csrf
 
-                        <div class="mb-3">
-                            <label for="title" class="form-label">Portfolio Title</label>
-                            <input type="text" class="form-control" name="title" value="{{old('title')}}"/>
+                        <!-- Title -->
+                        <div>
+                            <label for="title" class="block text-sm font-medium text-gray-300">Portfolio Title</label>
+                            <input type="text" 
+                                   name="title" 
+                                   class="mt-1 w-full px-4 py-2 bg-gray-900 text-gray-100 rounded-lg border border-gray-700 focus:ring-2 focus:ring-blue-400 focus:outline-none" 
+                                   value="{{old('title')}}">
                             @error('title')
-                            <div class="alert alert-danger">{{$message}}</div>
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
-                        <div class="mb-3">
-                            <label for="date" class="form-label">Date</label>
-                            <input type="date" class="form-control" name="date" value="{{date('Y-m-d')}}"/>
+                        <!-- Date -->
+                        <div>
+                            <label for="date" class="block text-sm font-medium text-gray-300">Date</label>
+                            <input type="date" 
+                                   name="date" 
+                                   class="mt-1 w-full px-4 py-2 bg-gray-900 text-gray-100 rounded-lg border border-gray-700 focus:ring-2 focus:ring-blue-400 focus:outline-none" 
+                                   value="{{ date('Y-m-d') }}">
                             @error('date')
-                            <div class="alert alert-danger">{{$message}}</div>
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
-                        <div class="mb-3">
-                            <label for="category" class="form-label">Category</label>
-                            <select name="category" class="form-select">
+                        <!-- Category -->
+                        <div>
+                            <label for="category" class="block text-sm font-medium text-gray-300">Category</label>
+                            <select name="category" 
+                                    class="mt-1 w-full px-4 py-2 bg-gray-900 text-gray-100 rounded-lg border border-gray-700 focus:ring-2 focus:ring-blue-400 focus:outline-none">
                                 <option value="Automation">Automation</option>
-                                <option value="Software Development">Software Development</option>
+                                <option value="Development">Software Development</option>
                             </select>
                             @error('category')
-                            <div class="alert alert-danger">{{$message}}</div>
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
-                        <div class="mb-3">
-                            <label for="tags" class="form-label">Tags (Comma Separated)</label>
-                            <input type="text" class="form-control" name="tags" value="{{old('tags')}}"/>
+                        <!-- Tags -->
+                        <div>
+                            <label for="tags" class="block text-sm font-medium text-gray-300">Tags (Comma Separated)</label>
+                            <input type="text" 
+                                   name="tags" 
+                                   class="mt-1 w-full px-4 py-2 bg-gray-900 text-gray-100 rounded-lg border border-gray-700 focus:ring-2 focus:ring-blue-400 focus:outline-none" 
+                                   value="{{old('tags')}}">
                             @error('tags')
-                            <div class="alert alert-danger">{{$message}}</div>
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
-                        <div class="mb-3">
-                            <label for="summary" class="form-label">Summary</label>
-                            <textarea class="form-control" name="summary" rows="5" value="{{old('summary')}}"></textarea>
+                        <!-- Summary -->
+                        <div>
+                            <label for="summary" class="block text-sm font-medium text-gray-300">Summary</label>
+                            <textarea name="summary" 
+                                      rows="4" 
+                                      class="mt-1 w-full px-4 py-2 bg-gray-900 text-gray-100 rounded-lg border border-gray-700 focus:ring-2 focus:ring-blue-400 focus:outline-none">{{old('summary')}}</textarea>
                             @error('summary')
-                            <div class="alert alert-danger">{{$message}}</div>
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" name="description" rows="5" value="{{old('description')}}"></textarea>
+                        <!-- Description -->
+                        <div>
+                            <label for="description" class="block text-sm font-medium text-gray-300">Description</label>
+                            <textarea name="description" 
+                                      rows="5" 
+                                      class="mt-1 w-full px-4 py-2 bg-gray-900 text-gray-100 rounded-lg border border-gray-700 focus:ring-2 focus:ring-blue-400 focus:outline-none">{{old('description')}}</textarea>
                             @error('description')
-                            <div class="alert alert-danger">{{$message}}</div>
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
-                        <div class="mb-3">
-                            <label for="link" class="form-label">Link</label>
-                            <input type="text" class="form-control" name="link" value="{{old('link')}}"/>
+                        <!-- Link -->
+                        <div>
+                            <label for="link" class="block text-sm font-medium text-gray-300">Link</label>
+                            <input type="text" 
+                                   name="link" 
+                                   class="mt-1 w-full px-4 py-2 bg-gray-900 text-gray-100 rounded-lg border border-gray-700 focus:ring-2 focus:ring-blue-400 focus:outline-none" 
+                                   value="{{old('link')}}">
                             @error('link')
-                            <div class="alert alert-danger">{{$message}}</div>
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
-                        <div class="mb-3">
-                            <label for="image" class="form-label">Image</label>
-                            <input type="file" class="form-control" name="image"/>
+                        <!-- Image -->
+                        <div>
+                            <label for="image" class="block text-sm font-medium text-gray-300">Image</label>
+                            <input type="file" 
+                                   name="image" 
+                                   class="mt-1 w-full px-4 py-2 bg-gray-900 text-gray-100 rounded-lg border border-gray-700 focus:ring-2 focus:ring-blue-400 focus:outline-none">
                             @error('image')
-                            <div class="alert alert-danger">{{$message}}</div>
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
 
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">Create</button>
+                        <!-- Submit Button -->
+                        <div class="mt-6">
+                            <button type="submit" 
+                                    class="w-full px-4 py-2 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 transition-all">
+                                Create
+                            </button>
                         </div>
                     </form>
                 </div>
