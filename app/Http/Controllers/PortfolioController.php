@@ -17,22 +17,22 @@ class PortfolioController extends BaseController
     public function portfolio(Request $request)
     {
         $query = Portfolio::query();
-
+    
         if ($request->input('search')) {
             $query->where('title', 'LIKE', '%'.$request->input('search').'%')
                 ->orWhere('tags', 'LIKE', '%'.$request->input('search').'%')
                 ->orWhere('category', 'LIKE', '%'.$request->input('search').'%');
         }
-
+    
         if ($request->input('category')) {
             $query->where('category', $request->input('category'));
         }
-
-        $portfolios = $query->paginate(6);
-
+    
+        $portfolios = $query->orderBy('date', 'desc')->paginate(6);
+    
         return view('portfolio', ['portfolios' => $portfolios]);
-
     }
+    
 
     public function portfoliosingle(Portfolio $portfolio)
     {
