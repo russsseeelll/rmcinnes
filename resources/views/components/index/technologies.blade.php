@@ -3,7 +3,7 @@
         <!-- Header -->
         <div class="text-center mb-12">
             <h2 class="text-4xl font-bold text-blue-400 mb-4">Technologies</h2>
-            <p class="text-gray-300 leading-relaxed max-w-2xl mx-auto">
+            <p class="text-gray-300 leading-relaxed text-lg max-w-2xl mx-auto">
                 The technologies I use as a full-stack web developer. This list will regularly update as I grow and change as a developer. 
                 Click on the images to explore how I utilize each technology in my projects!
             </p>

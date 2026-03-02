@@ -47,15 +47,15 @@
         <div class="text-center mb-8">
             <h3 class="text-4xl font-bold text-blue-400 mb-4">IT Innovation</h3>
         </div>
-        <div class="flex flex-col md:flex-row-reverse items-center md:items-start space-y-8 md:space-y-0 md:space-x-16">
+        <div class="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-12">
             <!-- Image -->
             <div class="md:w-1/2 flex justify-center">
-                <img src="images/automation.jpg" 
-                     alt="IT Projects" 
+                <img src="images/automation.jpg"
+                     alt="IT Projects"
                      class="w-full h-64 object-cover rounded-lg shadow-lg">
             </div>
             <!-- Text -->
-            <div class="md:w-1/2 text-center md:text-left md:pl-6">
+            <div class="md:w-1/2 text-center md:text-left">
                 <p class="text-gray-300 leading-relaxed text-lg">
                     I’ve developed a deep passion for exploring new ways to deliver efficient and reliable IT services. 
                     From researching innovative tools and technologies to implementing automation solutions, I strive to enhance workflows and improve the overall experience for users. 
