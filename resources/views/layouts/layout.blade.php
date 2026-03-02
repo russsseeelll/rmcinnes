@@ -40,7 +40,7 @@
                   <nav class="hidden lg:flex space-x-6" id="nav-menu">
                      <a href="/" class="hover:text-blue-400 transition">Home</a>
                      <a href="/portfolio" class="hover:text-blue-400 transition">Portfolio</a>
-                     <a href="/services" class="hover:text-blue-400 transition">Services</a>
+                     <a href="/#contact" class="hover:text-blue-400 transition">Contact</a>
                      @auth
                      <a href="#" class="hover:text-blue-400 transition" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Logout
@@ -54,7 +54,7 @@
                   <nav class="flex flex-col space-y-2 mt-4">
                      <a href="/" class="hover:text-blue-400 transition">Home</a>
                      <a href="/portfolio" class="hover:text-blue-400 transition">Portfolio</a>
-                     <a href="/services" class="hover:text-blue-400 transition">Services</a>
+                     <a href="/#contact" class="hover:text-blue-400 transition">Contact</a>
                      @auth
                      <a href="#" class="hover:text-blue-400 transition" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Logout
@@ -67,9 +67,7 @@
 
          <!-- Main Content -->
          <main class="flex-grow bg-gray-900">
-            <div class="container mx-auto bg-gray-900 px-4 py-12">
-               {{$slot}}
-            </div>
+            {{$slot}}
          </main>
 
          <!-- Footer -->
@@ -83,7 +81,7 @@
 
                   <!-- Copyright Section -->
                   <div class="text-center sm:text-left w-full sm:w-1/3">
-                     <p id="copyright" class="text-sm text-gray-400">&copy; Copyright 2024</p>
+                     <p id="copyright" class="text-sm text-gray-400">&copy; Copyright {{ date('Y') }}</p>
                   </div>
 
                   <!-- Social Links -->
