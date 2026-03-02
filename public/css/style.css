@@ -1,4 +1,59 @@
-:root * {
-	--ezy-theme-color-rgb: 121, 0, 255; 
-	--ezy-theme-color: rgb(121, 0, 255);
+/* ─── Smooth scrolling ─────────────────────────────────────── */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ─── Fix Bootstrap / Tailwind input conflict ──────────────── */
+/* Bootstrap 5 adds a white box-shadow on focus for inputs      */
+input:focus,
+textarea:focus,
+select:focus,
+.form-control:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* ─── Navbar active link indicator ─────────────────────────── */
+header nav a {
+    position: relative;
+    padding-bottom: 2px;
+}
+
+header nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #60a5fa; /* blue-400 */
+    transition: width 0.2s ease;
+}
+
+header nav a:hover::after {
+    width: 100%;
+}
+
+/* ─── Smoother section transitions ─────────────────────────── */
+section {
+    transition: background-color 0.3s ease;
+}
+
+/* ─── Image polish ──────────────────────────────────────────── */
+img {
+    display: block;
+}
+
+/* ─── Button base feel ──────────────────────────────────────── */
+button, a {
+    transition: all 0.2s ease;
+}
+
+/* ─── Footer link hover ─────────────────────────────────────── */
+footer a i {
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+footer a:hover i {
+    transform: scale(1.15);
 }

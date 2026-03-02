@@ -24,9 +24,6 @@ Route::get('/portfolio/{portfolio:slug}', [PortfolioController::class, 'portfoli
 Route::get('/portfolio', [PortfolioController::class, 'portfolio'])->name('portfolio');
 Route::post('/contact', [ContactController::class, 'store']);
 
-Route::get('/services', function () {
-    return view('services');
-});
 Route::get('/login', function () {
     return view('login');
 });
