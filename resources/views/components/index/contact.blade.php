@@ -63,7 +63,7 @@
                         <label class="block text-sm font-medium text-gray-400 mb-1">Name</label>
                         <input type="text" name="name"
                                class="w-full px-4 py-3 bg-gray-900 text-gray-100 rounded-lg border border-gray-700 focus:border-blue-400 focus:ring-1 focus:ring-blue-400 focus:outline-none transition"
-                               placeholder="Russell McInnes" value="{{ old('name') }}">
+                               placeholder="your name!" value="{{ old('name') }}">
                         @error('name')
                             <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span>
                         @enderror
@@ -73,7 +73,7 @@
                         <label class="block text-sm font-medium text-gray-400 mb-1">Email</label>
                         <input type="email" name="email"
                                class="w-full px-4 py-3 bg-gray-900 text-gray-100 rounded-lg border border-gray-700 focus:border-blue-400 focus:ring-1 focus:ring-blue-400 focus:outline-none transition"
-                               placeholder="you@example.com" value="{{ old('email') }}">
+                               placeholder="youremail@email.com" value="{{ old('email') }}">
                         @error('email')
                             <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span>
                         @enderror
@@ -83,7 +83,7 @@
                         <label class="block text-sm font-medium text-gray-400 mb-1">Message</label>
                         <textarea name="message" rows="5"
                                   class="w-full px-4 py-3 bg-gray-900 text-gray-100 rounded-lg border border-gray-700 focus:border-blue-400 focus:ring-1 focus:ring-blue-400 focus:outline-none transition resize-none"
-                                  placeholder="Tell me about your project...">{{ old('message') }}</textarea>
+                                  placeholder="Nice website! Now lets collab....">{{ old('message') }}</textarea>
                         @error('message')
                             <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span>
                         @enderror
