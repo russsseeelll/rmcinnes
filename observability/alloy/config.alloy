@@ -1,0 +1,60 @@
+otelcol.receiver.otlp "app" {
+  grpc {
+    endpoint = coalesce(sys.env("ALLOY_OTLP_GRPC"), "172.17.0.1:4317")
+  }
+
+  http {
+    endpoint = coalesce(sys.env("ALLOY_OTLP_HTTP"), "172.17.0.1:4318")
+  }
+
+  output {
+    metrics = [otelcol.processor.batch.default.input]
+    logs    = [otelcol.processor.batch.default.input]
+    traces  = [otelcol.processor.batch.default.input]
+  }
+}
+
+otelcol.processor.batch "default" {
+  output {
+    metrics = [otelcol.exporter.otlphttp.mimir.input]
+    logs    = [otelcol.exporter.otlphttp.loki.input]
+    traces  = [otelcol.exporter.otlp.tempo.input]
+  }
+}
+
+otelcol.exporter.otlp "tempo" {
+  client {
+    endpoint = coalesce(sys.env("TEMPO_OTLP"), "127.0.0.1:14317")
+
+    tls {
+      insecure = true
+    }
+  }
+}
+
+otelcol.exporter.otlphttp "loki" {
+  client {
+    endpoint = coalesce(sys.env("LOKI_URL"), "http://127.0.0.1:3100") + "/otlp"
+  }
+}
+
+otelcol.exporter.otlphttp "mimir" {
+  client {
+    endpoint = coalesce(sys.env("MIMIR_URL"), "http://127.0.0.1:9009") + "/otlp"
+  }
+}
+
+prometheus.exporter.unix "host" { }
+
+prometheus.scrape "host" {
+  targets         = prometheus.exporter.unix.host.targets
+  forward_to      = [prometheus.remote_write.mimir.receiver]
+  scrape_interval = "30s"
+  job_name        = "host"
+}
+
+prometheus.remote_write "mimir" {
+  endpoint {
+    url = coalesce(sys.env("MIMIR_URL"), "http://127.0.0.1:9009") + "/api/v1/push"
+  }
+}

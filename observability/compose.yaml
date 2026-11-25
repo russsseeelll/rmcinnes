@@ -1,0 +1,66 @@
+name: observability
+
+services:
+  loki:
+    image: grafana/loki:3.7.10
+    command: ["-config.file=/etc/loki/config.yaml"]
+    volumes:
+      - ./loki.yaml:/etc/loki/config.yaml:ro
+      - loki:/loki
+    ports:
+      - "127.0.0.1:3100:3100"
+    restart: unless-stopped
+
+  tempo:
+    image: grafana/tempo:2.10.10
+    user: "0"
+    command: ["-config.file=/etc/tempo.yaml"]
+    volumes:
+      - ./tempo.yaml:/etc/tempo.yaml:ro
+      - tempo:/var/tempo
+    ports:
+      - "127.0.0.1:3200:3200"
+      - "127.0.0.1:14317:4317"
+    restart: unless-stopped
+
+  mimir:
+    image: grafana/mimir:2.17.12
+    user: "0"
+    command: ["-config.file=/etc/mimir.yaml", "-target=all"]
+    volumes:
+      - ./mimir.yaml:/etc/mimir.yaml:ro
+      - mimir:/data
+    ports:
+      - "127.0.0.1:9009:9009"
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:13.3.2
+    environment:
+      GF_SERVER_ROOT_URL: ${GRAFANA_URL:-http://localhost:3000}
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:?set GRAFANA_ADMIN_PASSWORD in observability/.env}
+      GF_SECURITY_COOKIE_SECURE: ${GRAFANA_COOKIE_SECURE:-false}
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_USERS_DEFAULT_THEME: dark
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/rmcinnes-live.json
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+      GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
+      GF_NEWS_NEWS_FEED_ENABLED: "false"
+      GF_HELP_ENABLED: "false"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana:/var/lib/grafana
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on: [loki, tempo, mimir]
+    restart: unless-stopped
+
+volumes:
+  loki:
+  tempo:
+  mimir:
+  grafana:

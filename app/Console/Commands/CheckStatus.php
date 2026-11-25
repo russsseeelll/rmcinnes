@@ -17,7 +17,7 @@ class CheckStatus extends Command
     {
         $started = hrtime(true);
         try {
-            $response = Http::timeout(10)->get(url('/'));
+            $response = Http::timeout(10)->withUserAgent('rmcinnes-status-check')->get(url('/'));
             $ok = $response->successful();
             $code = $response->status();
         } catch (Throwable) {

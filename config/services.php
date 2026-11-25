@@ -31,6 +31,11 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'grafana' => [
+        'url' => env('GRAFANA_URL'),
+        'dashboard' => env('GRAFANA_DASHBOARD_PATH', '/d/rmcinnes-live/rmcinnes-co-uk-live'),
+    ],
+
     'strava' => [
         'client_id' => env('STRAVA_CLIENT_ID'),
         'client_secret' => env('STRAVA_CLIENT_SECRET'),

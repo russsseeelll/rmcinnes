@@ -16,6 +16,10 @@ FROM php:8.4-apache
 RUN apt-get update \
     && apt-get install -y --no-install-recommends libzip-dev libicu-dev \
     && docker-php-ext-install pdo_mysql intl zip bcmath pcntl opcache \
+    && apt-get install -y --no-install-recommends $PHPIZE_DEPS \
+    && pecl install opentelemetry \
+    && docker-php-ext-enable opentelemetry \
+    && apt-get purge -y --auto-remove $PHPIZE_DEPS \
     && a2enmod rewrite headers \
     && rm -rf /var/lib/apt/lists/*
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public

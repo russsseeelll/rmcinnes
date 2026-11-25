@@ -1,0 +1,40 @@
+multitenancy_enabled: false
+
+server:
+  http_listen_port: 9009
+  log_level: warn
+
+common:
+  storage:
+    backend: filesystem
+    filesystem:
+      dir: /data/storage
+
+blocks_storage:
+  storage_prefix: blocks
+  tsdb:
+    dir: /data/tsdb
+
+ruler_storage:
+  storage_prefix: ruler
+
+alertmanager_storage:
+  storage_prefix: alertmanager
+
+compactor:
+  data_dir: /data/compactor
+
+ingester:
+  ring:
+    replication_factor: 1
+
+store_gateway:
+  sharding_ring:
+    replication_factor: 1
+
+limits:
+  compactor_blocks_retention_period: 30d
+  max_global_exemplars_per_user: 100000
+
+usage_stats:
+  enabled: false

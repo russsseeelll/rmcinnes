@@ -6,6 +6,9 @@ started=$(date +%s)
 git pull --ff-only
 docker compose build
 docker compose up -d --remove-orphans
+if [ -f observability/.env ]; then
+    docker compose --project-directory observability --env-file observability/.env -f observability/compose.yaml up -d
+fi
 
 artisan() { docker compose exec -T -u www-data web php artisan "$@"; }
 artisan migrate --force

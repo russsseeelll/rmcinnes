@@ -53,6 +53,13 @@
                 <span class="tape tape--dark tape--small">{{ request()->getHost() }}</span>
             </span>
             <p class="foot__meta">{{ collect([$profile->name, $profile->location])->filter()->implode(' · ') }} · &copy; {{ date('Y') }}</p>
+            @if (config('services.grafana.url') && request()->attributes->get('trace_id'))
+                <p class="foot__deploy">
+                    This page view is trace <code>{{ substr(request()->attributes->get('trace_id'), 0, 12) }}</code>,
+                    recorded with your IP anonymised to <code>{{ request()->attributes->get('client_anonymised') ?? 'unknown' }}</code>.
+                    <a href="{{ rtrim(config('services.grafana.url'), '/').config('services.grafana.dashboard') }}?var-trace_id={{ request()->attributes->get('trace_id') }}" rel="noopener">See it live</a>
+                </p>
+            @endif
             @if ($latestDeploy)
                 <p class="foot__deploy">
                     Deployed <time datetime="{{ $latestDeploy->deployed_at->toIso8601String() }}" title="{{ $latestDeploy->deployed_at->toDayDateTimeString() }}">{{ $latestDeploy->deployed_at->diffForHumans() }}</time>

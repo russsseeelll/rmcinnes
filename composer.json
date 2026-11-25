@@ -12,6 +12,9 @@
         "laravel/sanctum": "^4.5",
         "laravel/socialite": "^5.33",
         "laravel/tinker": "^3.2",
+        "open-telemetry/exporter-otlp": "^1.6",
+        "open-telemetry/opentelemetry-auto-laravel": "^1.10",
+        "open-telemetry/sdk": "^1.17",
         "phpmailer/phpmailer": "^7.2"
     },
     "require-dev": {
@@ -63,7 +66,8 @@
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true,
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "tbachert/spi": true
         }
     },
     "minimum-stability": "stable",

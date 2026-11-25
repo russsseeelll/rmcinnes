@@ -65,6 +65,39 @@ Point a reverse proxy or a Cloudflare Tunnel at `http://localhost:8090`. The sch
 */2 * * * * $HOME/rmcinnes/autodeploy.sh >> $HOME/autodeploy.log 2>&1
 ```
 
+## Observability: the LGTM stack (optional)
+
+The site can be traced with OpenTelemetry into Grafana's LGTM stack: Loki for logs, Grafana, Tempo for traces and Mimir for metrics, collected by Grafana Alloy. `observability/` contains everything:
+
+- `compose.yaml` runs Loki, Tempo, Mimir and Grafana. Their ports are published on `127.0.0.1` only. Tempo turns spans into request metrics in Mimir.
+- `alloy/config.alloy` is the collector config. It receives OTLP from the site on the Docker bridge address (`172.17.0.1:4317/4318`) and sends traces to Tempo, logs to Loki, and app and host metrics to Mimir.
+- `grafana/` provisions the data sources and a public, read-only **rmcinnes.co.uk live** dashboard. It shows request rate, latency, status codes, recent requests, traces and server health.
+
+**Privacy:** visitor IPs are anonymised before anything is recorded (`App\Support\AnonymousIp`: IPv4 to /24, IPv6 to /48). Nothing from the contact form is recorded, and data is kept for 7 days. The dashboard and the site footer tell visitors this, and the footer links each visitor to their own trace.
+
+**Setup:**
+
+1. Create `observability/.env` with `GRAFANA_ADMIN_PASSWORD=…`, `GRAFANA_URL=https://grafana.your-domain` and `GRAFANA_COOKIE_SECURE=true`. `deploy.sh` then starts the stack.
+2. Install Alloy on the host ([Grafana's apt repository](https://grafana.com/docs/alloy/latest/set-up/install/linux/)), copy `observability/alloy/config.alloy` to `/etc/alloy/config.alloy`, and restart it.
+3. Add to the site's `.env`:
+   ```
+   OTEL_PHP_AUTOLOAD_ENABLED=true
+   OTEL_SERVICE_NAME=rmcinnes
+   OTEL_TRACES_EXPORTER=otlp
+   OTEL_LOGS_EXPORTER=otlp
+   OTEL_METRICS_EXPORTER=none
+   OTEL_EXPORTER_OTLP_PROTOCOL=http/json
+   OTEL_EXPORTER_OTLP_ENDPOINT=http://host.docker.internal:4318
+   OTEL_PHP_LARAVEL_LOG_ATTRIBUTES_FLATTEN=true
+   LOG_CHANNEL=stack
+   LOG_STACK=daily,null
+   GRAFANA_URL=https://grafana.your-domain
+   ```
+   `LOG_STACK=daily,null` keeps warnings in a local file, while every log line still reaches Loki.
+4. Route `grafana.your-domain` to `http://localhost:3000` (for example, with a Cloudflare Tunnel).
+
+The production image includes the OpenTelemetry PHP extension. Locally without it, telemetry stays off unless `OTEL_PHP_AUTOLOAD_ENABLED=true`.
+
 ## Site status and deploy history
 
 - **Health checks:** the scheduler runs `php artisan status:check` every five minutes, which requests your homepage and records the result. Add the standard Laravel cron entry on your server:
