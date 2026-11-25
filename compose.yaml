@@ -1,0 +1,29 @@
+x-app: &app
+  image: rmcinnes-web
+  env_file: .env
+  extra_hosts:
+    - "host.docker.internal:host-gateway"
+  volumes:
+    - storage:/var/www/html/storage
+    - uploads:/var/www/html/public/storage
+  restart: unless-stopped
+
+services:
+  web:
+    <<: *app
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "127.0.0.1:${APP_PORT:-8090}:80"
+
+  scheduler:
+    <<: *app
+    user: www-data
+    command: php artisan schedule:work
+    depends_on:
+      - web
+
+volumes:
+  storage:
+  uploads:

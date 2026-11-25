@@ -46,6 +46,19 @@ In `.env`, set `DB_CONNECTION=sqlite` (and remove the other `DB_*` lines) to use
 3. **Your projects:** edit `database/seeders/ProjectSeeder.php`, log in and use **Add project**, or use the API (below). Everything else (profile, experience, education, toolkit) can also be edited from the site once logged in.
 4. **Email:** set the `MAIL_*` values in `.env`. Contact form messages go to the profile's `email`.
 
+## Running in production with Docker
+
+The repo includes a production image (`docker/Dockerfile`, PHP 8.4 with Apache, assets built in) and `compose.yaml`, which runs two containers: `web`, published on `127.0.0.1:8090` (set `APP_PORT` to change it), and `scheduler`, which runs the scheduled jobs. Uploaded images and Laravel's storage live in Docker volumes.
+
+```bash
+git clone https://github.com/russsseeelll/rmcinnes.git && cd rmcinnes
+cp .env.example .env            # set APP_KEY, APP_URL, the DB_* and MAIL_* values
+./deploy.sh                     # pull, build, start, migrate, cache, record the deploy
+docker compose exec -u www-data web php artisan db:seed --class=ProfileSeeder --force   # first time only
+```
+
+Point a reverse proxy or a Cloudflare Tunnel at `http://localhost:8090`. Run `./deploy.sh` again for each update. The scheduler container replaces the cron entry described below.
+
 ## Site status and deploy history
 
 - **Health checks:** the scheduler runs `php artisan status:check` every five minutes, which requests your homepage and records the result. Add the standard Laravel cron entry on your server:

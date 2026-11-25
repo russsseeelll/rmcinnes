@@ -5,8 +5,7 @@
 #   Variables: DEPLOY_ENABLED = true
 #   Secrets:   DEPLOY_HOST, DEPLOY_USER, DEPLOY_PATH (the checkout on the server),
 #              DEPLOY_SSH_KEY (private key), DEPLOY_KNOWN_HOSTS (output of `ssh-keyscan your-host`)
-# The server needs git, PHP, Composer and Node, and a cron entry for the scheduler:
-#   * * * * * cd /path/to/site && php artisan schedule:run >> /dev/null 2>&1
+# The server needs git and Docker; it runs ./deploy.sh from the checkout.
 
 name: Deploy
 
@@ -24,9 +23,6 @@ jobs:
     if: vars.DEPLOY_ENABLED == 'true' && (github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-latest
     steps:
-      - name: Note start time
-        run: echo "STARTED=$(date +%s)" >> "$GITHUB_ENV"
-
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh
@@ -35,19 +31,5 @@ jobs:
           echo "${{ secrets.DEPLOY_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
 
       - name: Deploy
-        env:
-          SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
-          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
-          ssh -i ~/.ssh/deploy_key "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" bash -s -- \
-            "${{ secrets.DEPLOY_PATH }}" "$SHA" "$RUN_URL" "$STARTED" <<'REMOTE'
-          set -euo pipefail
-          cd "$1"
-          git fetch --quiet origin main
-          git checkout --quiet --detach "$2"
-          composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
-          npm ci --silent && npm run build
-          php artisan migrate --force
-          php artisan config:cache && php artisan route:cache && php artisan view:cache
-          php artisan deploy:record --commit="$2" --run-url="$3" --duration=$(( $(date +%s) - $4 ))
-          REMOTE
+          ssh -i ~/.ssh/deploy_key "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" "cd '${{ secrets.DEPLOY_PATH }}' && ./deploy.sh"
