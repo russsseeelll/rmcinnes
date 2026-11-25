@@ -4,7 +4,6 @@
     $featured = $education->firstWhere('featured', true);
     $studying = $education->firstWhere('in_progress', true);
     $current = $experiences->first();
-    // Short skill names become the labels on the falling workloads.
     $workloads = $skillGroups->flatMap->skillList()
         ->map(fn ($s) => strtolower(preg_replace(['/\s*\/\s*/', '/\s+/'], ['/', '-'], $s)))
         ->filter(fn ($s) => mb_strlen($s) <= 12)->values();
@@ -57,8 +56,10 @@
     </div>
 </section>
 
-<section class="intro" aria-label="About">
+<section class="intro" id="about" aria-label="About">
+    @include('partials.flash', ['scope' => 'profile'])
     <p class="intro__lead">{{ $profile->intro }}</p>
+    @auth<p><a class="btn btn--ink btn--sm" href="{{ route('profile.edit') }}">Edit intro and profile</a></p>@endauth
     <dl class="facts">
         @if ($current)<div><dt>Now</dt><dd>{{ $current->title }}, {{ $current->organisation }}</dd></div>@endif
         @if ($featured)<div><dt>Degree</dt><dd>{{ $featured->qualification }}{{ $featured->grade ? ', '.$featured->grade : '' }}</dd></div>@endif
@@ -67,13 +68,24 @@
 </section>
 
 <section class="section" id="experience" aria-labelledby="exp-h">
-    <h2 id="exp-h" class="tape tape--section">Experience</h2>
+    <div class="section__head">
+        <h2 id="exp-h" class="tape tape--section">Experience</h2>
+        @auth<a class="btn btn--signal btn--sm" href="{{ route('experience.create') }}">Add role</a>@endauth
+    </div>
+    @include('partials.flash', ['scope' => 'experience'])
     <ol class="rack">
         @foreach ($experiences as $job)
             <li @class(['rack__unit', 'rack__unit--quiet' => ! $job->highlightList()])>
                 <p class="rack__when">{{ $job->period() }}</p>
                 <div class="rack__body">
                     <h3>{{ $job->title }} <span>{{ $job->organisation }}</span></h3>
+                    @auth
+                        <div class="row-admin">
+                            <a class="btn btn--ink btn--sm" href="{{ route('experience.edit', $job) }}">Edit</a>
+                            <button type="button" class="btn btn--danger btn--sm" data-api-delete="{{ url('/api/experience/'.$job->id) }}"
+                                data-title="{{ $job->title }}" data-redirect="{{ route('home') }}#experience" data-scope="experience">Delete</button>
+                        </div>
+                    @endauth
                     @if ($job->highlightList())
                         <ul>
                             @foreach ($job->highlightList() as $line)<li>{{ $line }}</li>@endforeach
@@ -86,12 +98,23 @@
 </section>
 
 <section class="section section--panel" id="toolkit" aria-labelledby="kit-h">
-    <h2 id="kit-h" class="tape tape--section">Toolkit</h2>
+    <div class="section__head">
+        <h2 id="kit-h" class="tape tape--section">Toolkit</h2>
+        @auth<a class="btn btn--signal btn--sm" href="{{ route('toolkit.create') }}">Add group</a>@endauth
+    </div>
+    @include('partials.flash', ['scope' => 'toolkit'])
     <div class="kit">
         @foreach ($skillGroups as $group)
             <div class="kit__group" style="--cable: var(--{{ $colours[$loop->index % count($colours)] }})">
                 <h3>{{ $group->name }}</h3>
                 <ul>@foreach ($group->skillList() as $skill)<li>{{ $skill }}</li>@endforeach</ul>
+                @auth
+                    <div class="row-admin">
+                        <a class="btn btn--ink btn--sm" href="{{ route('toolkit.edit', $group) }}">Edit</a>
+                        <button type="button" class="btn btn--danger btn--sm" data-api-delete="{{ url('/api/skill-groups/'.$group->id) }}"
+                            data-title="{{ $group->name }}" data-redirect="{{ route('home') }}#toolkit" data-scope="toolkit">Delete</button>
+                    </div>
+                @endauth
             </div>
         @endforeach
     </div>
@@ -99,7 +122,7 @@
 
 <section class="section" id="work" aria-labelledby="work-h">
     <div class="section__head">
-        <h2 id="work-h" class="tape tape--section">Selected work</h2>
+        <h2 id="work-h" class="tape tape--section">Projects</h2>
         <a class="arrowlink" href="{{ route('portfolio') }}">All projects <svg class="ico" aria-hidden="true" viewBox="0 0 20 20" width="16" height="16"><path d="M4 10h12m-5-5 5 5-5 5"/></svg></a>
     </div>
     @if ($projects->isEmpty())
@@ -114,7 +137,11 @@
 </section>
 
 <section class="section section--panel" id="education" aria-labelledby="edu-h">
-    <h2 id="edu-h" class="tape tape--section">Education</h2>
+    <div class="section__head">
+        <h2 id="edu-h" class="tape tape--section">Education</h2>
+        @auth<a class="btn btn--signal btn--sm" href="{{ route('education.create') }}">Add qualification</a>@endauth
+    </div>
+    @include('partials.flash', ['scope' => 'education'])
     <ul class="edu">
         @foreach ($education->sortByDesc('featured') as $item)
             <li @class(['edu__item', 'edu__item--lead' => $item->featured])>
@@ -123,6 +150,13 @@
                 @if ($item->grade || $item->period)
                     <p class="edu__grade">{{ collect([$item->grade, $item->period])->filter()->implode(' · ') }}</p>
                 @endif
+                @auth
+                    <div class="row-admin">
+                        <a class="btn btn--ink btn--sm" href="{{ route('education.edit', $item) }}">Edit</a>
+                        <button type="button" class="btn btn--danger btn--sm" data-api-delete="{{ url('/api/education/'.$item->id) }}"
+                            data-title="{{ $item->qualification }}" data-redirect="{{ route('home') }}#education" data-scope="education">Delete</button>
+                    </div>
+                @endauth
             </li>
         @endforeach
     </ul>

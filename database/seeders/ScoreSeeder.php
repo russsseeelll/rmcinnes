@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Score;
 use Illuminate\Database\Seeder;
 
-/** Joke leaderboard entries so the board isn't empty on day one. Remove or replace freely. */
 class ScoreSeeder extends Seeder
 {
     public function run(): void

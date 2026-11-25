@@ -9,9 +9,9 @@ Live example: [rmcinnes.co.uk](https://rmcinnes.co.uk)
 - Playable falling-workload hero (canvas, no dependencies). Autopilot when idle, keyboard and touch controls, pauses off-screen, still image for visitors who prefer reduced motion.
 - Profile, experience, education and skill groups stored in the database and seeded from one file.
 - Projects with search, category filter, pagination and image uploads, managed from the site once you log in.
-- Game leaderboard shown after a game over, filled from `database/seeders/ScoreSeeder.php` (joke entries by default).
+- Game leaderboard shown after a game over. Joke entries are seeded from `database/seeders/ScoreSeeder.php`; edit them on the **Leaderboard** admin page.
 - `/cv`: a printable CV generated from the same data, so it is never out of date ("Save as PDF" in any browser).
-- `/status`: uptime, response times and recent deploys, plus a "Deployed 3 hours ago from `a1b2c3d`" line in the footer.
+- `/extras`: running stats from Strava (optional), uptime, response times and recent deploys. The footer also shows a "Deployed 3 hours ago from `a1b2c3d`" line.
 - Contact form that emails you and sends the visitor an auto-reply.
 - CV download.
 
@@ -42,11 +42,11 @@ In `.env`, set `DB_CONNECTION=sqlite` (and remove the other `DB_*` lines) to use
 ## Make it yours
 
 1. **Your details:** edit `database/seeders/ProfileSeeder.php` (name, headline, intro, links, experience, education, skill groups), then run `php artisan db:seed --class=ProfileSeeder`. Short skill names (12 characters or fewer) become the labels on the falling blocks.
-2. **Your CV:** put the PDF in `public/` and set `cv_path` in the profile seeder to its file name. Set it to `null` to hide the CV buttons.
-3. **Your projects:** edit `database/seeders/ProjectSeeder.php`, or log in and use **Add project** on `/portfolio`.
+2. **Your CV:** nothing to upload. `/cv` is generated from the same data as the site, and visitors save it as a PDF from there.
+3. **Your projects:** edit `database/seeders/ProjectSeeder.php`, log in and use **Add project**, or use the API (below). Everything else (profile, experience, education, toolkit) can also be edited from the site once logged in.
 4. **Email:** set the `MAIL_*` values in `.env`. Contact form messages go to the profile's `email`.
 
-## Status page and deploy history
+## Site status and deploy history
 
 - **Health checks:** the scheduler runs `php artisan status:check` every five minutes, which requests your homepage and records the result. Add the standard Laravel cron entry on your server:
 
@@ -55,6 +55,16 @@ In `.env`, set `DB_CONNECTION=sqlite` (and remove the other `DB_*` lines) to use
   ```
 
 - **Deploys:** run `php artisan deploy:record` at the end of every deploy (it reads the commit from git; `--run-url` and `--duration` are optional). The included `.github/workflows/deploy.yml` does this for you: it deploys over SSH after the tests pass. It is off until you set the `DEPLOY_ENABLED` repository variable and the secrets listed at the top of the file.
+
+## Strava running stats (optional)
+
+The Extras page (`/extras`) shows kilometres run this year, average pace and number of runs, fetched from the Strava API. The running section stays hidden until there's data.
+
+1. Create an API application at [strava.com/settings/api](https://www.strava.com/settings/api).
+2. Add its client ID, client secret and a refresh token, either in `.env` (`STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, `STRAVA_REFRESH_TOKEN`) or on the **Strava** admin page once logged in. `.env` values take priority. Values saved on the admin page are stored encrypted.
+3. Click **Sync now** or run `php artisan strava:sync`. The scheduler then syncs every hour.
+
+Strava only counts activities set to Everyone.
 
 ## Admin login
 
@@ -65,6 +75,47 @@ php artisan tinker --execute="App\Models\User::create(['name' => 'admin', 'passw
 ```
 
 Then sign in at `/login` with that name and password. Alternatively, create `database/seeders/AdminUserSeeder.php`. It is git-ignored, so your password never reaches the repository, and `php artisan db:seed` runs it automatically when it exists.
+
+## API
+
+All site content can be read and managed through a JSON API, which the admin pages use too. That makes it easy to update the site from a script or an AI assistant.
+
+| Resource | Read (public) | Write (needs auth) |
+|---|---|---|
+| Projects | `GET /api/projects` (`?search=`, `?category=`), `GET /api/projects/{slug}` | `POST /api/projects`, `PATCH /api/projects/{slug}`, `DELETE /api/projects/{slug}` |
+| Experience | `GET /api/experience`, `GET /api/experience/{id}` | `POST`, `PATCH /{id}`, `DELETE /{id}` |
+| Education | `GET /api/education`, `GET /api/education/{id}` | `POST`, `PATCH /{id}`, `DELETE /{id}` |
+| Toolkit | `GET /api/skill-groups`, `GET /api/skill-groups/{id}` | `POST`, `PATCH /{id}`, `DELETE /{id}` |
+| Profile | `GET /api/profile` | `PATCH /api/profile` |
+
+**Authentication.** Create a token, then send it as a bearer token:
+
+```bash
+php artisan api:token --name=claude     # prints the token once
+```
+
+```bash
+curl -X POST https://your-site/api/projects \
+  -H "Authorization: Bearer $TOKEN" -H "Accept: application/json" -H "Content-Type: application/json" \
+  -d '{"title":"Homelab cluster","date":"2026-01-01","category":"Platform","tags":["Kubernetes","Proxmox"],
+       "summary":"One or two sentences for lists.","description":"The full write-up.","link":"https://github.com/you/homelab"}'
+```
+
+**Fields**
+
+- **Project:** `title`, `date` (YYYY-MM-DD), `category`, `summary` (max 512) and `description` (max 3000) are required. `tags` (a list or comma-separated string), `link` (URL) and `image` (multipart upload) are optional, and `remove_image: true` clears the image. Projects are addressed by `slug`, which follows the title.
+- **Experience:** `title`, `organisation` and `started_on` are required. `ended_on` can be left empty for a current role. `highlights` takes a list or one bullet per line.
+- **Education:** `qualification` is required. `institution`, `period` (free text), `grade`, `in_progress`, `featured` and `sort_order` are optional.
+- **Skill group:** `name` and `skills` (a list or comma-separated string) are required. `sort_order` is optional.
+- **Profile:** `name`, `headline`, `email`, `intro`, `location`, `github_url`, `linkedin_url`, `contact_heading`, `meta_description`, `show_mascot`.
+
+**Behaviour**
+
+- Updates are partial: send only the fields you want to change.
+- Validation errors come back as `422` with an `errors` object keyed by field.
+- A successful write returns the saved record in `data`, including its public `url`.
+
+The admin pages authenticate with the logged-in session instead of a token, via Laravel Sanctum. That works on the domain in `APP_URL`, so make sure `APP_URL` matches your real site address, or list extra domains in `SANCTUM_STATEFUL_DOMAINS`.
 
 ## Development
 

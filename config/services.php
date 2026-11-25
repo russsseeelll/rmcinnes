@@ -35,7 +35,8 @@ return [
         'client_id' => env('STRAVA_CLIENT_ID'),
         'client_secret' => env('STRAVA_CLIENT_SECRET'),
         'redirect' => env('STRAVA_REDIRECT_URI'),
+        'refresh_token' => env('STRAVA_REFRESH_TOKEN'),
+        'access_token' => env('STRAVA_ACCESS_TOKEN'),
     ],
-
 
 ];

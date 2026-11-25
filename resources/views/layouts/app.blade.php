@@ -17,15 +17,29 @@
     <a class="skip" href="#main">Skip to content</a>
 
     <header class="rail">
-        <a href="{{ route('home') }}" class="tape tape--small rail__home" aria-label="{{ $profile->name }}, home">{{ $profile->shortName() }}</a>
+        <a href="{{ route('home') }}" class="rail__brand" aria-label="{{ $profile->name }}, home">
+            @if ($profile->show_mascot ?? true)@include('partials.spaniel')@endif
+            <span class="tape tape--small rail__home">{{ $profile->shortName() }}</span>
+        </a>
         <nav class="rail__nav" aria-label="Main">
-            <a href="{{ route('home') }}#work" @class(['is-current' => request()->routeIs('portfolio', 'portfolio.single')])>Projects</a>
             <a href="{{ route('home') }}#experience">Experience</a>
+            <a href="{{ route('home') }}#work" @class(['is-current' => request()->routeIs('portfolio', 'portfolio.single')])>Projects</a>
             <a href="{{ route('home') }}#contact">Contact</a>
-            @auth<a href="{{ route('portfolio.create') }}" @class(['is-current' => request()->routeIs('portfolio.create')])>Add project</a>@endauth
+            <a href="{{ route('extras') }}" @class(['is-current' => request()->routeIs('extras')])>Extras</a>
             <a @class(['btn btn--ink', 'is-current' => request()->routeIs('cv')]) href="{{ route('cv') }}">CV</a>
         </nav>
     </header>
+    @auth
+        <nav class="admin-strip" aria-label="Admin">
+            <span class="admin-strip__label">Logged in as {{ auth()->user()->name }}</span>
+            <a href="{{ route('portfolio.create') }}">Add project</a>
+            <a href="{{ route('experience.create') }}">Add role</a>
+            <a href="{{ route('profile.edit') }}">Edit profile</a>
+            <a href="{{ route('strava.edit') }}">Strava</a>
+            <a href="{{ route('leaderboard.edit') }}">Leaderboard</a>
+            <form action="{{ route('logout') }}" method="POST">@csrf<button type="submit" class="linklike">Log out</button></form>
+        </nav>
+    @endauth
 
     <main id="main">
         @yield('content')
@@ -33,7 +47,10 @@
 
     <footer class="foot">
         <div class="foot__inner">
-            <span class="tape tape--dark tape--small">{{ request()->getHost() }}</span>
+            <span class="foot__brand">
+                @if ($profile->show_mascot ?? true)@include('partials.spaniel')@endif
+                <span class="tape tape--dark tape--small">{{ request()->getHost() }}</span>
+            </span>
             <p class="foot__meta">{{ collect([$profile->name, $profile->location])->filter()->implode(' · ') }} · &copy; {{ date('Y') }}</p>
             @if ($latestDeploy)
                 <p class="foot__deploy">
@@ -43,7 +60,7 @@
                 </p>
             @endif
             <ul class="foot__links">
-                <li><a href="{{ route('status') }}">Status</a></li>
+                <li><a href="{{ route('extras') }}">Extras</a></li>
                 <li><a href="mailto:{{ $profile->email }}">Email</a></li>
                 @if ($profile->github_url)<li><a href="{{ $profile->github_url }}" rel="me">GitHub</a></li>@endif
                 @if ($profile->linkedin_url)<li><a href="{{ $profile->linkedin_url }}" rel="me">LinkedIn</a></li>@endif

@@ -1,14 +1,35 @@
-@extends('layouts.app', ['title' => 'Status · '.$profile->name])
+@extends('layouts.app', ['title' => 'Extras · '.$profile->name])
 
 @section('content')
 <section class="page-head">
-    <h1 class="tape tape--hero">Status</h1>
-    <p class="page-head__sub">
-        How this site is running. The server checks its own homepage every five minutes; deploys are recorded by the pipeline.
-    </p>
+    <h1 class="tape tape--hero">Extras</h1>
+    <p class="page-head__sub">Things from outside work, and how this site is running.</p>
 </section>
 
-<section class="section section--tight status">
+@if ($running)
+<section class="section section--tight extras" id="running" aria-labelledby="running-h">
+    <h2 id="running-h" class="tape tape--section">Running</h2>
+    <article class="run-card">
+        <h3 class="run-card__title">Running in {{ $running['year'] }}</h3>
+        <dl class="run-card__stats">
+            <div><dt>Distance this year</dt><dd>{{ rtrim(rtrim(number_format($running['km'], 1), '0'), '.') }}<span>km</span></dd></div>
+            @if ($pace = \App\Services\Strava::formatPace($running['pace_seconds_per_km']))
+                <div><dt>Average pace</dt><dd>{{ $pace }}<span>/km</span></dd></div>
+            @endif
+            <div><dt>Runs</dt><dd>{{ $running['runs'] }}</dd></div>
+        </dl>
+        <p class="run-card__source">
+            Retrieved automatically from the Strava API, updated hourly
+            (last at <time datetime="{{ $running['fetched_at'] }}">{{ \Illuminate\Support\Carbon::parse($running['fetched_at'])->format('H:i, j M') }}</time>).
+            Public activities only.
+        </p>
+    </article>
+</section>
+@endif
+
+<section class="section section--tight status" id="status" aria-labelledby="status-h">
+    <h2 id="status-h" class="tape tape--section">Site status</h2>
+    <p class="extras__intro">The server checks its own homepage every five minutes; deploys are recorded by the pipeline.</p>
     @if (! $latest)
         <p class="empty">No checks recorded yet. They start once the scheduler runs (<code>php artisan schedule:run</code> every minute).</p>
     @else

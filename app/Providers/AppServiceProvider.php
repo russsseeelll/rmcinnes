@@ -22,7 +22,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Every page reads the site owner's details from the database.
         View::composer('*', fn ($view) => $view->with('profile', Profile::current()));
         View::composer('layouts.app', fn ($view) => $view->with('latestDeploy', Deploy::latest('deployed_at')->first()));
     }

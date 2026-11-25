@@ -7,7 +7,6 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Throwable;
 
-/** Requests the homepage and records whether it answered, for the /status page. Scheduled every five minutes. */
 class CheckStatus extends Command
 {
     protected $signature = 'status:check';

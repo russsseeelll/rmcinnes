@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('status:check')->everyFiveMinutes()->withoutOverlapping();
+        $schedule->command('strava:sync')->hourly()->withoutOverlapping();
     }
 
     /**

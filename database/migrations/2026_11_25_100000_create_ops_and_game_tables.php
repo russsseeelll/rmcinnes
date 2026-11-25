@@ -8,7 +8,6 @@ return new class extends Migration
 {
     public function up(): void
     {
-        // Recorded by `php artisan deploy:record` at the end of each deploy.
         Schema::create('deploys', function (Blueprint $table) {
             $table->id();
             $table->string('commit', 40);
@@ -18,7 +17,6 @@ return new class extends Migration
             $table->timestamp('deployed_at')->index();
         });
 
-        // Written by the scheduled `status:check` command.
         Schema::create('health_checks', function (Blueprint $table) {
             $table->id();
             $table->boolean('ok');
@@ -27,7 +25,6 @@ return new class extends Migration
             $table->timestamp('checked_at')->index();
         });
 
-        // Cluster game leaderboard.
         Schema::create('scores', function (Blueprint $table) {
             $table->id();
             $table->string('name', 40);

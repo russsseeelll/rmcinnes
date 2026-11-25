@@ -8,7 +8,6 @@ return new class extends Migration
 {
     public function up(): void
     {
-        // One row: who the site is about.
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -30,7 +29,7 @@ return new class extends Migration
             $table->string('organisation');
             $table->date('started_on');
             $table->date('ended_on')->nullable();
-            $table->text('highlights')->nullable(); // one bullet per line
+            $table->text('highlights')->nullable();
             $table->timestamps();
         });
 
@@ -49,12 +48,11 @@ return new class extends Migration
         Schema::create('skill_groups', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('skills'); // comma separated, like portfolio tags
+            $table->text('skills');
             $table->unsignedInteger('sort_order')->default(0);
             $table->timestamps();
         });
 
-        // The old homepage's technology tiles are replaced by skill groups.
         Schema::dropIfExists('tools');
     }
 

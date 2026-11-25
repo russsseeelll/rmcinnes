@@ -1,64 +1,84 @@
 @extends('layouts.app', ['title' => ($portfolio->exists ? 'Edit '.$portfolio->title : 'New project').' · '.$profile->name])
 
-@php($categories = \App\Models\Portfolio::query()->distinct()->orderBy('category')->pluck('category'))
+@php
+    $categories = \App\Models\Portfolio::query()->distinct()->orderBy('category')->pluck('category');
+    $action = $portfolio->exists ? url('/api/projects/'.$portfolio->slug) : url('/api/projects');
+@endphp
 
 @section('content')
-<section class="page-head">
-    <h1 class="tape tape--hero">{{ $portfolio->exists ? 'Edit project' : 'New project' }}</h1>
-    @if ($portfolio->exists)<p class="page-head__sub">Editing “{{ $portfolio->title }}”.</p>@endif
-</section>
+<section class="admin-page">
+    <header class="admin-page__head">
+        <a class="arrowlink arrowlink--back" href="{{ $portfolio->exists ? route('portfolio.single', $portfolio->slug) : route('portfolio') }}">
+            <svg class="ico" aria-hidden="true" viewBox="0 0 20 20" width="16" height="16"><path d="M16 10H4m5-5-5 5 5 5"/></svg>
+            {{ $portfolio->exists ? 'Back to project' : 'All projects' }}
+        </a>
+        <h1 class="admin-page__title">{{ $portfolio->exists ? 'Edit project' : 'New project' }}</h1>
+        @if ($portfolio->exists)<p class="admin-page__sub">Editing “{{ $portfolio->title }}”</p>@endif
+    </header>
 
-<section class="section section--tight">
-    <form class="form form--wide" method="POST" enctype="multipart/form-data"
-          action="{{ $portfolio->exists ? route('portfolio.update', $portfolio->slug) : route('portfolio.store') }}">
-        @csrf
-        @if ($portfolio->exists) @method('PUT') @endif
-        @if ($errors->any())
-            <p class="form__error" role="alert">Some fields need fixing. They're marked below.</p>
-        @endif
+    <form class="admin-form" method="POST" enctype="multipart/form-data" novalidate
+          data-api-form action="{{ $action }}" data-method="{{ $portfolio->exists ? 'PUT' : 'POST' }}"
+          data-success="{{ $portfolio->exists ? 'saved' : 'added' }}">
+        <p class="form__error" data-form-error role="alert" tabindex="-1" hidden>Some fields need fixing. They're marked below.</p>
 
-        @foreach ([
-            ['title', 'Title', 'text', null],
-            ['date', 'Date', 'date', null],
-            ['category', 'Category', 'text', 'Pick an existing one or type a new one'],
-            ['tags', 'Tags', 'text', 'Comma separated, e.g. Kubernetes, ArgoCD'],
-            ['link', 'Link', 'url', 'GitHub, demo or live site (optional)'],
-        ] as [$name, $label, $type, $note])
-            <div class="field">
-                <label for="f-{{ $name }}">{{ $label }} @if ($note)<span class="field__note">{{ $note }}</span>@endif</label>
-                <input id="f-{{ $name }}" type="{{ $type }}" name="{{ $name }}" value="{{ old($name, $portfolio->$name) }}"
-                    @if ($name === 'category') list="categories" @endif
-                    @error($name) aria-invalid="true" aria-describedby="f-{{ $name }}-err" @enderror>
-                @error($name)<p class="field__err" id="f-{{ $name }}-err">{{ $message }}</p>@enderror
+        <fieldset class="admin-form__group">
+            <legend>The basics</legend>
+            <div class="field field--wide">
+                <label for="f-title">Title</label>
+                <input id="f-title" type="text" name="title" value="{{ $portfolio->title }}" required maxlength="255">
             </div>
-        @endforeach
-        <datalist id="categories">@foreach ($categories as $c)<option value="{{ $c }}">@endforeach</datalist>
-
-        @foreach ([['summary', 'Summary', 3, 'Shown in project lists, up to 512 characters'], ['description', 'Description', 8, 'Shown on the project page, up to 3000 characters']] as [$name, $label, $rows, $note])
             <div class="field">
-                <label for="f-{{ $name }}">{{ $label }} <span class="field__note">{{ $note }}</span></label>
-                <textarea id="f-{{ $name }}" name="{{ $name }}" rows="{{ $rows }}"
-                    @error($name) aria-invalid="true" aria-describedby="f-{{ $name }}-err" @enderror>{{ old($name, $portfolio->$name) }}</textarea>
-                @error($name)<p class="field__err" id="f-{{ $name }}-err">{{ $message }}</p>@enderror
+                <label for="f-date">Date</label>
+                <input id="f-date" type="date" name="date" value="{{ $portfolio->date }}" required>
             </div>
-        @endforeach
+            <div class="field">
+                <label for="f-category">Category <span class="field__note">pick one or type a new one</span></label>
+                <input id="f-category" type="text" name="category" value="{{ $portfolio->category }}" list="categories" required maxlength="255">
+                <datalist id="categories">@foreach ($categories as $c)<option value="{{ $c }}">@endforeach</datalist>
+            </div>
+            <div class="field">
+                <label for="f-tags">Tags <span class="field__note">comma separated</span></label>
+                <input id="f-tags" type="text" name="tags" value="{{ $portfolio->tags }}" placeholder="Kubernetes, ArgoCD" maxlength="255">
+            </div>
+            <div class="field">
+                <label for="f-link">Link <span class="field__note">optional</span></label>
+                <input id="f-link" type="url" name="link" value="{{ $portfolio->link }}" placeholder="https://github.com/…" maxlength="255">
+            </div>
+        </fieldset>
 
-        <div class="field">
-            <label for="f-image">{{ $portfolio->image ? 'Replace image' : 'Image' }} <span class="field__note">JPG, PNG, GIF or WebP, up to 10 MB</span></label>
+        <fieldset class="admin-form__group">
+            <legend>The write-up</legend>
+            <div class="field field--wide">
+                <label for="f-summary">Summary <span class="field__note">shown in project lists · <span data-count-for="f-summary"></span>/512</span></label>
+                <textarea id="f-summary" name="summary" rows="3" required maxlength="512">{{ $portfolio->summary }}</textarea>
+            </div>
+            <div class="field field--wide">
+                <label for="f-description">Description <span class="field__note">shown on the project page · <span data-count-for="f-description"></span>/3000</span></label>
+                <textarea id="f-description" name="description" rows="10" required maxlength="3000">{{ $portfolio->description }}</textarea>
+            </div>
+        </fieldset>
+
+        <fieldset class="admin-form__group">
+            <legend>Image</legend>
             @if ($portfolio->image)
-                <div class="field__current">
+                <div class="field field--wide field__current">
                     <img src="{{ asset($portfolio->image) }}" alt="Current image for {{ $portfolio->title }}">
-                    <label class="check"><input type="checkbox" name="remove_image" value="1" @checked(old('remove_image'))> Remove this image</label>
+                    <label class="check"><input type="checkbox" name="remove_image" value="1"> Remove this image</label>
                 </div>
             @endif
-            <input id="f-image" type="file" name="image" accept="image/jpeg,image/png,image/gif,image/webp"
-                @error('image') aria-invalid="true" aria-describedby="f-image-err" @enderror>
-            @error('image')<p class="field__err" id="f-image-err">{{ $message }}</p>@enderror
-        </div>
+            <div class="field field--wide">
+                <label for="f-image">{{ $portfolio->image ? 'Replace with' : 'Upload' }} <span class="field__note">JPG, PNG, GIF or WebP, up to 10 MB</span></label>
+                <input id="f-image" type="file" name="image" accept="image/jpeg,image/png,image/gif,image/webp">
+            </div>
+        </fieldset>
 
-        <div class="form__actions">
-            <button type="submit" class="btn btn--signal btn--lg">{{ $portfolio->exists ? 'Save changes' : 'Add project' }}</button>
+        <div class="admin-form__actions">
+            <button type="submit" class="btn btn--signal btn--lg" data-submit>{{ $portfolio->exists ? 'Save changes' : 'Add project' }}</button>
             <a class="btn btn--line btn--lg" href="{{ $portfolio->exists ? route('portfolio.single', $portfolio->slug) : route('portfolio') }}">Cancel</a>
+            @if ($portfolio->exists)
+                <button type="button" class="btn btn--danger btn--lg admin-form__delete"
+                    data-api-delete="{{ url('/api/projects/'.$portfolio->slug) }}" data-title="{{ $portfolio->title }}">Delete project</button>
+            @endif
         </div>
     </form>
 </section>

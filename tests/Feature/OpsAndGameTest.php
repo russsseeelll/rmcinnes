@@ -25,7 +25,8 @@ class OpsAndGameTest extends TestCase
             ->assertSuccessful();
 
         $this->get('/')->assertSee('a1a1a1a')->assertSee('2m 14s');
-        $this->get('/status')->assertOk()->assertSee('Ship it');
+        $this->get('/extras')->assertOk()->assertSee('Ship it');
+        $this->get('/status')->assertRedirect('/extras#status');
     }
 
     public function test_deploy_record_rejects_a_bad_sha(): void
@@ -36,12 +37,12 @@ class OpsAndGameTest extends TestCase
 
     public function test_status_page_reports_uptime(): void
     {
-        $this->get('/status')->assertOk()->assertSee('No checks recorded yet');
+        $this->get('/extras')->assertOk()->assertSee('No checks recorded yet');
 
         HealthCheck::create(['ok' => true, 'status_code' => 200, 'response_ms' => 80, 'checked_at' => now()->subMinutes(10)]);
         HealthCheck::create(['ok' => false, 'status_code' => 500, 'response_ms' => 90, 'checked_at' => now()->subMinutes(5)]);
 
-        $this->get('/status')->assertOk()->assertSee('Down')->assertSee('50%');
+        $this->get('/extras')->assertOk()->assertSee('Down')->assertSee('50%');
     }
 
     public function test_cv_page_renders_from_the_database(): void
@@ -59,4 +60,22 @@ class OpsAndGameTest extends TestCase
         $this->postJson('/scores', ['name' => 'Someone', 'score' => 5])->assertStatus(405);
     }
 
+    public function test_leaderboard_entries_are_managed_when_logged_in(): void
+    {
+        $this->postJson('/api/scores', ['name' => 'X', 'score' => 1])->assertUnauthorized();
+        $this->get('/leaderboard')->assertRedirect('/login');
+
+        $this->actingAs(\App\Models\User::create(['name' => 'admin', 'password' => bcrypt('x')]));
+        $this->get('/leaderboard')->assertOk()->assertSee('Jared Isaacman');
+
+        $id = $this->postJson('/api/scores', ['name' => 'Ada Lovelace', 'organisation' => 'Analytical Engines', 'score' => 99])
+            ->assertCreated()->json('data.id');
+        $this->getJson('/scores')->assertJsonPath('0.name', 'Ada Lovelace');
+
+        $this->putJson("/api/scores/{$id}", ['score' => 1000])->assertJsonValidationErrors('score');
+        $this->putJson("/api/scores/{$id}", ['score' => 5])->assertOk()->assertJsonPath('data.score', 5);
+
+        $this->deleteJson("/api/scores/{$id}")->assertNoContent();
+        $this->assertNull(\App\Models\Score::find($id));
+    }
 }

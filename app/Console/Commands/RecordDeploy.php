@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Models\Deploy;
 use Illuminate\Console\Command;
 
-/** Run at the end of a deploy so the site can show what's live (see .github/workflows/deploy.yml). */
 class RecordDeploy extends Command
 {
     protected $signature = 'deploy:record
@@ -14,7 +13,7 @@ class RecordDeploy extends Command
         {--run-url= : Link to the CI run}
         {--duration= : Pipeline duration in seconds}';
 
-    protected $description = 'Record a deploy so the footer and /status page can show it';
+    protected $description = 'Record a deploy so the footer and Extras page can show it';
 
     public function handle(): int
     {

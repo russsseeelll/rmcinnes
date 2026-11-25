@@ -1,19 +1,14 @@
-// Cluster: an original falling-workload packing game. Rectangular workloads drop into a
-// three-node cluster; a full row ships a rollout. Autopilot plays until a visitor takes over.
 
 const INK = '#111011';
 const COLORS = ['#86e1c6', '#ffb547', '#ff7663', '#8ea8ff', '#c4a9ff'].map((fill) => ({ fill, ink: INK }));
-// Fallback labels; the page normally supplies the owner's skills via data-workloads.
 const DEFAULT_WORKLOADS = [
     'nginx', 'postgres', 'redis', 'ansible', 'grafana', 'prometheus', 'jenkins', 'rundeck',
     'ldap', 'bind9', 'nfs', 'docker', 'sssd', 'snipe-it', 'k8s-api', 'shibboleth', 'haproxy', 'kvm',
 ];
-// [w, h] in cells; rectangles only, rotation swaps the sides.
 const SHAPES = [[1, 1], [2, 1], [3, 1], [2, 1], [3, 1], [2, 2], [3, 2], [1, 2], [2, 3]];
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-// Leaderboard (routes/web.php). Failures are silent: the game works without it.
 const csrf = () => document.querySelector('meta[name="csrf-token"]')?.content ?? '';
 const api = (url, body) => fetch(url, {
     method: body ? 'POST' : 'GET',
@@ -43,21 +38,19 @@ export function cluster(root) {
     try {
         const fromPage = JSON.parse(root.dataset.workloads || '[]');
         if (fromPage.length >= 4) workloads = fromPage;
-    } catch { /* keep defaults */ }
+    } catch { }
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     let cols = 0, rows = 0, cell = 0, ox = 0, oy = 0, dpr = 1, cssW = 0, cssH = 0;
     let grid, owners = new Map(), nextId = 1;
     let active = null;
-    let mode = 'auto';           // 'auto' | 'play' | 'over'
+    let mode = 'auto';
     let score = 0;
-    let clearing = null;         // { rows: [...], t0 }
+    let clearing = null;
     let visible = true, running = false;
     let lastFall = 0, lastStep = 0, target = null;
 
     const fallMs = () => mode === 'play' ? Math.max(120, 650 * Math.pow(0.94, score)) : 105;
-
-    // ---------- board ----------
 
     function layout() {
         const r = canvas.getBoundingClientRect();
@@ -83,7 +76,7 @@ export function cluster(root) {
         active = null; target = null; clearing = null;
         setScore(0);
         updateNodes();
-        if (mode === 'auto') prefill(); // start mid-shift, not on an empty cluster
+        if (mode === 'auto') prefill();
     }
 
     const at = (x, y) => grid[y * cols + x];
@@ -147,7 +140,6 @@ export function cluster(root) {
             api('/scores').then((top) => showBoard(top)).catch(() => {});
             return;
         }
-        // Autopilot never loses on screen: wipe the cluster and carry on.
         reset();
     }
 
@@ -166,8 +158,6 @@ export function cluster(root) {
         });
         nodesEl.innerHTML = labels.map((l) => `<span>${l}</span>`).join('');
     }
-
-    // ---------- autopilot ----------
 
     function evaluate(g) {
         let holes = 0, agg = 0, bump = 0, lines = 0, prev = -1;
@@ -205,7 +195,6 @@ export function cluster(root) {
     }
 
     function prefill() {
-        // Reduced motion: show a packed cluster at rest instead of animating one.
         for (let n = 0; n < rows * 2; n++) {
             spawn();
             if (!active || !target) break;
@@ -229,15 +218,12 @@ export function cluster(root) {
         else if (p.x > target.x && fits(p.x - 1, p.y, p.w, p.h)) p.x--;
     }
 
-    // ---------- player ----------
-
     function command(cmd) {
         if (mode !== 'play' || !active || clearing) return;
         const p = active;
         if (cmd === 'left' && fits(p.x - 1, p.y, p.w, p.h)) p.x--;
         else if (cmd === 'right' && fits(p.x + 1, p.y, p.w, p.h)) p.x++;
         else if (cmd === 'rotate' && p.w !== p.h) {
-            // Rotate in place, nudging away from walls when it would clip.
             for (const dx of [0, -1, 1, -2, 2]) {
                 if (fits(p.x + dx, p.y, p.h, p.w)) { p.x += dx; [p.w, p.h] = [p.h, p.w]; break; }
             }
@@ -281,8 +267,6 @@ export function cluster(root) {
     toggle.addEventListener('click', () => (mode === 'auto' ? startPlay() : stopPlay()));
     restart.addEventListener('click', startPlay);
 
-    // ---------- leaderboard ----------
-
     function showBoard(top) {
         board.replaceChildren(...top.map((row) => {
             const li = document.createElement('li');
@@ -325,8 +309,6 @@ export function cluster(root) {
         command(cmd);
     });
 
-    // ---------- loop ----------
-
     function frame(now) {
         if (!visible || document.hidden || (reduced && mode === 'auto')) { running = false; return; }
         if (mode !== 'over') {
@@ -355,13 +337,10 @@ export function cluster(root) {
         requestAnimationFrame(frame);
     }
 
-    // ---------- drawing ----------
-
     function draw(now) {
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         ctx.clearRect(0, 0, cssW, cssH);
 
-        // Rack holes and node rails.
         ctx.fillStyle = 'rgba(243,236,230,0.07)';
         for (let j = 0; j <= rows; j++)
             for (let i = 0; i <= cols; i++) ctx.fillRect(ox + i * cell - 1, oy + j * cell - 1, 2, 2);
@@ -372,7 +351,6 @@ export function cluster(root) {
             ctx.fillRect(x - 1.5, 0, 3, cssH);
         }
 
-        // Settled workloads, drawn cell by cell so cleared rows can cut pieces.
         const boxes = new Map();
         for (let j = 0; j < rows; j++) {
             for (let i = 0; i < cols; i++) {
@@ -387,7 +365,6 @@ export function cluster(root) {
         }
         for (const b of boxes.values()) label(b.o, ox + b.x0 * cell, oy + b.y0 * cell, (b.x1 - b.x0 + 1) * cell, (b.y1 - b.y0 + 1) * cell);
 
-        // Active workload: eased fall, ghost landing spot for players.
         if (active) {
             const p = active;
             p.ry += (p.y - p.ry) * (reduced ? 1 : 0.32);
@@ -404,7 +381,6 @@ export function cluster(root) {
             label(p, ox + p.x * cell, oy + p.ry * cell, p.w * cell, p.h * cell);
         }
 
-        // Rollout sweep.
         if (clearing) {
             const t = Math.min(1, (now - clearing.t0) / 420);
             for (const j of clearing.rows) {
@@ -422,7 +398,6 @@ export function cluster(root) {
     }
 
     function drawCell(i, j, y, fill, id) {
-        // Outline only where the neighbour belongs to another workload, so pieces read whole.
         const e = 2.5;
         const x = ox + i * cell;
         const l = i === 0 || at(i - 1, j) !== id;
@@ -447,7 +422,6 @@ export function cluster(root) {
     }
 
     function label(o, x, y, w, h) {
-        // Status LED, then the workload name if it fits.
         ctx.fillStyle = INK;
         ctx.fillRect(x + 7, y + 7, 4, 4);
         const size = Math.max(9, Math.min(13, cell * 0.36));
@@ -468,8 +442,6 @@ export function cluster(root) {
             ctx.restore();
         }
     }
-
-    // ---------- lifecycle ----------
 
     new IntersectionObserver(([e]) => { visible = e.isIntersecting; ensureRunning(); }, { threshold: 0.15 }).observe(root);
     document.addEventListener('visibilitychange', ensureRunning);

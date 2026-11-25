@@ -15,7 +15,6 @@ class Experience extends Model
         return $this->started_on->format('M Y').' – '.($this->ended_on?->format('M Y') ?? 'now');
     }
 
-    /** @return string[] */
     public function highlightList(): array
     {
         return array_values(array_filter(array_map('trim', explode("\n", (string) $this->highlights))));

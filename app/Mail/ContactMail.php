@@ -20,7 +20,8 @@ class ContactMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Contact Form Query')
-                    ->view('emails.contact');
+        return $this->subject('Website message from '.$this->details['name'])
+            ->replyTo($this->details['email'], $this->details['name'])
+            ->view('emails.contact');
     }
 }

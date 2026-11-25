@@ -17,13 +17,10 @@
         @endif
     </a>
     @auth
-        <span class="ledger__admin">
-            <a href="{{ route('portfolio.edit', $p->slug) }}">Edit</a>
-            <form method="POST" action="{{ route('portfolio.destroy', $p->slug) }}"
-                onsubmit="return confirm('Delete “{{ addslashes($p->title) }}”? This cannot be undone.')">
-                @csrf @method('DELETE')
-                <button type="submit" class="linklike linklike--danger">Delete</button>
-            </form>
-        </span>
+        <div class="row-admin ledger__admin">
+            <a class="btn btn--ink btn--sm" href="{{ route('portfolio.edit', $p->slug) }}">Edit</a>
+            <button type="button" class="btn btn--danger btn--sm" data-api-delete="{{ url('/api/projects/'.$p->slug) }}"
+                data-title="{{ $p->title }}" data-redirect="{{ route('portfolio') }}">Delete</button>
+        </div>
     @endauth
 </li>

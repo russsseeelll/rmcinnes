@@ -6,9 +6,6 @@
 <section class="cv-page">
     <div class="cv-actions">
         <button type="button" class="btn btn--signal btn--lg" onclick="window.print()">Save as PDF</button>
-        @if ($profile->cvUrl())
-            <a class="btn btn--line btn--lg" href="{{ $profile->cvUrl() }}" download="{{ $profile->cvDownloadName() }}">Original PDF</a>
-        @endif
         <p class="cv-actions__note">Always up to date: generated from the same data as this site.</p>
     </div>
 

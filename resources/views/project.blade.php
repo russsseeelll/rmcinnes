@@ -4,19 +4,13 @@
 
 @section('content')
 <article class="project">
-    @if ($message = session('message'))
-        <p class="form__ok" role="status">{{ $message }}</p>
-    @endif
+    @include('partials.flash')
 
     @auth
         <div class="admin-bar">
             <span class="admin-bar__label">You're logged in</span>
             <a class="btn btn--ink" href="{{ route('portfolio.edit', $portfolio->slug) }}">Edit project</a>
-            <form method="POST" action="{{ route('portfolio.destroy', $portfolio->slug) }}"
-                onsubmit="return confirm('Delete “{{ addslashes($portfolio->title) }}”? This cannot be undone.')">
-                @csrf @method('DELETE')
-                <button type="submit" class="btn btn--danger">Delete</button>
-            </form>
+            <button type="button" class="btn btn--danger" data-api-delete="{{ url('/api/projects/'.$portfolio->slug) }}" data-title="{{ $portfolio->title }}">Delete</button>
         </div>
     @endauth
 
@@ -59,7 +53,6 @@
             </aside>
         @endif
     </div>
-
 
     <aside class="project__next">
         <p>Want the full picture?</p>

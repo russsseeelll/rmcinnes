@@ -20,9 +20,7 @@
         </nav>
     </form>
 
-    @if ($message = session('message'))
-        <p class="form__ok" role="status">{{ $message }}</p>
-    @endif
+    @include('partials.flash')
 
     @if ($portfolios->isEmpty())
         <div class="empty">
@@ -54,7 +52,7 @@
     @endif
 
     @auth
-        <p class="admin-add"><a class="btn btn--line" href="{{ route('portfolio.create') }}">Add project</a></p>
+        <p class="admin-add"><a class="btn btn--signal" href="{{ route('portfolio.create') }}">Add project</a></p>
     @endauth
 </section>
 @endsection

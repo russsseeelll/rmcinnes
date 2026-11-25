@@ -4,17 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Deploy;
 use App\Models\HealthCheck;
+use App\Services\Strava;
 
 class StatusController extends Controller
 {
-    public function __invoke()
+    public function __invoke(Strava $strava)
     {
         $uptime = fn (int $days) => $this->uptime(HealthCheck::where('checked_at', '>=', now()->subDays($days)));
 
         $day = HealthCheck::where('checked_at', '>=', now()->subDay())->orderBy('checked_at')->get();
         $times = $day->where('ok', true)->pluck('response_ms')->sort()->values();
 
-        // Last 48 hours in hourly buckets, oldest first; null means no checks ran that hour.
         $since = now()->subHours(47)->startOfHour();
         $byHour = HealthCheck::where('checked_at', '>=', $since)->get()
             ->groupBy(fn ($c) => $c->checked_at->format('Y-m-d H'));
@@ -25,7 +25,8 @@ class StatusController extends Controller
             return ['at' => $hour, 'uptime' => $checks ? $checks->where('ok', true)->count() / $checks->count() : null];
         });
 
-        return view('status', [
+        return view('extras', [
+            'running' => $strava->running(),
             'latest' => HealthCheck::latest('checked_at')->first(),
             'uptime' => ['24 hours' => $uptime(1), '7 days' => $uptime(7), '30 days' => $uptime(30)],
             'avgMs' => $times->isEmpty() ? null : (int) round($times->avg()),
