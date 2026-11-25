@@ -57,7 +57,13 @@ cp .env.example .env            # set APP_KEY, APP_URL, the DB_* and MAIL_* valu
 docker compose exec -u www-data web php artisan db:seed --class=ProfileSeeder --force   # first time only
 ```
 
-Point a reverse proxy or a Cloudflare Tunnel at `http://localhost:8090`. Run `./deploy.sh` again for each update. The scheduler container replaces the cron entry described below.
+Point a reverse proxy or a Cloudflare Tunnel at `http://localhost:8090`. The scheduler container replaces the cron entry described below.
+
+**Updates:** run `./deploy.sh` by hand, or let the server deploy itself. `autodeploy.sh` checks GitHub for a new commit on `main` and deploys it once the Tests workflow has passed on it. It only makes outgoing requests, so nothing needs to reach your server. Run it every couple of minutes from your user's crontab:
+
+```
+*/2 * * * * $HOME/rmcinnes/autodeploy.sh >> $HOME/autodeploy.log 2>&1
+```
 
 ## Site status and deploy history
 
@@ -67,7 +73,7 @@ Point a reverse proxy or a Cloudflare Tunnel at `http://localhost:8090`. Run `./
   * * * * * cd /path/to/site && php artisan schedule:run >> /dev/null 2>&1
   ```
 
-- **Deploys:** run `php artisan deploy:record` at the end of every deploy (it reads the commit from git; `--run-url` and `--duration` are optional). The included `.github/workflows/deploy.yml` does this for you: it deploys over SSH after the tests pass. It is off until you set the `DEPLOY_ENABLED` repository variable and the secrets listed at the top of the file.
+- **Deploys:** `deploy.sh` records each deploy with `php artisan deploy:record`, so it appears in the footer and on the Extras page.
 
 ## Strava running stats (optional)
 
