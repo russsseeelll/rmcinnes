@@ -2,7 +2,7 @@ name: rmcinnes
 recipe: laravel
 config:
   webroot: public
-  php: "8.1"
+  php: "8.4"
 
 services:
   app:

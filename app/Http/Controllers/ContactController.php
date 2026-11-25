@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactMail;
 use App\Mail\AutoReplyMail;
+use App\Models\Profile;
 
 class ContactController extends Controller
 {
@@ -18,7 +19,7 @@ class ContactController extends Controller
             'message' => 'required|string|min:20',
         ]);
 
-        Mail::to('you@example.com')->send(new ContactMail($validatedData));
+        Mail::to(Profile::current()->email)->send(new ContactMail($validatedData));
 
         $autoReplyDetails = [
             'name' => $validatedData['name'],

@@ -28,7 +28,7 @@ class UserController extends Controller
             Auth::login($user);
             $request->session()->regenerate();
 
-            return redirect('/')->with('message', 'You have successfully logged in');
+            return redirect()->intended(route('portfolio'))->with('message', 'Logged in. You can add, edit and delete projects here.');
         }
 
         return back()->withErrors(['name'=> 'Invalid Credentials'])->withInput(['name']);

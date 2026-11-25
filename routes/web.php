@@ -1,12 +1,16 @@
 <?php
+
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CvController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\ScoreController;
+use App\Http\Controllers\StatusController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ToolController;
-use App\Http\Controllers\PortfolioController;
-use App\Http\Controllers\ContactController;
-use Laravel\Socialite\Facades\Socialite;
 
-Route::get('/', [ToolController::class, 'tools']);
+Route::get('/', HomeController::class)->name('home');
 
 Route::middleware('auth')->group(function () {
     Route::get('/portfolio/create', [PortfolioController::class, 'create'])->name('portfolio.create');
@@ -16,6 +20,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/portfolio/{portfolio:slug}', [PortfolioController::class, 'destroy'])->name('portfolio.destroy');
     Route::post('/logout', function () {
         Auth::logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+
         return redirect('/');
     })->name('logout');
 });
@@ -23,9 +30,10 @@ Route::middleware('auth')->group(function () {
 Route::get('/portfolio/{portfolio:slug}', [PortfolioController::class, 'portfoliosingle'])->name('portfolio.single');
 Route::get('/portfolio', [PortfolioController::class, 'portfolio'])->name('portfolio');
 Route::post('/contact', [ContactController::class, 'store']);
+Route::get('/cv', CvController::class)->name('cv');
+Route::get('/status', StatusController::class)->name('status');
 
-Route::get('/login', function () {
-    return view('login');
-});
+Route::get('/scores', [ScoreController::class, 'index'])->name('scores');
 
-Route::post('/login', [App\Http\Controllers\UserController::class, 'authenticate'])->name('login');
+Route::view('/login', 'login')->middleware('guest');
+Route::post('/login', [UserController::class, 'authenticate'])->middleware(['guest', 'throttle:5,1'])->name('login');

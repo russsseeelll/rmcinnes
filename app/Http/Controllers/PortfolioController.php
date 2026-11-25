@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Portfolio;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\File;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -16,122 +16,102 @@ class PortfolioController extends BaseController
 
     public function portfolio(Request $request)
     {
+        return view('portfolio', [
+            'portfolios' => $this->filtered($request)->paginate(8)->withQueryString(),
+            'categories' => Portfolio::query()->distinct()->orderBy('category')->pluck('category'),
+        ]);
+    }
+
+    private function filtered(Request $request)
+    {
         $query = Portfolio::query();
-    
+
         if ($request->input('search')) {
             $query->where('title', 'LIKE', '%'.$request->input('search').'%')
                 ->orWhere('tags', 'LIKE', '%'.$request->input('search').'%')
                 ->orWhere('category', 'LIKE', '%'.$request->input('search').'%');
         }
-    
+
         if ($request->input('category')) {
             $query->where('category', $request->input('category'));
         }
-    
-        $portfolios = $query->orderBy('date', 'desc')->paginate(6);
-    
-        return view('portfolio', ['portfolios' => $portfolios]);
+
+        return $query->orderBy('date', 'desc');
     }
-    
 
     public function portfoliosingle(Portfolio $portfolio)
     {
-        if (!$portfolio) {
-            return redirect('/login');
-        }
-        return view('portfolio-single', ['portfolio' => $portfolio]);
+        return view('project', ['portfolio' => $portfolio]);
     }
 
     public function create()
     {
-        return view("components.create-portfolio");
+        return view('admin.project-form', ['portfolio' => new Portfolio(['date' => now()->toDateString()])]);
     }
 
     public function store(Request $request)
     {
-        $formFields = $request->validate([
-            "title" => ['required', 'unique:portfolio'],
-            "date" => "required",
-            "category" => "required",
-            "tags" => "nullable",
-            "summary" => ['required', 'max:512'],
-            "description" => ['required', 'max:3000'],
-            "link" => "nullable",
-            "image" => "image|mimes:jpeg,png,jpg,gif|max:10000",
-        ]);
+        $portfolio = Portfolio::create($this->fields($request));
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('storage/images'), $imageName);
-            $formFields['image'] = 'storage/images/' . $imageName;
-        }
-
-        $formFields['tags'] = empty($formFields['tags']) ? null : $formFields['tags'];
-        $formFields['link'] = empty($formFields['link']) ? null : $formFields['link'];
-        $formFields['slug'] = Str::slug($formFields['title'], '-');
-
-        Portfolio::create($formFields);
-
-        return redirect("/portfolio")->with("message", "Entry created successfully!");
+        return redirect()->route('portfolio.single', $portfolio->slug)->with('message', 'Project added.');
     }
 
-    public function edit(Portfolio $portfolio){
-        if (!$portfolio) {
-            return redirect('/login');
-        }
-        return view('components.edit-portfolio', ['portfolio' => $portfolio]);
+    public function edit(Portfolio $portfolio)
+    {
+        return view('admin.project-form', ['portfolio' => $portfolio]);
     }
 
     public function update(Request $request, Portfolio $portfolio)
     {
-        $formFields = $request->validate([
-            "title" => "required",
-            "date" => "required",
-            "category" => "required",
-            "tags" => "nullable",
-            "summary" => ['required', 'max:513'],
-            "description" => ['required', 'max:3000'],
-            "link" => "nullable",
-            "image" => "image|mimes:jpeg,png,jpg,gif|max:10000",
-        ]);
+        $portfolio->update($this->fields($request, $portfolio));
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('storage/images'), $imageName);
-            $formFields['image'] = 'storage/images/' . $imageName;
-        }
-
-        $formFields['slug'] = Str::slug($formFields['title'], '-');
-
-        $portfolio->update($formFields);
-
-        return redirect()->route('portfolio')
-            ->with("message", "Entry updated successfully!");
+        return redirect()->route('portfolio.single', $portfolio->slug)->with('message', 'Changes saved.');
     }
 
     public function destroy(Portfolio $portfolio)
     {
-
-        if (!$portfolio) {
-            return redirect('/login');
-        }
-
-        $title = $portfolio->title;
-        $category = $portfolio->category;
-
-        $imagePath = public_path($portfolio->image);
-        if(File::exists($imagePath)) {
-            File::delete($imagePath);
-        }
-
+        $this->deleteImage($portfolio->image);
         $portfolio->delete();
 
-        return redirect('/portfolio')->with('message', 'You have successfully deleted "' . $title . '" from the category "' . $category . '".');
+        return redirect()->route('portfolio')->with('message', "“{$portfolio->title}” deleted.");
     }
 
-    public function manage() {
-        return view('portfolio.manage', ['portfolios' => Portfolio::all()]);
+    /** Validated fields for create and update, with the image stored or removed as asked. */
+    private function fields(Request $request, ?Portfolio $portfolio = null): array
+    {
+        $fields = $request->validate([
+            'title' => ['required', 'string', 'max:255', Rule::unique('portfolio', 'title')->ignore($portfolio)],
+            'date' => ['required', 'date'],
+            'category' => ['required', 'string', 'max:255'],
+            'tags' => ['nullable', 'string', 'max:255'],
+            'summary' => ['required', 'string', 'max:512'],
+            'description' => ['required', 'string', 'max:3000'],
+            'link' => ['nullable', 'url', 'max:255'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:10000'],
+            'remove_image' => ['nullable', 'boolean'],
+        ]);
+        unset($fields['remove_image']);
+
+        if ($request->hasFile('image')) {
+            $this->deleteImage($portfolio?->image);
+            // Kept under public/storage/images, where existing project images already live.
+            $file = $request->file('image');
+            $file->move(public_path('storage/images'), $name = $file->hashName());
+            $fields['image'] = 'storage/images/'.$name;
+        } elseif ($request->boolean('remove_image')) {
+            $this->deleteImage($portfolio?->image);
+            $fields['image'] = null;
+        } else {
+            unset($fields['image']);
+        }
+
+        return $fields;
+    }
+
+    private function deleteImage(?string $path): void
+    {
+        if ($path && File::isFile(public_path($path))) {
+            File::delete(public_path($path));
+        }
     }
 }

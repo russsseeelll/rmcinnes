@@ -32,7 +32,9 @@ class Portfolio extends Model
     {
         return [
             'slug' => [
-                'source' => 'title'
+                'source' => 'title',
+                // Keep the URL in step with the title; the package keeps slugs unique.
+                'onUpdate' => true,
             ]
         ];
     }

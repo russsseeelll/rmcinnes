@@ -30,8 +30,7 @@ class AutoReplyMail extends Mailable
      */
     public function build()
     {
-        return $this->from('you@example.com', 'rmcinnes')
-                    ->markdown('emails.autoreply')
+        return $this->markdown('emails.autoreply')
                     ->subject('Thank you for your message!')
                     ->with([
                         'name' => $this->details['name'],

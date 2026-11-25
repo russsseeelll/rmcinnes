@@ -4,5 +4,5 @@
 {{ $message }}
 
 Thanks,<br>
-Your Name
+{{ $profile->name }}
 @endcomponent
