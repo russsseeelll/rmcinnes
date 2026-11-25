@@ -23,9 +23,9 @@ class ToolkitAndProfileApiTest extends TestCase
 
     public function test_guests_can_read_but_not_write(): void
     {
-        $this->getJson('/api/skill-groups')->assertOk()->assertJsonPath('data.0.name', 'Security');
+        $this->getJson('/api/skill-groups')->assertOk()->assertJsonPath('data.0.name', 'Cloud & platforms');
         $this->getJson('/api/education')->assertOk();
-        $this->getJson('/api/profile')->assertOk()->assertJsonPath('data.name', 'Your Name');
+        $this->getJson('/api/profile')->assertOk()->assertJsonPath('data.name', 'Alex Example');
 
         $this->postJson('/api/skill-groups', ['name' => 'X', 'skills' => 'Y'])->assertUnauthorized();
         $this->putJson('/api/profile', ['name' => 'Someone Else'])->assertUnauthorized();
@@ -40,14 +40,14 @@ class ToolkitAndProfileApiTest extends TestCase
         $this->get('/toolkit/create')->assertOk()->assertSee('New skill group');
 
         $id = $this->postJson('/api/skill-groups', ['name' => 'Languages', 'skills' => "Go\nRust, Python, Go"])
-            ->assertCreated()->assertJsonPath('data.skills', ['Go', 'Rust', 'Python'])->assertJsonPath('data.sort_order', 3)->json('data.id');
+            ->assertCreated()->assertJsonPath('data.skills', ['Go', 'Rust', 'Python'])->assertJsonPath('data.sort_order', 6)->json('data.id');
 
         $this->get('/')->assertSee('Languages')->assertSee('Add group');
         $this->patchJson("/api/skill-groups/{$id}", ['skills' => ['Go', 'Zig']])->assertOk()->assertJsonPath('data.skills', ['Go', 'Zig']);
         $this->get("/toolkit/{$id}/edit")->assertOk()->assertSee('Go, Zig');
 
         $this->deleteJson("/api/skill-groups/{$id}")->assertNoContent();
-        $this->assertSame(3, SkillGroup::count());
+        $this->assertSame(6, SkillGroup::count());
     }
 
     public function test_education_can_be_added_edited_and_deleted(): void
@@ -56,7 +56,7 @@ class ToolkitAndProfileApiTest extends TestCase
         $this->get('/education/create')->assertOk()->assertSee('New qualification');
 
         $id = $this->postJson('/api/education', ['qualification' => 'CKA', 'institution' => 'CNCF', 'sort_order' => ''])
-            ->assertCreated()->assertJsonPath('data.sort_order', 4)->json('data.id');
+            ->assertCreated()->assertJsonPath('data.sort_order', 3)->json('data.id');
         $this->get("/education/{$id}/edit")->assertOk()->assertSee('CNCF');
 
         $featured = Education::where('featured', true)->first();
@@ -72,7 +72,7 @@ class ToolkitAndProfileApiTest extends TestCase
         $this->get('/profile/edit')->assertOk()->assertSee('Edit profile');
 
         $this->putJson('/api/profile', ['headline' => 'Platform Engineer', 'github_url' => 'not a url'])->assertJsonValidationErrors('github_url');
-        $this->putJson('/api/profile', ['headline' => 'Platform Engineer'])->assertOk()->assertJsonPath('data.name', 'Your Name');
+        $this->putJson('/api/profile', ['headline' => 'Platform Engineer'])->assertOk()->assertJsonPath('data.name', 'Alex Example');
 
         $this->get('/')->assertSee('Platform Engineer');
         $this->get('/cv')->assertSee('Platform Engineer');

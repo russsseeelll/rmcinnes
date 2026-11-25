@@ -21,7 +21,7 @@ class ExampleTest extends TestCase
 
         $this->get('/')
             ->assertOk()
-            ->assertSee('Your Name')
+            ->assertSee('Alex Example')
             ->assertSee(Experience::first()->title)
             ->assertSee($project->title);
 

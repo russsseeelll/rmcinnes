@@ -15,7 +15,7 @@ class ExperienceApiTest extends TestCase
     {
         $this->seed();
 
-        $this->getJson('/api/experience')->assertOk()->assertJsonPath('data.0.title', 'Senior Linux System Administrator');
+        $this->getJson('/api/experience')->assertOk()->assertJsonPath('data.0.title', 'Senior Platform Engineer');
         $this->postJson('/api/experience', $this->valid())->assertUnauthorized();
         $this->get('/experience/create')->assertRedirect('/login');
     }

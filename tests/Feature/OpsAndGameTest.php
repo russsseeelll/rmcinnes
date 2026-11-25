@@ -47,7 +47,7 @@ class OpsAndGameTest extends TestCase
 
     public function test_cv_page_renders_from_the_database(): void
     {
-        $this->get('/cv')->assertOk()->assertSee('Your Name')->assertSee('Senior Linux System Administrator')->assertSee('Save as PDF');
+        $this->get('/cv')->assertOk()->assertSee('Alex Example')->assertSee('Senior Platform Engineer')->assertSee('Save as PDF');
     }
 
     public function test_leaderboard_is_seeded_and_capped_at_ten(): void
