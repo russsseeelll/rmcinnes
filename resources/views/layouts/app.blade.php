@@ -7,6 +7,7 @@
     @if ($profile->meta_description)<meta name="description" content="{{ $profile->meta_description }}">@endif
     <meta name="theme-color" content="#252425">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="alternate" type="text/plain" href="{{ route('llms') }}" title="Summary for AI tools">
     <link rel="icon" href="/favicon.ico" sizes="any">
     @if ($profile->show_mascot ?? true)<link rel="icon" href="{{ route('favicon') }}" type="image/svg+xml">@endif
     <link rel="preconnect" href="https://fonts.googleapis.com">

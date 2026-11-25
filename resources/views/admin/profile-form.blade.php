@@ -33,6 +33,10 @@
                 <label for="p-intro">Intro <span class="field__note">the paragraph under the game · <span data-count-for="p-intro"></span>/2000</span></label>
                 <textarea id="p-intro" name="intro" rows="5" required maxlength="2000">{{ $profile->exists ? $profile->intro : '' }}</textarea>
             </div>
+            <div class="field field--wide">
+                <label for="p-ai">Summary for AI tools <span class="field__note">published in <a href="{{ url('/llms.txt') }}">/llms.txt</a> for AI assistants and search; write it in the first person · <span data-count-for="p-ai"></span>/3000</span></label>
+                <textarea id="p-ai" name="ai_summary" rows="8" maxlength="3000">{{ $profile->ai_summary }}</textarea>
+            </div>
         </fieldset>
 
         <fieldset class="admin-form__group">

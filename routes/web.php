@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CvController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LlmsController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ScoreController;
 use App\Http\Controllers\StatusController;
@@ -31,6 +32,7 @@ Route::get('/portfolio/{portfolio:slug}', [PortfolioController::class, 'portfoli
 Route::get('/portfolio', [PortfolioController::class, 'portfolio'])->name('portfolio');
 Route::post('/contact', [ContactController::class, 'store']);
 Route::get('/cv', CvController::class)->name('cv');
+Route::get('/llms.txt', LlmsController::class)->name('llms');
 Route::get('/favicon.svg', fn () => response()->view('favicon')->header('Content-Type', 'image/svg+xml')->header('Cache-Control', 'public, max-age=86400'))->name('favicon');
 Route::get('/extras', StatusController::class)->name('extras');
 Route::redirect('/status', '/extras#status', 301);

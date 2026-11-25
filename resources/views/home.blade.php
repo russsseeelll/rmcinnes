@@ -11,6 +11,30 @@
 @endphp
 
 @section('content')
+@php
+    $personLd = array_filter([
+        '@context' => 'https://schema.org',
+        '@type' => 'Person',
+        'name' => $profile->name,
+        'jobTitle' => $profile->headline,
+        'description' => $profile->intro,
+        'url' => url('/'),
+        'email' => $profile->email ? 'mailto:'.$profile->email : null,
+        'address' => $profile->location ? ['@type' => 'PostalAddress', 'addressLocality' => $profile->location] : null,
+        'sameAs' => array_values(array_filter([$profile->github_url, $profile->linkedin_url])),
+        'knowsAbout' => $skillGroups->flatMap->skillList()->unique()->values()->all(),
+        'alumniOf' => $education->pluck('institution')->filter()->unique()->values()
+            ->map(fn ($i) => ['@type' => 'EducationalOrganization', 'name' => $i])->all(),
+        'hasCredential' => $education->map(fn ($e) => array_filter([
+            '@type' => 'EducationalOccupationalCredential',
+            'name' => $e->qualification,
+            'credentialCategory' => $e->grade === 'Certification' ? 'certification' : 'degree',
+            'recognizedBy' => $e->institution ? ['@type' => 'Organization', 'name' => $e->institution] : null,
+        ]))->values()->all(),
+        'subjectOf' => ['@type' => 'WebPage', 'url' => route('llms'), 'name' => 'Summary for AI tools'],
+    ]);
+@endphp
+<script type="application/ld+json">{!! json_encode($personLd, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP) !!}</script>
 <section class="hero" aria-labelledby="hero-name">
 
     <div class="cluster" data-cluster data-workloads='@json($workloads)'>

@@ -9,7 +9,7 @@ class Profile extends Model
 {
     protected $fillable = [
         'name', 'headline', 'location', 'email', 'github_url', 'linkedin_url',
-        'intro', 'contact_heading', 'meta_description', 'show_mascot',
+        'intro', 'ai_summary', 'contact_heading', 'meta_description', 'show_mascot',
     ];
 
     protected $casts = ['show_mascot' => 'boolean'];
