@@ -754,3 +754,6 @@ code { font-family: var(--mono); font-size: .9em; }
     .board-admin__row { grid-template-columns: 2em 1fr 5em; }
     .board-admin__row input[name="organisation"] { grid-column: 2 / -1; }
 }
+.obs-card__title::before { background: var(--periwinkle); }
+.obs-card__lead { margin-top: 14px; color: var(--text-2); max-width: 70ch; }
+.obs-card__actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 22px; }

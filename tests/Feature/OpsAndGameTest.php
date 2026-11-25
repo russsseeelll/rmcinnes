@@ -78,4 +78,14 @@ class OpsAndGameTest extends TestCase
         $this->deleteJson("/api/scores/{$id}")->assertNoContent();
         $this->assertNull(\App\Models\Score::find($id));
     }
+
+    public function test_extras_links_to_grafana_only_when_configured(): void
+    {
+        $this->get('/extras')->assertDontSee('id="observability"', false);
+
+        config(['services.grafana.url' => 'https://grafana.example.test']);
+        $this->get('/extras')->assertSee('id="observability"', false)
+            ->assertSee('https://grafana.example.test/d/rmcinnes-live/rmcinnes-co-uk-live', false)
+            ->assertSee('IP addresses are anonymised');
+    }
 }

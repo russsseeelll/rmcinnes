@@ -27,6 +27,34 @@
 </section>
 @endif
 
+@if ($grafana = config('services.grafana.url'))
+    @php
+        $dashboard = rtrim($grafana, '/').config('services.grafana.dashboard');
+        $traceId = request()->attributes->get('trace_id');
+    @endphp
+    <section class="section section--tight extras" id="observability" aria-labelledby="observability-h">
+        <h2 id="observability-h" class="tape tape--section">Observability</h2>
+        <article class="run-card obs-card">
+            <h3 class="run-card__title obs-card__title">Live telemetry in Grafana</h3>
+            <p class="obs-card__lead">
+                This site is instrumented with OpenTelemetry. Every page view is traced and logged into the LGTM stack:
+                Loki for logs, Grafana for dashboards, Tempo for traces and Mimir for metrics, collected by Grafana Alloy.
+            </p>
+            <p class="obs-card__actions">
+                <a class="btn btn--signal btn--lg" href="{{ $dashboard }}" rel="noopener">Open the live dashboard</a>
+                @if ($traceId)
+                    <a class="btn btn--line btn--lg" href="{{ $dashboard }}?var-trace_id={{ $traceId }}" rel="noopener">See this page view</a>
+                @endif
+            </p>
+            <p class="run-card__source">
+                Each page view is recorded with its method, path, status, timing and browser user agent. IP addresses are anonymised
+                before anything is stored (the last block of an IPv4 address becomes 0; IPv6 is cut to its first 48 bits), nothing typed
+                into the contact form is recorded, and data is kept for 7 days.
+            </p>
+        </article>
+    </section>
+@endif
+
 <section class="section section--tight status" id="status" aria-labelledby="status-h">
     <h2 id="status-h" class="tape tape--section">Site status</h2>
     @if (! $latest)
