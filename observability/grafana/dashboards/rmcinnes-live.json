@@ -14,7 +14,7 @@
   },
   "refresh": "30s",
   "schemaVersion": 39,
-  "version": 1,
+  "version": 2,
   "templating": {
     "list": [
       {
@@ -643,15 +643,31 @@
       "id": 10
     },
     {
+      "id": 99,
+      "type": "text",
+      "title": "",
+      "transparent": true,
+      "gridPos": {
+        "x": 0,
+        "y": 36,
+        "w": 24,
+        "h": 2
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "**Pick a trace** from the table above, paste a trace ID into the box at the top, or follow the *See it live* link in the footer of [rmcinnes.co.uk](https://rmcinnes.co.uk) to see your own request here."
+      }
+    },
+    {
       "type": "traces",
-      "title": "Selected trace: ${trace_id}",
+      "title": "Selected trace",
       "datasource": {
         "type": "tempo",
         "uid": "tempo"
       },
       "gridPos": {
         "x": 0,
-        "y": 36,
+        "y": 38,
         "w": 24,
         "h": 14
       },
@@ -667,201 +683,6 @@
         }
       ],
       "id": 11
-    },
-    {
-      "type": "row",
-      "title": "The server",
-      "gridPos": {
-        "x": 0,
-        "y": 50,
-        "w": 24,
-        "h": 1
-      },
-      "collapsed": false,
-      "panels": [],
-      "id": 12
-    },
-    {
-      "type": "timeseries",
-      "title": "CPU in use",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "mimir"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 51,
-        "w": 8,
-        "h": 7
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "mimir"
-          },
-          "expr": "1 - avg(rate(node_cpu_seconds_total{mode=\"idle\"}[$__rate_interval]))",
-          "legendFormat": "CPU"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percentunit",
-          "min": 0,
-          "max": 1,
-          "color": {
-            "mode": "fixed",
-            "fixedColor": "#86e1c6"
-          },
-          "custom": {
-            "lineWidth": 2,
-            "fillOpacity": 20,
-            "gradientMode": "opacity",
-            "showPoints": "never"
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "showLegend": false
-        }
-      },
-      "id": 13
-    },
-    {
-      "type": "timeseries",
-      "title": "Memory in use",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "mimir"
-      },
-      "gridPos": {
-        "x": 8,
-        "y": 51,
-        "w": 8,
-        "h": 7
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "mimir"
-          },
-          "expr": "1 - sum(node_memory_MemAvailable_bytes) / sum(node_memory_MemTotal_bytes)",
-          "legendFormat": "Memory"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percentunit",
-          "min": 0,
-          "max": 1,
-          "color": {
-            "mode": "fixed",
-            "fixedColor": "#c4a9ff"
-          },
-          "custom": {
-            "lineWidth": 2,
-            "fillOpacity": 20,
-            "gradientMode": "opacity",
-            "showPoints": "never"
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "showLegend": false
-        }
-      },
-      "id": 14
-    },
-    {
-      "type": "timeseries",
-      "title": "Load average",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "mimir"
-      },
-      "gridPos": {
-        "x": 16,
-        "y": 51,
-        "w": 8,
-        "h": 7
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "mimir"
-          },
-          "expr": "avg(node_load1)",
-          "legendFormat": "1 min"
-        },
-        {
-          "refId": "B",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "mimir"
-          },
-          "expr": "avg(node_load15)",
-          "legendFormat": "15 min"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "min": 0,
-          "custom": {
-            "lineWidth": 2,
-            "fillOpacity": 10,
-            "showPoints": "never"
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "1 min"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "#ffb547"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "15 min"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "mode": "fixed",
-                  "fixedColor": "#8ea8ff"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        }
-      },
-      "id": 15
     }
   ],
   "links": [

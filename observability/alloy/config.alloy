@@ -9,8 +9,32 @@ otelcol.receiver.otlp "app" {
 
   output {
     metrics = [otelcol.processor.batch.default.input]
-    logs    = [otelcol.processor.batch.default.input]
-    traces  = [otelcol.processor.batch.default.input]
+    logs    = [otelcol.processor.transform.scrub.input]
+    traces  = [otelcol.processor.transform.scrub.input]
+  }
+}
+
+otelcol.processor.transform "scrub" {
+  error_mode = "ignore"
+
+  trace_statements {
+    context    = "resource"
+    statements = [`delete_matching_keys(attributes, "^(host|os|process)\\..*")`]
+  }
+
+  trace_statements {
+    context    = "span"
+    statements = [`delete_matching_keys(attributes, "^(network\\.peer\\..*|client\\.port|code\\.file\\.path)$")`]
+  }
+
+  log_statements {
+    context    = "resource"
+    statements = [`delete_matching_keys(attributes, "^(host|os|process)\\..*")`]
+  }
+
+  output {
+    logs   = [otelcol.processor.batch.default.input]
+    traces = [otelcol.processor.batch.default.input]
   }
 }
 
@@ -41,20 +65,5 @@ otelcol.exporter.otlphttp "loki" {
 otelcol.exporter.otlphttp "mimir" {
   client {
     endpoint = coalesce(sys.env("MIMIR_URL"), "http://127.0.0.1:9009") + "/otlp"
-  }
-}
-
-prometheus.exporter.unix "host" { }
-
-prometheus.scrape "host" {
-  targets         = prometheus.exporter.unix.host.targets
-  forward_to      = [prometheus.remote_write.mimir.receiver]
-  scrape_interval = "30s"
-  job_name        = "host"
-}
-
-prometheus.remote_write "mimir" {
-  endpoint {
-    url = coalesce(sys.env("MIMIR_URL"), "http://127.0.0.1:9009") + "/api/v1/push"
   }
 }
