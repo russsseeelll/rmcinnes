@@ -80,11 +80,12 @@ class ToolkitAndProfileApiTest extends TestCase
 
     public function test_spaniel_can_be_switched_off(): void
     {
-        $this->get('/')->assertSee('class="spaniel"', false);
+        $this->get('/favicon.svg')->assertOk()->assertHeader('Content-Type', 'image/svg+xml');
+        $this->get('/')->assertSee('class="spaniel"', false)->assertSee('favicon.svg');
 
         $this->login();
         $this->putJson('/api/profile', ['show_mascot' => '0'])->assertOk()->assertJsonPath('data.show_mascot', false);
-        $this->get('/')->assertDontSee('class="spaniel"', false);
+        $this->get('/')->assertDontSee('class="spaniel"', false)->assertDontSee('favicon.svg');
 
         $this->putJson('/api/profile', ['show_mascot' => true])->assertJsonPath('data.show_mascot', true);
         $this->get('/')->assertSee('class="spaniel"', false);

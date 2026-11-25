@@ -29,7 +29,6 @@
 
 <section class="section section--tight status" id="status" aria-labelledby="status-h">
     <h2 id="status-h" class="tape tape--section">Site status</h2>
-    <p class="extras__intro">The server checks its own homepage every five minutes; deploys are recorded by the pipeline.</p>
     @if (! $latest)
         <p class="empty">No checks recorded yet. They start once the scheduler runs (<code>php artisan schedule:run</code> every minute).</p>
     @else

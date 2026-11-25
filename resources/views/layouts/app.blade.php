@@ -7,7 +7,8 @@
     @if ($profile->meta_description)<meta name="description" content="{{ $profile->meta_description }}">@endif
     <meta name="theme-color" content="#252425">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    @if ($profile->show_mascot ?? true)<link rel="icon" href="{{ route('favicon') }}" type="image/svg+xml">@endif
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Martian+Mono:wdth,wght@87.5,400..700&display=swap" rel="stylesheet">

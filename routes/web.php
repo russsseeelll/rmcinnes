@@ -31,6 +31,7 @@ Route::get('/portfolio/{portfolio:slug}', [PortfolioController::class, 'portfoli
 Route::get('/portfolio', [PortfolioController::class, 'portfolio'])->name('portfolio');
 Route::post('/contact', [ContactController::class, 'store']);
 Route::get('/cv', CvController::class)->name('cv');
+Route::get('/favicon.svg', fn () => response()->view('favicon')->header('Content-Type', 'image/svg+xml')->header('Cache-Control', 'public, max-age=86400'))->name('favicon');
 Route::get('/extras', StatusController::class)->name('extras');
 Route::redirect('/status', '/extras#status', 301);
 
