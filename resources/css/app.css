@@ -324,10 +324,6 @@ main { display: block; }
     letter-spacing: -.012em;
     max-width: 34ch;
 }
-.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; margin: 0; border-top: 2px solid var(--text); }
-.facts div { padding: 14px 20px 0 0; }
-.facts dt { font-size: .9rem; color: var(--text-2); }
-.facts dd { margin: 4px 0 0; font-weight: 700; }
 
 .rack { list-style: none; margin: 0; padding: 0; background: var(--graphite-up); border: 3px solid var(--outline); border-radius: 14px; overflow: hidden; }
 .rack__unit {

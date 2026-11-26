@@ -1,9 +1,6 @@
 @extends('layouts.app')
 
 @php
-    $featured = $education->firstWhere('featured', true);
-    $studying = $education->firstWhere('in_progress', true);
-    $current = $experiences->first();
     $workloads = $skillGroups->flatMap->skillList()
         ->map(fn ($s) => strtolower(preg_replace(['/\s*\/\s*/', '/\s+/'], ['/', '-'], $s)))
         ->filter(fn ($s) => mb_strlen($s) <= 12)->values();
@@ -84,11 +81,6 @@
     @include('partials.flash', ['scope' => 'profile'])
     <p class="intro__lead">{{ $profile->intro }}</p>
     @auth<p><a class="btn btn--ink btn--sm" href="{{ route('profile.edit') }}">Edit intro and profile</a></p>@endauth
-    <dl class="facts">
-        @if ($current)<div><dt>Now</dt><dd>{{ $current->title }}, {{ $current->organisation }}</dd></div>@endif
-        @if ($featured)<div><dt>Degree</dt><dd>{{ $featured->qualification }}{{ $featured->grade ? ', '.$featured->grade : '' }}</dd></div>@endif
-        @if ($studying)<div><dt>Studying</dt><dd>{{ $studying->qualification }}</dd></div>@endif
-    </dl>
 </section>
 
 <section class="section" id="experience" aria-labelledby="exp-h">
