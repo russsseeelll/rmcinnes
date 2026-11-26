@@ -13,7 +13,8 @@ COPY . .
 RUN composer dump-autoload --optimize --no-dev --no-scripts
 
 FROM php:8.4-apache
-RUN apt-get update \
+RUN echo 'Acquire::Retries "5";' > /etc/apt/apt.conf.d/80-retries \
+    && apt-get update \
     && apt-get install -y --no-install-recommends libzip-dev libicu-dev \
     && docker-php-ext-install pdo_mysql intl zip bcmath pcntl opcache \
     && apt-get install -y --no-install-recommends $PHPIZE_DEPS \

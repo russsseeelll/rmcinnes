@@ -6,9 +6,9 @@ exec 9>/tmp/rmcinnes-autodeploy.lock
 flock -n 9 || exit 0
 
 git fetch -q origin main
-current=$(git rev-parse HEAD)
+deployed=$(cat .deployed 2>/dev/null || true)
 latest=$(git rev-parse origin/main)
-[ "$current" = "$latest" ] && exit 0
+[ "$deployed" = "$latest" ] && exit 0
 
 repo=$(git remote get-url origin | sed -E 's#(git@github.com:|https://github.com/)##; s#\.git$##')
 verdict=$(curl -fsS -H "Accept: application/vnd.github+json" "https://api.github.com/repos/$repo/commits/$latest/check-runs" | python3 -c '
@@ -23,6 +23,9 @@ else:
 ')
 
 case "$verdict" in
-    passed) echo "$(date -Is) deploying ${latest:0:7}"; ./deploy.sh ;;
+    passed)
+        echo "$(date -Is) deploying ${latest:0:7}"
+        if ./deploy.sh; then echo "$latest" > .deployed; else echo "$(date -Is) deploy of ${latest:0:7} failed; will retry"; fi
+        ;;
     failed) echo "$(date -Is) skipping ${latest:0:7}: checks failed" ;;
 esac
